@@ -54,7 +54,7 @@ const Header = ({isNotification, setCurrentPage, setUserStatus}) => {
         <Button color="inherit" onClick={() => setCurrentPage("ready")}>
           <AppShortcutIcon/>
         </Button>
-        <Button color="inherit" onClick = {() => setCurrentPage("login")}>
+        <Button color="inherit" onClick = {() => setUserStatus("login")}>
           <LogoutIcon/>
         </Button>
         <Button color="inherit" onClick={() => setCurrentPage("chat")}>
