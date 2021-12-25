@@ -6,13 +6,15 @@ import { useEffect, useState } from "react";
 const a = 1;
 
 
+
 function App() {
   const [userStatus, setUserStatus] = useState("login");
+
   return (
     <>
       {userStatus === "login" && <SignIn setUserStatus={setUserStatus} />}
       {userStatus === "signup" && <SignUp setUserStatus={setUserStatus} />}
-      {userStatus === "logined" && <Logined/>}
+      {userStatus === "logined" && <Logined setUserStatus={setUserStatus} />}
     </>
   );
 }

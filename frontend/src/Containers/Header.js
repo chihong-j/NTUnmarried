@@ -13,7 +13,6 @@ import PersonIcon from '@mui/icons-material/Person';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import AppShortcutIcon from '@mui/icons-material/AppShortcut';
-
 // const useStyles = makeStyles(theme => ({
 //   menuButton: {
 //     marginRight: theme.spacing(2),

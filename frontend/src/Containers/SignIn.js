@@ -37,6 +37,7 @@ export default function SignIn({setUserStatus}) {
       email: data.get('email'),
       password: data.get('password'),
     });
+    setUserStatus("logined");
   };
 
   return (
