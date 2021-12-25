@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useEffect, useState } from "react";
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -18,7 +18,7 @@ function Copyright(props) {
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
       <Link color="inherit" href="https://mui.com/">
-        Your Website
+        @material-ui
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -28,15 +28,32 @@ function Copyright(props) {
 
 const theme = createTheme();
 
-export default function SignUp() {
+export default function SignUp({setUserStatus}) {
+  const [errorMessage, setErrorMessage] = useState("")
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    // eslint-disable-next-line no-console
+    var name = data.get('name');
+    var email = data.get('email');
+    var password = data.get('password');
     console.log({
-      email: data.get('email'),
-      password: data.get('password'),
+        Name: name,
+        Email: email,
+        Password: password,
     });
+    setErrorMessage("");
+    if (email.slice(9) !== "@ntu.edu.tw") {
+        setErrorMessage("You must use NTU mail to sign up.")
+    }
+    else if (password.length < 8) {
+        setErrorMessage("Password must be at least 8 characters.")
+    }
+    else if (!/[a-zA-z]/i.test(password)) {
+        setErrorMessage("Password must contains at least one english character.")
+    }
+    else {
+        setUserStatus("login");
+    }
   };
 
   return (
@@ -57,27 +74,20 @@ export default function SignUp() {
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
+          <Typography sx={{ marginTop: 1, color: 'error.main' }} >
+            {errorMessage}
+          </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12}>
                 <TextField
                   autoComplete="given-name"
-                  name="firstName"
+                  name="name"
                   required
                   fullWidth
-                  id="firstName"
-                  label="First Name"
+                  id="name"
+                  label="User Name"
                   autoFocus
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  name="lastName"
-                  autoComplete="family-name"
                 />
               </Grid>
               <Grid item xs={12}>
@@ -101,12 +111,12 @@ export default function SignUp() {
                   autoComplete="new-password"
                 />
               </Grid>
-              <Grid item xs={12}>
+              {/* <Grid item xs={12}>
                 <FormControlLabel
                   control={<Checkbox value="allowExtraEmails" color="primary" />}
                   label="I want to receive inspiration, marketing promotions and updates via email."
                 />
-              </Grid>
+              </Grid> */}
             </Grid>
             <Button
               type="submit"
@@ -118,7 +128,7 @@ export default function SignUp() {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href="" variant="body2" onClick={() => setUserStatus("login")}>
                   Already have an account? Sign in
                 </Link>
               </Grid>

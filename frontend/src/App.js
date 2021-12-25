@@ -4,10 +4,11 @@ import SignUp from './Containers/SignUp';
 import { useEffect, useState } from "react";
 
 function App() {
-  const [signIn, setSignIn] = useState(false);
+  const [userStatus, setUserStatus] = useState("login");
   return (
     <>
-    {signIn ? <SignIn /> : <SignUp />} 
+      {userStatus === "login" && <SignIn setUserStatus={setUserStatus} />}
+      {userStatus === "signup" && <SignUp setUserStatus={setUserStatus} />}
     </>
   );
 }
