@@ -12,7 +12,7 @@ function App() {
     <>
       {userStatus === "login" && <SignIn setUserStatus={setUserStatus} />}
       {userStatus === "signup" && <SignUp setUserStatus={setUserStatus} />}
-      {userStatus === "logined" && <Logined/>}
+      {userStatus === "logined" && <Logined setUserStatus={setUserStatus} />}
     </>
   );
 }

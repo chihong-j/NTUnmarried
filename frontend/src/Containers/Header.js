@@ -13,7 +13,6 @@ import PersonIcon from '@mui/icons-material/Person';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import AppShortcutIcon from '@mui/icons-material/AppShortcut';
-var e = 1;
 // const useStyles = makeStyles(theme => ({
 //   menuButton: {
 //     marginRight: theme.spacing(2),
@@ -54,7 +53,7 @@ const Header = ({isNotification, setCurrentPage, setUserStatus}) => {
         <Button color="inherit" onClick={() => setCurrentPage("ready")}>
           <AppShortcutIcon/>
         </Button>
-        <Button color="inherit" onClick = {() => setCurrentPage("login")}>
+        <Button color="inherit" onClick = {() => setUserStatus("login")}>
           <LogoutIcon/>
         </Button>
         <Button color="inherit" onClick={() => setCurrentPage("chat")}>
