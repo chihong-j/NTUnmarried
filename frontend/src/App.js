@@ -7,17 +7,16 @@ import useChat from "../hooks/useChat";
 
 
 function App() {
-  const [userStatus, setUserStatus] = useState("login");
-  const savedMe = localStorage.getItem(LOCALSTORAGE_KEY_ME);
-  const [userName, setUserName] = useState(savedMe || "");
-  const savedPa = localStorage.getItem(LOCALSTORAGE_KEY_PA);
-  const [password, setPassword] = useState(savedPa || "");
-  useEffect(() => {
-    if (userStatus === "Home") {
-      localStorage.setItem(LOCALSTORAGE_KEY_ME, userName);
-      localStorage.setItem(LOCALSTORAGE_KEY_PA, password);
-    }
-  }, [userStatus, password, userName]);
+  const {
+    userStatus,
+    setUserStatus,
+    email,
+    setEmail,
+    userName,
+    setUserName,
+    password,
+    setPassword,
+  } = useChat();
 
   return (
     <>
