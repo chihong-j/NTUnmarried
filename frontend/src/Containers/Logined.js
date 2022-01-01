@@ -14,7 +14,6 @@ const Logined = ({setUserStatus}) => {
         <Header isNotifications={isNotification} setCurrentPage = {setCurrentPage} setUserStatus = {setUserStatus}/>
         {currentPage === "notification" && <Notification/>}
         {currentPage === "match" && <Match/>}
-        {/* {currentPage === "ready" && <Ready/>} */}
         {currentPage === "chat"  && <Chat/>}
         {currentPage === "profile" && <Profile/>}
         </>
