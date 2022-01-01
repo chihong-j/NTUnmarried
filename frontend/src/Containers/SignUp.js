@@ -36,6 +36,7 @@ export default function SignUp({setUserStatus}) {
     var name = data.get('name');
     var email = data.get('email');
     var password = data.get('password');
+    // 傳給後端
     console.log({
         Name: name,
         Email: email,

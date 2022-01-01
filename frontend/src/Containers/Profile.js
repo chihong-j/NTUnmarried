@@ -39,9 +39,9 @@ const Profile = () => {
     return (
             <Container maxWidth = "sm">
                 <ImageList sx={{ width: 500, height: 450 }} cols={3} rowHeight={200}>
-                    {images.map((image) => 
+                    {images.map((image, id) => 
                         image?(
-                        <ImageListItem key = {image}>
+                        <ImageListItem key = {id}>
                             <img
                                 src={`${image}?w=164&h=164&fit=crop&auto=format`}
                                 srcSet={`${image}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
@@ -73,7 +73,7 @@ const Profile = () => {
                             <TextField
                                 id="About Me"
                                 label="About Me"
-                                defaultValue = ""
+                                // defaultValue = ""
                                 value = {aboutMe}
                                 onChange = {(e) => setAboutMe(e.target.value)}
                             />
@@ -82,7 +82,7 @@ const Profile = () => {
                             <TextField
                                 id="Interest"
                                 label="Interest"
-                                defaultValue=""
+                                // defaultValue=""
                                 value = {interest}
                                 onChange = {(e) => setInterest(e.target.value)}
                             />
@@ -92,7 +92,7 @@ const Profile = () => {
                             <TextField
                                 id="Department"
                                 label="Department"
-                                defaultValue=""
+                                // defaultValue=""
                                 value = {department}
                                 onChange = {(e) => setDepartment(e.target.value)}
                                 />

@@ -29,7 +29,7 @@ const Logined = ({setUserStatus}) => {
             <Header isNotifications={isNotification} setCurrentPage = {setCurrentPage} setUserStatus = {setUserStatus}/>  
             {currentPage === "match" && <Match user={user} />}
             {currentPage === "chat"  && <Chat/>}
-            {currentPage === "notification" && <Notification/>}
+            {currentPage === "notifications" && <Notification/>}
             {currentPage === "profile" && <Profile/>}
         </Container>
     );

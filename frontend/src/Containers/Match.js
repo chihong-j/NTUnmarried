@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import "../style.css"
-// import Button from '@mui/material/Button';
-import styled from 'styled-components';
 import { Container, Row, Col } from 'reactstrap';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';

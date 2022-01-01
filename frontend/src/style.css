@@ -1,3 +1,4 @@
+/* Match */
 .view-container {
     height: 100%;
     display: flex;
@@ -92,4 +93,14 @@
     to{
         right:200px;
     }
+}
+
+/* Notification */
+.notification-cell {
+    width: 260px;
+    padding: 10px;
+    height: 100px;
+    border: solid;
+    border-radius: 5px;
+    margin: 5px auto;
 }
