@@ -9,12 +9,13 @@ const b = 1;
 
 function App() {
   const [userStatus, setUserStatus] = useState("login");
+  const [userName, setUserName] = useState("Leehom");
 
   return (
     <>
       {userStatus === "login" && <SignIn setUserStatus={setUserStatus} />}
       {userStatus === "signup" && <SignUp setUserStatus={setUserStatus} />}
-      {userStatus === "logined" && <Logined setUserStatus={setUserStatus} />}
+      {userStatus === "logined" && <Logined setUserStatus={setUserStatus} userName = {userName}/>}
     </>
   );
 }

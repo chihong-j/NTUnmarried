@@ -7,8 +7,11 @@ const Message = styled.div`
   height: 400px;
   background: #eeeeee52;
   border-radius: 10px;
-  margin: 20px;
-  padding: 20px;
+  // margin: 20px;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  // padding: 20px;
+  // border: solid;
 `;
 
 export default Message;

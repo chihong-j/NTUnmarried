@@ -1,11 +1,10 @@
-import { useCallback, useState } from 'react'
 import { Input } from 'antd';
+const {Search} = Input;
 
 const TypeBar = ({ me, activeKey, displayStatus, sendMessage, disabled, messageInput, setMessageInput }) => {
-    // const [body, setBody] = useState('');
     
     return (
-        <Input.Search
+        <Search
             value={messageInput} 
             enterButton="Send"
             placeholder="Type messages here..."
@@ -29,9 +28,9 @@ const TypeBar = ({ me, activeKey, displayStatus, sendMessage, disabled, messageI
                 });
                 setMessageInput('');
             }}
-            disabled={disabled}
-            style={{ width: '75%' }}
-        ></Input.Search>
+            // disabled={disabled}
+            size = "large"
+        ></Search>
     );
 }
 

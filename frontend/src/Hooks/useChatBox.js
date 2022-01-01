@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 const useChatBox = () => {
     const [chatBoxes, setChatBoxes] = useState([]);
+    const [userChatWith, setUserChatWith] = useState("")
     const removeChatBox = (targetKey, activeKey) => {
         let temp = chatBoxes;
         let i = temp.indexOf(targetKey);
@@ -22,7 +23,7 @@ const useChatBox = () => {
     const createChatBox = (friend) => {
         setChatBoxes([...chatBoxes, friend]);
     };
-    return {chatBoxes, removeChatBox, createChatBox};
+    return {chatBoxes, removeChatBox, createChatBox, userChatWith, setUserChatWith};
 };
 
 

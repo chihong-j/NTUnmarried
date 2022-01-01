@@ -73,7 +73,7 @@ const Profile = () => {
                             <TextField
                                 id="About Me"
                                 label="About Me"
-                                defaultValue = ""
+                                // defaultValue = ""
                                 value = {aboutMe}
                                 onChange = {(e) => setAboutMe(e.target.value)}
                             />
@@ -82,7 +82,7 @@ const Profile = () => {
                             <TextField
                                 id="Interest"
                                 label="Interest"
-                                defaultValue=""
+                                // defaultValue=""
                                 value = {interest}
                                 onChange = {(e) => setInterest(e.target.value)}
                             />
@@ -92,7 +92,7 @@ const Profile = () => {
                             <TextField
                                 id="Department"
                                 label="Department"
-                                defaultValue=""
+                                // defaultValue=""
                                 value = {department}
                                 onChange = {(e) => setDepartment(e.target.value)}
                                 />
