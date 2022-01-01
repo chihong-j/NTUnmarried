@@ -29,7 +29,7 @@ const Header = ({isNotification, setCurrentPage, setUserStatus, userName}) => {
   return (
     <AppBar position="static">
       <Toolbar>
-        <Typography variant="h6" className= "NTUnmarriedTitle" sx = {{flexGrow: 1}}>
+        <Typography variant="h6" className= "NTUnmarriedTitle" sx = {{flexGrow: 1}} color = "white">
           NTㄩㄇ
         </Typography>
         <Button color="inherit" onClick={() => setCurrentPage("match")} sx = {{flexGrow: 0}}>
@@ -48,7 +48,7 @@ const Header = ({isNotification, setCurrentPage, setUserStatus, userName}) => {
           <PersonIcon/>
         </Button>
         <Box sx = {{flexGrow: 0}}>
-          <Typography variant="h6" className= "NTUnmarriedTitle">
+          <Typography variant="h6" className= "NTUnmarriedTitle" color = "white">
             Hi {userName}!
           </Typography>
         </Box>

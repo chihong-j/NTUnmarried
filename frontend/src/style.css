@@ -104,3 +104,21 @@
     border-radius: 5px;
     margin: 5px auto;
 }
+
+/* Chat */
+.chat-cell {
+    width: 600px;
+    padding: 10px;
+    height: 100px;
+    border-bottom: solid;
+    border-right: solid;
+    border-left: solid;
+    border-radius: 5px;
+    /* margin: 5px auto; */
+}
+
+.chat-cell:hover {
+    color: white;
+    background-color: #dbead5;
+    border: 2px green solid;
+}

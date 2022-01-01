@@ -28,7 +28,7 @@ const TypeBar = ({ me, activeKey, displayStatus, sendMessage, disabled, messageI
                 });
                 setMessageInput('');
             }}
-            // disabled={disabled}
+            disabled={disabled}
             size = "large"
         ></Search>
     );
