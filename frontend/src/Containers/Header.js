@@ -30,7 +30,7 @@ const Header = ({isNotification, setCurrentPage, setUserStatus, userName}) => {
     <AppBar position="static">
       <Toolbar>
         <Typography variant="h6" className= "NTUnmarriedTitle" sx = {{flexGrow: 1}}>
-          NTUㄩㄇ
+          NTㄩㄇ
         </Typography>
         <Button color="inherit" onClick={() => setCurrentPage("match")} sx = {{flexGrow: 0}}>
           <FavoriteIcon/>
