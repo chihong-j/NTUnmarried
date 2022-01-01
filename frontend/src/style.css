@@ -1,0 +1,95 @@
+.view-container {
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.like-button {
+    padding-top: 10px;
+    align-items: center;
+    justify-content: center;
+    margin: 10px;
+    background-color: white;
+    border: 2px green solid;
+    border-radius: 50%;
+    width: 70px;
+    height: 70px;
+    color: white;
+    text-align: center;
+    font-size: 32px;
+    cursor: pointer;
+}
+
+.like-button:hover {
+    color: white;
+    background-color: #dbead5;
+    border: 2px green solid;
+}
+
+.dislike-button {
+    padding-left: 7px;
+    padding-top: 7px;
+    margin: 10px;
+    background-color: white;
+    border-radius: 50%;
+    border: 2px red solid;
+    width: 70px;
+    height: 70px;
+    color: white;
+    text-align: center;
+    font-size: 32px;
+    cursor: pointer;
+}
+
+.dislike-button:hover {
+    color: red;
+    background-color: #ffdfdb;
+    border: 2px red solid;
+}
+
+.big-pic {
+    max-height: 100%;  
+    max-width: 100%; 
+    width: auto;
+    height: auto;
+    position: absolute;  
+    top: 0;  
+    bottom: 0;  
+    left: 0;  
+    right: 0;  
+    margin: auto;
+}
+
+.album {
+    height: 600px;
+    width: 500px;
+    margin: auto;
+    overflow: hidden;
+    position: relative;
+}
+.alb-animate-like {
+    animation-name: like;
+    animation-duration:0.4s;
+}
+@keyframes like{
+    from{
+        left:0;
+    }
+    to{
+        left:200px;
+    }
+}
+.alb-animate-dislike {
+    animation-name: dislike;
+    animation-duration:0.4s;
+}
+@keyframes dislike{
+    from{
+        right:0;
+    }
+    to{
+        right:200px;
+    }
+}
