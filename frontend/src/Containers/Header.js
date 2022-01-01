@@ -33,6 +33,10 @@ const Header = ({isNotification, setCurrentPage, setUserStatus}) => {
     setOpen(false);
   };
 
+  const test = () => {
+    console.log('###')
+  }
+
   return (
     <AppBar position="static">
       <Toolbar>
@@ -50,19 +54,19 @@ const Header = ({isNotification, setCurrentPage, setUserStatus}) => {
         <Button color="inherit" onClick={() => setCurrentPage("match")}>
           <FavoriteIcon/>
         </Button>
-        <Button color="inherit" onClick={() => setCurrentPage("ready")}>
+        {/* <Button color="inherit" onClick={() => setCurrentPage("ready")}>
           <AppShortcutIcon/>
-        </Button>
-        <Button color="inherit" onClick = {() => setUserStatus("login")}>
-          <LogoutIcon/>
-        </Button>
+        </Button> */}
         <Button color="inherit" onClick={() => setCurrentPage("chat")}>
           <ChatIcon/>
         </Button>
         <Button color="inherit" onClick={() => setCurrentPage("notifications")}>
           {isNotification?<NotificationsActiveIcon/>:<NotificationsIcon/>}
         </Button>
-        <Button color="inherit" onClick={() => setCurrentPage("Profile")}>
+        <Button color="inherit" onClick = {() => setUserStatus("login")}>
+          <LogoutIcon/>
+        </Button>
+        <Button color="inherit" onClick={() => setCurrentPage("profile")}>
           <PersonIcon/>
         </Button>
       </Toolbar>

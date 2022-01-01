@@ -12,10 +12,10 @@ const Logined = ({setUserStatus}) => {
     return (
         <>
         <Header isNotifications={isNotification} setCurrentPage = {setCurrentPage} setUserStatus = {setUserStatus}/>
-        {currentPage === "match" && <Match/>}
-        {currentPage === "ready" && <Ready/>}
-        {currentPage === "chat"  && <Chat/>}
         {currentPage === "notification" && <Notification/>}
+        {currentPage === "match" && <Match/>}
+        {/* {currentPage === "ready" && <Ready/>} */}
+        {currentPage === "chat"  && <Chat/>}
         {currentPage === "profile" && <Profile/>}
         </>
     );
