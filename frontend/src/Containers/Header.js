@@ -1,28 +1,17 @@
 import React, { useState } from 'react';
-// import { makeStyles } from '@mui/material/styles';
+import Box from '@mui/material/Box';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
 import Button from '@mui/material/Button';
-// import ModalDialog from './ModalDialog';
 import LogoutIcon from '@mui/icons-material/Logout';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ChatIcon from '@mui/icons-material/Chat';
 import PersonIcon from '@mui/icons-material/Person';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import AppShortcutIcon from '@mui/icons-material/AppShortcut';
-// const useStyles = makeStyles(theme => ({
-//   menuButton: {
-//     marginRight: theme.spacing(2),
-//   },
-//   title: {
-//     flexGrow: 1,
-//   },
-// }));
 
-const Header = ({isNotification, setCurrentPage, setUserStatus}) => {
+const Header = ({isNotification, setCurrentPage, setUserStatus, userName}) => {
   const [open, setOpen] = useState(false);
 
   const handleChangeTab = () => {
@@ -40,35 +29,29 @@ const Header = ({isNotification, setCurrentPage, setUserStatus}) => {
   return (
     <AppBar position="static">
       <Toolbar>
-        {/* <IconButton
-          edge="start"
-          color="inherit"
-          aria-label="menu"
-          className={classes.menuButton}
-        >
-          <MenuIcon />
-        </IconButton> */}
-        <Typography variant="h6" className= "NTUnmarriedTitle">
-          NTUnmarried
+        <Typography variant="h6" className= "NTUnmarriedTitle" sx = {{flexGrow: 1}}>
+          NTㄩㄇ
         </Typography>
-        <Button color="inherit" onClick={() => setCurrentPage("match")}>
+        <Button color="inherit" onClick={() => setCurrentPage("match")} sx = {{flexGrow: 0}}>
           <FavoriteIcon/>
         </Button>
-        {/* <Button color="inherit" onClick={() => setCurrentPage("ready")}>
-          <AppShortcutIcon/>
-        </Button> */}
-        <Button color="inherit" onClick={() => setCurrentPage("chat")}>
+        <Button color="inherit" onClick={() => setCurrentPage("chat")} sx = {{flexGrow: 0}}>
           <ChatIcon/>
         </Button>
-        <Button color="inherit" onClick={() => setCurrentPage("notifications")}>
+        <Button color="inherit" onClick={() => setCurrentPage("notifications")} sx = {{flexGrow: 0}}>
           {isNotification?<NotificationsActiveIcon/>:<NotificationsIcon/>}
         </Button>
-        <Button color="inherit" onClick = {() => setUserStatus("login")}>
+        <Button color="inherit" onClick = {() => setUserStatus("login")} sx = {{flexGrow: 0}}>
           <LogoutIcon/>
         </Button>
-        <Button color="inherit" onClick={() => setCurrentPage("profile")}>
+        <Button color="inherit" onClick={() => setCurrentPage("profile")} sx = {{flexGrow: 0}}>
           <PersonIcon/>
         </Button>
+        <Box sx = {{flexGrow: 0}}>
+          <Typography variant="h6" className= "NTUnmarriedTitle">
+            Hi {userName}!
+          </Typography>
+        </Box>
       </Toolbar>
     </AppBar>
   );

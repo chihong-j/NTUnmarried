@@ -3,6 +3,8 @@ import { useQuery } from '@apollo/client';
 import {CHATBOX_QUERY, MESSAGE_SUBSCRIPTION} from '../graphql'
 import { Tag } from 'antd'
 import styled from 'styled-components'
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import Button from '@mui/material/Button';
 
 const Messages = styled.div`
     height: calc(240px - 36px);
@@ -49,20 +51,20 @@ const ChatBox = ({me, friend, ...props}) => {
     if(loading) return <p>loading</p>;
 
     return (
-        <Messages>
-            {data.chatBox.messages.map(({sender: {name}, body}, i) => (
-                <div className="App-message" key={name + body + i} style={{ flexDirection: (name === me) ? 'row-reverse' : ''} } >
-                    <Tag style={{height:"25px"}} color="blue">{name}</Tag>
-                    <p className="MessageBody" style={{ margin: (name === me) ? '0px 10px' : '' }}>{body}</p>
-                </div>
-                // <div className="App-message" key={i} style={{ flexDirection: (name === user_from) ? 'row-reverse' : '' }} >
-                //     <Tag style={{height:"25px"}} color="blue">{name}</Tag>
-                //     <p className="MessageBody" style={{ margin: (name === user_from) ? '0px 10px' : '' }}>{body}</p>
-                // </div>
-                // <Message me = {me} name = {name} body = {body} key = {name + body + i}/>
-            ))}
-            <div ref = {messagesFooter}/>
-        </Messages>
+        <>
+            <Button color="primary" variant="raised" component="span">
+                <ArrowBackIosIcon sx = {{fontSize : "50px", flexGrow: 1}}/>
+            </Button>
+            <Messages>
+                {/* {data.chatBox.messages.map(({sender: {name}, body}, i) => (
+                    <div className="App-message" key={name + body + i} style={{ flexDirection: (name === me) ? 'row-reverse' : ''} } >
+                        <Tag style={{height:"25px"}} color="blue">{name}</Tag>
+                        <p className="MessageBody" style={{ margin: (name === me) ? '0px 10px' : '' }}>{body}</p>
+                    </div>
+                    ))} */}
+                <div ref = {messagesFooter}/>
+            </Messages>
+        </>
     );
 };
 

@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import img from "../img/index";
 import { Container } from 'reactstrap';
 
-const Logined = ({setUserStatus}) => {
+const Logined = ({setUserStatus, userName}) => {
     const [isNotification, setIsNotification] = useState(false);
     const [currentPage, setCurrentPage] = useState("match");
     const user = [
@@ -26,7 +26,7 @@ const Logined = ({setUserStatus}) => {
     ]
     return (
         <Container>
-            <Header isNotifications={isNotification} setCurrentPage = {setCurrentPage} setUserStatus = {setUserStatus}/>  
+            <Header isNotifications={isNotification} setCurrentPage = {setCurrentPage} setUserStatus = {setUserStatus} userName = {userName}/>  
             {currentPage === "match" && <Match user={user} />}
             {currentPage === "chat"  && <Chat/>}
             {currentPage === "notifications" && <Notification/>}
