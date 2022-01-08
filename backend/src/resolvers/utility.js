@@ -1,6 +1,10 @@
 import {createModel} from "mongoose-gridfs";
 import { uuid } from 'uuidv4';
 import mongoose from "mongoose";
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv-defaults';
+
+dotenv.config();
 
 const checkUser = (db, name, errFunc) => {
     console.log(db)
@@ -10,8 +14,8 @@ const checkUser = (db, name, errFunc) => {
 
 
 // make sure calling checkUser beforehand
-const newUser = (db, name, gender, age) => {
-    return new db.UserModel({ name, gender, age }).save();
+const newUser = (db, email, name, gender, age, password) => {
+    return new db.UserModel({ email, name, gender, age, password }).save();
 };
 
 const saveImage = async (db, readStream, filename) => {
@@ -44,10 +48,13 @@ const readStreamToDataUrl = async (readStream) => {
     })
 }
 
+const createToken = ({ email }, secret) => jwt.sign({ email }, secret, { expiresIn: '1d' });
+
 export {
     checkUser,
     newUser,
     saveImage,
     readStreamToDataUrl,
-    retrieveImage
+    retrieveImage,
+    createToken
 };

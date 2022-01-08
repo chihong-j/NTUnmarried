@@ -14,10 +14,12 @@ const CreateFileModel = (container) => {
 }
 
 const UserSchema = new Schema({
+    email: { type: String, required: true},
     name: { type: String, required: true},
     gender: { type: Boolean, required: true},
     age: { type: Number, required: true},
-    images: [{ type: mongoose.Types.ObjectId }]
+    images: [{ type: mongoose.Types.ObjectId }],
+    password: { type: String, required: true }
 })
 
 const container = []
