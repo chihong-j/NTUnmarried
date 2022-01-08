@@ -30,19 +30,10 @@ const Image_Button = styled(Button)`
 
 
 const Profile = ({me}) => {
-    const {images, setIamges, aboutMe, setAboutMe, department, setDepartment, gender, setGender, age, setAge, birth, setBirth} = useNTU()
+    const {images, setIamges, aboutMe, setAboutMe, department, setDepartment, gender, setGender, age, setAge, birth, setBirth, initialize} = useNTU()
     const updateUser = useMutation(UPDATE_USER_MUTATION)
     const uploadFile = useMutation(UPLOADFILE_MUTATION)
-    if(me.images){
-        setIamges(me.images.concat(new Array(6 - me.images.length)))
-    }else{
-        setIamges(new Array(6).fill(""))
-    }
-    
-    setAboutMe(me.aboutMe)
-    setDepartment(me.department)
-    setGender(me.gender)
-    setAge(me.age)
+    initialize(me)
     const add_image = useCallback(() => {
         // uploadFile()
     }, [])
@@ -103,6 +94,7 @@ const Profile = ({me}) => {
                                 id="About Me"
                                 label="About Me"
                                 // defaultValue = ""
+                                required
                                 value = {aboutMe}
                                 onChange = {(e) => setAboutMe(e.target.value)}
                             />
@@ -113,6 +105,7 @@ const Profile = ({me}) => {
                                 id="Department"
                                 label="Department"
                                 // defaultValue=""
+                                required
                                 value = {department}
                                 onChange = {(e) => setDepartment(e.target.value)}
                                 />
