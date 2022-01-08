@@ -1,24 +1,25 @@
 scalar Upload
 
 type Query {
-    user(id: ID!): User!
+    user(email: String!): User!
+    stranger(email: String!): User!
 }
 
 type Mutation {
     createMessage(from: String!, to: String!, message: String!): Message!
     createChatBox(email1: String, email2: String): ChatBox!
     createLike(from: String!, to: String!): User!
-    updateUser(email: String!, gender: Boolean!, age: Int, aboutMe: String, interest: String, department: String, birth: Birth!): User!
+    updateUser(email: String!, gender: Boolean!, age: Int, aboutMe: String, department: String): User!
     uploadFile(file: Upload!, userEmail: String!): String!
 
     signup(email: String!, password: String!, name: String!): User!
     login(email: String!, password: String!): Token!
 }
 
-type Subscription {
-    message(from: String!, to: String!): MessageSubscriptionPayload!
-    like(from: String!, to: String!): LikeSubscriptionPayload!
-}
+#type Subscription {
+#    message(from: String!, to: String!): MessageSubscriptionPayload!
+#    like(from: String!, to: String!): LikeSubscriptionPayload!
+#}
 
 
 type User {
@@ -27,6 +28,8 @@ type User {
     name: String!,
     gender: Boolean!,
     age: Int!
+    aboutMe: String!,
+    department: String!,
     images: [String!]
 }
 
@@ -44,9 +47,4 @@ type Message {
   id: ID!
   sender: User!
   body: String!
-}
-type Birth {
-    year: Int!
-    month: Int!
-    day: Int!
 }
