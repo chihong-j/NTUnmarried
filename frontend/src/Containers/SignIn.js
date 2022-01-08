@@ -1,4 +1,5 @@
-import * as React from 'react';
+// import * as React from 'react';
+import { useEffect, useState } from "react";
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -13,6 +14,8 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import bcrypt from "bcryptjs";
+import { LOGIN_MUTATION } from "../graphql";
+import { useMutation } from '@apollo/client';
 
 function Copyright(props) {
   return (
@@ -30,16 +33,30 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignIn({setUserStatus, setUserName}) {
+  const [errorMessage, setErrorMessage] = useState("")
+  const [logInUser] = useMutation(LOGIN_MUTATION)
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     var email = data.get('email');
     var password = data.get('password');
-    password = validate(password); 
+    if (email === "") {
+      setErrorMessage("Email field required.")
+    }
+    else if (password === "") {
+      setErrorMessage("Password field required.")
+    }
+    var passwordHash = validate(password); 
     console.log({
       Email: email,
-      Password: password,
+      Password: passwordHash,
     });
+    logInUser({
+      variables: {
+          email,
+          passwordHash,
+        },
+    })
     setUserName(email);
     setUserStatus("logined");
   };
@@ -65,6 +82,9 @@ export default function SignIn({setUserStatus, setUserName}) {
           </Avatar>
           <Typography component="h1" variant="h5">
             Sign in
+          </Typography>
+          <Typography sx={{ marginTop: 1, color: 'error.main' }} >
+            {errorMessage}
           </Typography>
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
             <TextField

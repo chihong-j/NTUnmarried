@@ -56,7 +56,7 @@ export default function SignUp({setUserStatus}) {
     var email = data.get('email');
     var password = data.get('password');
     // 加密
-    password = create(password);
+    var passwordHash = create(password);
     // 傳給後端
     console.log({
         Name: name,
@@ -66,11 +66,26 @@ export default function SignUp({setUserStatus}) {
         Birth: birth,
         Age: age,
         Email: email,
-        Password: password,
+        Password: passwordHash,
     });
     
     setErrorMessage("");
-    if (email.slice(9) !== "@ntu.edu.tw") {
+    if (name === "") {
+      setErrorMessage("Name field required.")
+    }
+    else if (email === "") {
+      setErrorMessage("Email field required.")
+    }
+    else if (password === "") {
+      setErrorMessage("Password field required.")
+    }
+    else if (department === "") {
+      setErrorMessage("Department field required.")
+    }
+    else if (aboutMe === "") {
+      setErrorMessage("About me field required.")
+    }
+    else if (email.slice(9) !== "@ntu.edu.tw") {
         setErrorMessage("You must use NTU mail to sign up.")
     }
     else if (password.length < 8) {
@@ -84,7 +99,7 @@ export default function SignUp({setUserStatus}) {
         signUpUser({
           variables: {
               email,
-              password,
+              passwordHash,
               name,
               gender,
               age,
