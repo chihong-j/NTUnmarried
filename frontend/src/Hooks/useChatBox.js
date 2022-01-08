@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 const useChatBox = () => {
     const [chatBoxes, setChatBoxes] = useState([]);
-    const [userChatWith, setUserChatWith] = useState("")
+    const [userChatWith, setUserChatWith] = useState(null)
     const removeChatBox = (targetKey, activeKey) => {
         let temp = chatBoxes;
         let i = temp.indexOf(targetKey);

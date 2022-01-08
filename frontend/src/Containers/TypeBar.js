@@ -1,7 +1,7 @@
 import { Input } from 'antd';
 const {Search} = Input;
 
-const TypeBar = ({ me, activeKey, displayStatus, sendMessage, disabled, messageInput, setMessageInput }) => {
+const TypeBar = ({ me, displayStatus, sendMessage, disabled, messageInput, setMessageInput }) => {
     
     return (
         <Search
@@ -20,11 +20,11 @@ const TypeBar = ({ me, activeKey, displayStatus, sendMessage, disabled, messageI
                 // console.log(me);
                 await sendMessage(
                 {
-                    variables: {
-                        from: me,
-                        to: activeKey,
-                        message: msg,
-                    },
+                    // variables: {
+                    //     from: me,
+                    //     to: activeKey,
+                    //     message: msg,
+                    // },
                 });
                 setMessageInput('');
             }}

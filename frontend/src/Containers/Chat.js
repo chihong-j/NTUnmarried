@@ -29,7 +29,7 @@ const Chat = ({ me, displayStatus }) => {
     const onChange = (idx) => {
         setActiveKey(idx);
     };
-    const firends = [{User: "Leehom", LastMessage: "你不知道的事"}, {User: "Showlo", LastMessage: "哈囉你好，我是阿扣謝和弦"}];
+    const firends = [{Email: "b07100000@ntu.edu.tw", Name: "Leehom", LastMessage: "你不知道的事"}, {Email: "b07100001@ntu.edu.tw", Name: "Showlo", LastMessage: "哈囉你好，我是阿扣謝和弦"}];
     const onEdit = (targetKey, action) => {
         // if (action === 'add') {
         //     setModalVisible(true);
@@ -59,13 +59,16 @@ const Chat = ({ me, displayStatus }) => {
         <>
             { userChatWith ?(
             <Container sx = {{height: 600}}>
+                <Typography variant="h5" sx = {{justifyContent: "center", display: "flex", margin: "10px"}}>
+                    {userChatWith.Name}   
+                </Typography>
                 <Message>
                     <Display>
 
                     </Display>
                 </Message>
                 <Control>
-                    <TypeBar me={me} activeKey={activeKey} messageInput = {messageInput} setMessageInput = {setMessageInput}
+                    <TypeBar me={me} friend = {userChatWith} messageInput = {messageInput} setMessageInput = {setMessageInput}
                         // displayStatus={displayStatus} sendMessage={sendMessage}
                         disabled={chatBoxes.length === 0} />
                 </Control>
@@ -73,78 +76,24 @@ const Chat = ({ me, displayStatus }) => {
             ): (
                 <Container maxWidth = "sm" sx = {{display: "flex"}}>
                     <Stack>
-                        {/* {
-                            chatBoxes.map((friend) => 
-                            <Button color="inherit" onClick={() => setUserChatWith(friend)}>
-                                <PersonIcon/>
-                                <h1>Hi</h1>
-                            </Button>
+                        {
+                            firends.map((friend) => 
+                            <div className="chat-cell" onClick={() => setUserChatWith(friend)}>
+                            <div style={{display: "inline-block"}}>
+                                <PersonIcon className="chat_img" sx={{color: "green",fontSize: "70px" }} />    
+                            </div>
+                            <div style={{display: "inline-block"}}>  
+                            <Typography variant="h4" color = "primary">
+                                            {friend.Name}
+                                        </Typography>
+                                        <Typography variant="h5">
+                                            {friend.LastMessage} 
+                                            {/* 37 characters */}
+                                        </Typography>
+                            </div>
+                        </div>
                             )
-                        } */}
-                        <div className="chat-cell" onClick={() => setUserChatWith("1")}>
-                            <div style={{display: "inline-block"}}>
-                                <PersonIcon className="chat_img" sx={{color: "green",fontSize: "70px" }} />    
-                            </div>
-                            <div style={{display: "inline-block"}}>  
-                            <Typography variant="h4" color = "primary">
-                                            Leehom
-                                        </Typography>
-                                        <Typography variant="h5">
-                                            Hi 1231316541654461111146946944941651... 
-                                            {/* 37 characters */}
-                                        </Typography>
-                            </div>
-                        </div>
-                        <div className="chat-cell" onClick={() => setUserChatWith("1")}>
-                            <div style={{display: "inline-block"}}>
-                                <PersonIcon className="chat_img" sx={{color: "green",fontSize: "70px" }} />    
-                            </div>
-                            <div style={{display: "inline-block"}}>  
-                            <Typography variant="h4" color = "primary">
-                                            Leehom
-                                        </Typography>
-                                        <Typography variant="h5">
-                                            Hi 1231316541654461111146946944941651... 
-                                            {/* 37 characters */}
-                                        </Typography>
-                            </div>
-                        </div>
-                        {/* <Button onClick={() => setUserChatWith("1")} sx = {{position: "relative", height: 80, border: "solid"}}>
-                            <div style = {{alignItems: "center", border: "solid"}}>
-                                <div style = {{height: "50%", width: "20%", position: "absolute", display : "inline-block", border: "solid"}}>
-                                    <PersonIcon sx = {{height: 80, fontSize: 80, position: "relative"}}/>
-                                </div>
-                                <div style = {{height: "50%", width: "600px", display: "inline-block", position: "absolute", border: "solid"}}>
-                                    <div>
-                                        <Typography variant="h4" color = "primary">
-                                            Leehom
-                                        </Typography>
-                                        <Typography variant="h5">
-                                            Hi 12313165416544646946944941651... 
-                                            {/* 32 characters */}
-                                        {/* </Typography>
-                                    </div>
-                                </div>
-                            </div>
-                        </Button>
-                        <Button onClick={() => setUserChatWith("1")} sx = {{position: "relative", height: 80}}>
-                            <div style = {{alignItems: "center"}}>
-                                <div style = {{height: "50%", width: "20%", position: "absolute", display : "inline-block"}}>
-                                    <PersonIcon sx = {{height: 80, fontSize: 80, position: "relative"}}/>
-                                </div>
-                                <div style = {{height: "50%", width: "600px", display: "inline-block", position: "absolute"}}>
-                                    <div>
-                                        <Typography variant="h4" color = "primary">
-                                            Leehom
-                                        </Typography>
-                                        <Typography variant="h5">
-                                            Hi 12313165416544646946944941651... 
-                                            {/* 32 characters */}
-                                        {/* </Typography>
-                                    </div>
-                                </div>
-                            </div>
-                        </Button> */}
+                        }
                     </Stack>
                 </Container>
             )
