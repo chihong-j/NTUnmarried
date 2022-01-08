@@ -5,11 +5,11 @@ type Query {
 }
 
 type Mutation {
-    updateUser(email: String!, name: String, gender: Boolean, age: Int): User!
-    uploadFile(file: Upload!, userId: ID!): String!
+    updateUser(email: String!, gender: Boolean!, age: Int, aboutMe: String, interest: String, department: String, birth: Birth!): User!
+    uploadFile(file: Upload!, userEmail: String!): String!
 
-    signup(email: String!, name: String!, gender: Boolean!, age: Int!, password: String): User!
-    login(email: String!, password: String): Token!
+    signup(email: String!, password: String!, name: String!): User!
+    login(email: String!, password: String!): Token!
 }
 
 
@@ -24,4 +24,10 @@ type User {
 
 type Token {
     token: String!
+}
+
+type Birth {
+    year: Int!
+    month: Int!
+    day: Int!
 }
