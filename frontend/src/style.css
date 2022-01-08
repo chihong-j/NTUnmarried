@@ -70,6 +70,13 @@
     overflow: hidden;
     position: relative;
 }
+.text-on-image {
+    position: absolute;
+    color: white;
+    right: 70%;
+    /* left: 50%; */
+    bottom: 10%;
+  }
 .alb-animate-like {
     animation-name: like;
     animation-duration:0.4s;

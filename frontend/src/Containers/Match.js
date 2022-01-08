@@ -5,6 +5,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
+import Typography from '@mui/material/Typography';
 
 
 const Match = ({ user }) => {
@@ -77,10 +78,20 @@ const Match = ({ user }) => {
             <Row>
                 <div className="view-container">
                     <ChevronLeftIcon sx={{fontSize: "50px", marginLeft: "300px", cursor: leftPicDisabled ? "" : "pointer", opacity: leftPicDisabled ? "0.2" : "1"}} onClick={prevPic} />
-                    <div className={rightAnimate ? "album alb-animate-like" : (leftAnimate ? "album alb-animate-dislike" : "album")} > 
-                        <img className="big-pic" src={user[selectedUserId].img[selectedPicId]} alt="IU"></img>
+                    <div className={rightAnimate ? "album alb-animate-like" : (leftAnimate ? "album alb-animate-dislike" : "album")} >  
+                        <img className="big-pic" src={user[selectedUserId].img[selectedPicId]} alt="IU"></img>      
+                        <div class="text-on-image">
+                            <Typography variant="h4" style={{color: "white"}}>IU</Typography>
+                            <Typography variant="h6" style={{color: "white"}}>工管系</Typography>
+                            <Typography variant="h6" style={{color: "white"}}>25</Typography>
+                        </div>
                     </div>
                     <ChevronRightIcon sx={{fontSize: "50px", marginRight: "300px", cursor: rightPicDisabled ? "" : "pointer", opacity: rightPicDisabled ? "0.2" : "1"}} onClick={nextPic} />
+                </div>
+            </Row>
+            <Row>
+                <div className="view-container">
+                    <Typography variant="body">你好，我是IU，我喜歡睡覺</Typography>
                 </div>
             </Row>
             <Row>
