@@ -17,7 +17,7 @@ const Notification = () => {
                         <div style={{display: "inline-block"}}>
                             <FavoriteIcon className="like" sx={{color: "green",fontSize: "30px" }} />    
                         </div>
-                        <Typography variant="h6" style={{display: "inline-block", color: "black"}}>
+                        <Typography variant="h5" style={{display: "inline-block", color: "black"}}>
                             {notiMsg}
                         </Typography>
                         {/* <div style={{display: "inline-block"}}>  

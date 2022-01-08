@@ -28,13 +28,13 @@ const Image_Button = styled(Button)`
 
 
 const Profile = () => {
-    const {images, setIamges, aboutMe, setAboutMe, interest, setInterest, department, setDepartment, gender, setGender, sexualOrigentation, setSexualOrientation, birth, setBirth} = useNTU()
+    const {images, setIamges, aboutMe, setAboutMe, interest, setInterest, department, setDepartment, gender, setGender, birth, setBirth} = useNTU()
     const add_image = useCallback(() => {
     
     }, [])
     const handleFormSubmit = useCallback(() => {
-        
-    },[images, aboutMe, interest, department, gender, sexualOrigentation]);
+
+    },[images, aboutMe, interest, department, gender, birth]);
 
     return (
             <Container maxWidth = "sm">
@@ -107,26 +107,9 @@ const Profile = () => {
                             label="Gender"
                             onChange={(e) => setGender(e.target.value)}
                             >
-                            <MenuItem value={1}>Male</MenuItem>
-                            <MenuItem value={2}>Female</MenuItem>
-                            <MenuItem value={3}>All</MenuItem>
+                            <MenuItem value={true}>Male</MenuItem>
+                            <MenuItem value={false}>Female</MenuItem>
                         </Select>
-                        </FormControl>
-                        <FormControl required sx={{ m: 1, minWidth: 120 }}>
-                            <InputLabel id="demo-simple-select-required-label">Gender you want to date?</InputLabel>
-                            <Select
-                                required
-                                labelId="demo-simple-select-label"
-                                id="GenderWant"
-                                
-                                value={sexualOrigentation}
-                                label="Gender you want to date?"
-                                onChange={(e) => setSexualOrientation(e.target.value)}
-                                >
-                                <MenuItem value={1}>Male</MenuItem>
-                                <MenuItem value={2}>Female</MenuItem>
-                                <MenuItem value={3}>Third gender</MenuItem>
-                            </Select>
                         </FormControl>
                         <FormControl required sx={{ m: 1, minWidth: 120 }}>
                             <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -142,7 +125,6 @@ const Profile = () => {
                         <Button
                             type="submit"
                             color="primary"
-                            disabled={gender === 0 || sexualOrigentation === 0}
                             >
                             Submit
                         </Button>
