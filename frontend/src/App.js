@@ -4,18 +4,17 @@ import SignUp from './Containers/SignUp';
 import Logined from './Containers/Logined';
 import { useEffect, useState } from "react";
 
-const b = 1;
-
 
 function App() {
   const [userStatus, setUserStatus] = useState("login");
   const [userName, setUserName] = useState("Leehom");
+  const [userEmail, setUserEmail] = useState("");
 
   return (
     <>
       {userStatus === "login" && <SignIn setUserStatus={setUserStatus} />}
       {userStatus === "signup" && <SignUp setUserStatus={setUserStatus} />}
-      {userStatus === "logined" && <Logined setUserStatus={setUserStatus} userName = {userName}/>}
+      {userStatus === "logined" && <Logined setUserStatus={setUserStatus} userEmail = {userEmail}/>}
     </>
   );
 }
