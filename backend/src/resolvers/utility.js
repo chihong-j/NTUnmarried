@@ -3,6 +3,7 @@ import { uuid } from 'uuidv4';
 import mongoose from "mongoose";
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv-defaults';
+import { AuthenticationError } from "apollo-server-core";
 
 dotenv.config();
 

@@ -1,11 +1,14 @@
 import {checkUser, newUser, saveImage, readStreamToDataUrl, createToken} from "./utility";
 import bcrypt from 'bcryptjs';
+import {AuthenticationError} from "apollo-server-core";
+import {UserModel} from "../db";
 
 const Mutation = {
     async updateUser(parent, {email, name, gender, age}, {db, me}, info) {
-        if (!me) throw new Error('Not logged in');
+        if (!me) throw new AuthenticationError('Not logged in');
 
-        const user = await db.UserModel.findOneAndUpdate({ email }, {name, gender, age});
+        await db.UserModel.findOneAndUpdate({ email }, {name, gender, age});
+        const user = db.UserModel.findOne({ email })
         return user;
     },
 
@@ -19,6 +22,13 @@ const Mutation = {
         if (!user) {
             throw new Error(`Email: ${email} not found!`)
         } else {
+            // test
+            if (password === user.password)
+                return {
+                    token: createToken(user, process.env.SECRET)
+                }
+
+
             if (await bcrypt.compare(password, user.password)) {
                 return {
                     token: createToken(user, process.env.SECRET)
@@ -30,7 +40,7 @@ const Mutation = {
     },
 
     async uploadFile(parent, { file, userId }, { db, me }, info) {
-        if (!me) throw new Error('Not logged in');
+        if (!me) throw new AuthenticationError('Not logged in');
 
         const { createReadStream, filename, mimetype, encoding } = await file;
         const user = await db.UserModel.findOne({_id: userId});
