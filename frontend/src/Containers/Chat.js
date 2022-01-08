@@ -29,7 +29,7 @@ const Chat = ({ me, displayStatus }) => {
     const onChange = (idx) => {
         setActiveKey(idx);
     };
-
+    const firends = [{User: "Leehom", LastMessage: "你不知道的事"}, {User: "Showlo", LastMessage: "哈囉你好，我是阿扣謝和弦"}];
     const onEdit = (targetKey, action) => {
         // if (action === 'add') {
         //     setModalVisible(true);
