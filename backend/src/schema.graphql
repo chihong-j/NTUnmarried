@@ -16,10 +16,10 @@ type Mutation {
     login(email: String!, password: String!): Token!
 }
 
-type Subscription {
-    message(from: String!, to: String!): MessageSubscriptionPayload!
-    like(from: String!, to: String!): LikeSubscriptionPayload!
-}
+#type Subscription {
+#    message(from: String!, to: String!): MessageSubscriptionPayload!
+#    like(from: String!, to: String!): LikeSubscriptionPayload!
+#}
 
 
 type User {

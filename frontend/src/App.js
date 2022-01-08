@@ -5,14 +5,26 @@ import Logined from './Containers/Logined';
 import { useEffect, useState } from "react";
 
 
-function App() {
-  const [userStatus, setUserStatus] = useState("login");
-  const [userName, setUserName] = useState("Leehom");
-  const [userEmail, setUserEmail] = useState("");
+const LOCALSTORAGE_KEY = "save-user";
+const LOCALSTORAGE_KEY_LOGIN = "save-login";
+  
+  
+  function App() {
+    const savedUser = localStorage.getItem(LOCALSTORAGE_KEY);
+    const savedLogin = localStorage.getItem(LOCALSTORAGE_KEY_LOGIN);
+    const [userStatus, setUserStatus] = useState(savedLogin || "login");
+    const [userName, setUserName] = useState(savedUser || "Leehom");
+    const [userEmail, setUserEmail] = useState("");
+  useEffect(() => {
+    if (userStatus === "logined") {
+      localStorage.setItem(LOCALSTORAGE_KEY, userName);
+      localStorage.setItem(LOCALSTORAGE_KEY_LOGIN, userStatus);
+    }
+  }, [userStatus, userName, userStatus]);
 
   return (
     <>
-      {userStatus === "login" && <SignIn setUserStatus={setUserStatus} />}
+      {userStatus === "login" && <SignIn setUserStatus={setUserStatus} setUserName={setUserName} />}
       {userStatus === "signup" && <SignUp setUserStatus={setUserStatus} />}
       {userStatus === "logined" && <Logined setUserStatus={setUserStatus} userEmail = {userEmail}/>}
     </>
