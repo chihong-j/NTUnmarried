@@ -19,6 +19,8 @@ import useNTU from '../Hooks/useNTU'
 import {
     Form,
   } from 'reactstrap';
+import {UPLOADFILE_MUTATION, UPDATE_USER_MUTATION} from './../graphql'
+import { useMutation } from '@apollo/client';
 
 const Image_Button = styled(Button)`
     display: flex;
@@ -27,14 +29,41 @@ const Image_Button = styled(Button)`
 
 
 
-const Profile = () => {
-    const {images, setIamges, aboutMe, setAboutMe, interest, setInterest, department, setDepartment, gender, setGender, birth, setBirth} = useNTU()
-    const add_image = useCallback(() => {
+const Profile = ({me}) => {
+    const {images, setIamges, aboutMe, setAboutMe, department, setDepartment, gender, setGender, age, setAge, birth, setBirth} = useNTU()
+    const updateUser = useMutation(UPDATE_USER_MUTATION)
+    const uploadFile = useMutation(UPLOADFILE_MUTATION)
+    if(me.images){
+        setIamges(me.images.concat(new Array(6 - me.images.length)))
+    }else{
+        setIamges(new Array(6).fill(""))
+    }
     
+    setAboutMe(me.aboutMe)
+    setDepartment(me.department)
+    setGender(me.gender)
+    setAge(me.age)
+    const add_image = useCallback(() => {
+        // uploadFile()
     }, [])
-    const handleFormSubmit = useCallback(() => {
 
-    },[images, aboutMe, interest, department, gender, birth]);
+    const getAge = () => {
+        let now = new Date.getTime()
+        return Math.ceil((now - birth)/31536000000)
+    }
+
+    const handleFormSubmit = useCallback(() => {
+        setAge(getAge())
+        updateUser({
+            variables: {
+                email: me.Email,
+                gender,
+                age,
+                aboutMe,
+                department,
+              },
+        })
+    },[images, aboutMe, department, gender, birth]);
 
     return (
             <Container maxWidth = "sm">
@@ -79,15 +108,6 @@ const Profile = () => {
                             />
                         </FormControl>
                         <FormControl required sx={{ m: 1, minWidth: 120 }}>
-                            <TextField
-                                id="Interest"
-                                label="Interest"
-                                // defaultValue=""
-                                value = {interest}
-                                onChange = {(e) => setInterest(e.target.value)}
-                            />
-                        </FormControl>
-                        <FormControl required sx={{ m: 1, minWidth: 120 }}>
 
                             <TextField
                                 id="Department"
@@ -125,8 +145,9 @@ const Profile = () => {
                         <Button
                             type="submit"
                             color="primary"
+                            disabled = {!aboutMe || !department}
                             >
-                            Submit
+                            Save
                         </Button>
                     </Stack>
                 </Form>

@@ -19,16 +19,15 @@ import PersonIcon from '@mui/icons-material/Person';
 import Typography from '@mui/material/Typography';
 import "../style.css"
 
-const Chat = ({ me, displayStatus, user }) => {
+const Chat = ({ me, displayStatus, user}) => {
     const [messageInput, setMessageInput] = useState("");
-    const [activeKey, setActiveKey] = useState("");
     const [modalVisible, setModalVisible] = useState(false);
     const {chatBoxes, createChatBox, removeChatBox, userChatWith, setUserChatWith} = useChatBox();
     // const [startChat] = useMutation(CREATE_CHATBOX_MUTATION);
     // const [sendMessage] = useMutation(CREATE_MESSAGE_MUTATION);
-    const onChange = (idx) => {
-        setActiveKey(idx);
-    };
+    // const onChange = (idx) => {
+    //     setActiveKey(idx);
+    // };
     const firends = [{Email: "b07100000@ntu.edu.tw", Name: "Leehom", LastMessage: "你不知道的事"}, {Email: "b07100001@ntu.edu.tw", Name: "Showlo", LastMessage: "哈囉你好，我是阿扣謝和我是阿扣謝和我是阿扣謝和"}];
     const onEdit = (targetKey, action) => {
         // if (action === 'add') {
