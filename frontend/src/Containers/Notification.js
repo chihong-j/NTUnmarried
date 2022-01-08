@@ -3,11 +3,12 @@ import "../style.css"
 import Container from '@mui/material/Container';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
+
 
 const Notification = () => {
     const userLike = ["Kris", "Showlo"]
     const notifiMsg = userLike.map((name) => (`${name} 與你配對到了！快去跟他聊天吧！`))
-    console.log(notifiMsg);
     return (
         <Container maxWidth = "sm" sx={{display: "flex", justifyContent: "center"}}>
             <Stack>
@@ -16,9 +17,12 @@ const Notification = () => {
                         <div style={{display: "inline-block"}}>
                             <FavoriteIcon className="like" sx={{color: "green",fontSize: "30px" }} />    
                         </div>
-                        <div style={{display: "inline-block"}}>  
+                        <Typography variant="h6" style={{display: "inline-block", color: "black"}}>
                             {notiMsg}
-                        </div>
+                        </Typography>
+                        {/* <div style={{display: "inline-block"}}>  
+                            {notiMsg}
+                        </div> */}
                     </div>
                 )}
             </Stack>

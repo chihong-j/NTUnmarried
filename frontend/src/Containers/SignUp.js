@@ -12,6 +12,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import bcrypt from "bcryptjs";
 
 function Copyright(props) {
   return (
@@ -30,12 +31,15 @@ const theme = createTheme();
 
 export default function SignUp({setUserStatus}) {
   const [errorMessage, setErrorMessage] = useState("")
+  const myPassword = 'password1';
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     var name = data.get('name');
     var email = data.get('email');
     var password = data.get('password');
+    // 加密
+    password = create(password);
     // 傳給後端
     console.log({
         Name: name,
@@ -56,6 +60,11 @@ export default function SignUp({setUserStatus}) {
         setUserStatus("login");
     }
   };
+  const create = async (password) => {
+    password = await bcrypt.hash(password, 10);
+    return password;
+  }
+
 
   return (
     <ThemeProvider theme={theme}>

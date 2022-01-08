@@ -13,7 +13,7 @@ const Messages = styled.div`
     overflow: auto;
 `;
 
-const ChatBox = ({me, friend, ...props}) => {
+const ChatBox = ({me, friend, me_img, friend_img}) => {
     const messagesFooter = useRef(null);
 
     const {data, loading, subscribeToMore} = useQuery(CHATBOX_QUERY, {variables: {

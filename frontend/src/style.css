@@ -97,9 +97,9 @@
 
 /* Notification */
 .notification-cell {
-    width: 260px;
+    width: 360px;
     padding: 10px;
-    height: 100px;
+    height: 150px;
     border: solid;
     border-radius: 5px;
     margin: 5px auto;
@@ -121,4 +121,15 @@
     color: white;
     background-color: #dbead5;
     border: 2px green solid;
+}
+
+.chat-img-div {
+    width: 50px;
+    height: 50px;
+    /* border: solid; */
+    overflow: hidden;
+}
+
+.chat_img {
+    width: 50px;
 }

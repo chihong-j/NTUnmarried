@@ -19,7 +19,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import Typography from '@mui/material/Typography';
 import "../style.css"
 
-const Chat = ({ me, displayStatus }) => {
+const Chat = ({ me, displayStatus, user }) => {
     const [messageInput, setMessageInput] = useState("");
     const [activeKey, setActiveKey] = useState("");
     const [modalVisible, setModalVisible] = useState(false);
@@ -29,7 +29,7 @@ const Chat = ({ me, displayStatus }) => {
     const onChange = (idx) => {
         setActiveKey(idx);
     };
-    const firends = [{Email: "b07100000@ntu.edu.tw", Name: "Leehom", LastMessage: "你不知道的事"}, {Email: "b07100001@ntu.edu.tw", Name: "Showlo", LastMessage: "哈囉你好，我是阿扣謝和弦"}];
+    const firends = [{Email: "b07100000@ntu.edu.tw", Name: "Leehom", LastMessage: "你不知道的事"}, {Email: "b07100001@ntu.edu.tw", Name: "Showlo", LastMessage: "哈囉你好，我是阿扣謝和nnnnnnnnnnnnnnjdsjfodsjlfcdjsalvcjdoaszjxcds"}];
     const onEdit = (targetKey, action) => {
         // if (action === 'add') {
         //     setModalVisible(true);
@@ -60,11 +60,11 @@ const Chat = ({ me, displayStatus }) => {
             { userChatWith ?(
             <Container sx = {{height: 600}}>
                 <Typography variant="h5" sx = {{justifyContent: "center", display: "flex", margin: "10px"}}>
-                    {userChatWith.Name}   
+                    {userChatWith.Name}  
                 </Typography>
                 <Message>
                     <Display>
-
+                        <ChatBox me = {me.Email} friend = {userChatWith.Email} me_img = {user[0].img[0]} friend_img = {user[1].img[0]}/>
                     </Display>
                 </Message>
                 <Control>
@@ -79,10 +79,10 @@ const Chat = ({ me, displayStatus }) => {
                         {
                             firends.map((friend) => 
                             <div className="chat-cell" onClick={() => setUserChatWith(friend)}>
-                            <div style={{display: "inline-block"}}>
-                                <PersonIcon className="chat_img" sx={{color: "green",fontSize: "70px" }} />    
+                            <div className="chat-img-div" style={{display: "inline-block"}}>
+                                <img className="chat_img" src={user[0].img[0]} ></img>  
                             </div>
-                            <div style={{display: "inline-block"}}>  
+                            <div style={{display: "inline-block", marginLeft: "20px", overflow: "hidden"}}>
                             <Typography variant="h4" color = "primary">
                                             {friend.Name}
                                         </Typography>
