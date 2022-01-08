@@ -56,6 +56,9 @@ export default function SignIn({setUserStatus, setUserName}) {
           email,
           passwordHash,
         },
+      // TODO: token
+      // onCompleted: () => {
+      // },
     })
     setUserName(email);
     setUserStatus("logined");
