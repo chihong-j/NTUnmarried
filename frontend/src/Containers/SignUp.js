@@ -68,17 +68,7 @@ export default function SignUp({setUserStatus}) {
         Email: email,
         Password: password,
     });
-    signUpUser({
-      variables: {
-          email,
-          password,
-          name,
-          gender,
-          age,
-          aboutMe,
-          department,
-        },
-    })
+    
     setErrorMessage("");
     if (email.slice(9) !== "@ntu.edu.tw") {
         setErrorMessage("You must use NTU mail to sign up.")
@@ -91,6 +81,17 @@ export default function SignUp({setUserStatus}) {
     }
     else {
         setUserStatus("login");
+        signUpUser({
+          variables: {
+              email,
+              password,
+              name,
+              gender,
+              age,
+              aboutMe,
+              department,
+            },
+        })
     }
   };
   const create = async (password) => {
