@@ -3,6 +3,8 @@ scalar Upload
 type Query {
     user(email: String!): User!
     stranger(email: String!): User!
+    chatBox(email1: String!, email2: String!): ChatBox! #Query all the messages in the chatBox given two users
+    usersChatting(email: String!): [ChatBox!] #Query all the ChatBoxes the user have with others
 }
 
 type Mutation {
