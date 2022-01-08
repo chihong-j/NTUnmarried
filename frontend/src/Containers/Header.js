@@ -26,6 +26,11 @@ const Header = ({isNotification, setCurrentPage, setUserStatus, userName}) => {
     console.log('###')
   }
 
+  const logout = () => {
+    setUserStatus("login");
+    localStorage.clear();
+  }
+
   return (
     <AppBar position="static">
       <Toolbar>
@@ -41,7 +46,7 @@ const Header = ({isNotification, setCurrentPage, setUserStatus, userName}) => {
         <Button color="inherit" onClick={() => setCurrentPage("notifications")} sx = {{flexGrow: 0}}>
           {isNotification?<NotificationsActiveIcon/>:<NotificationsIcon/>}
         </Button>
-        <Button color="inherit" onClick = {() => setUserStatus("login")} sx = {{flexGrow: 0}}>
+        <Button color="inherit" onClick = {logout} sx = {{flexGrow: 0}}>
           <LogoutIcon/>
         </Button>
         <Button color="inherit" onClick={() => setCurrentPage("profile")} sx = {{flexGrow: 0}}>

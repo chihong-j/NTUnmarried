@@ -29,7 +29,7 @@ function Copyright(props) {
 
 const theme = createTheme();
 
-export default function SignIn({setUserStatus}) {
+export default function SignIn({setUserStatus, setUserName}) {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -40,6 +40,7 @@ export default function SignIn({setUserStatus}) {
       Email: email,
       Password: password,
     });
+    setUserName(email);
     setUserStatus("logined");
   };
   const validate = async(password) => {
@@ -86,10 +87,10 @@ export default function SignIn({setUserStatus}) {
               id="password"
               autoComplete="current-password"
             />
-            <FormControlLabel
+            {/* <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
-            />
+            /> */}
             <Button
               type="submit"
               fullWidth
