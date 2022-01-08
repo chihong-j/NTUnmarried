@@ -51,7 +51,7 @@ const UPLOADFILE_MUTATION = gql`
 
 const SIGNUP_MUTATION = gql`
 
-  mutation signup($email: String!, $password: String!, $name: String!, $gender: Boolean!, $age: Int, $aboutMe: String, $department: String) {
+  mutation signup($email: String!, $password: String!, $name: String!, $gender: Boolean!, $age: Int!, $aboutMe: String!, $department: String!) {
     signup(email: $email, password: $passward, name: $name, gender: $gender, age: $age, aboutMe: $aboutMe, department: $department) {
       name
     }
