@@ -3,6 +3,12 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
+import InputLabel from '@mui/material/InputLabel';
+import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
@@ -31,11 +37,16 @@ const theme = createTheme();
 
 export default function SignUp({setUserStatus}) {
   const [errorMessage, setErrorMessage] = useState("")
+  const [birth, setBirth] = useState(new Date())
+  const [gender, setGender] = useState(true);
   const myPassword = 'password1';
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     var name = data.get('name');
+    var department = data.get('department');
+    // var gender = data.get('gender');
+    // var birth = data.get('birth');
     var email = data.get('email');
     var password = data.get('password');
     // 加密
@@ -43,6 +54,9 @@ export default function SignUp({setUserStatus}) {
     // 傳給後端
     console.log({
         Name: name,
+        Department: department,
+        Gender: gender,
+        Birth: birth,
         Email: email,
         Password: password,
     });
@@ -99,6 +113,52 @@ export default function SignUp({setUserStatus}) {
                   label="User Name"
                   autoFocus
                 />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  id="department"
+                  label="Department"
+                  name="department"
+                  autoComplete="department"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <InputLabel id="demo-simple-select-required-label">Gender</InputLabel>
+                <Select
+                    required
+                    fullWidth   
+                    labelId="demo-simple-select-label"
+                    id="gender"
+                    label="Gender"
+                    value={gender}
+                    name="gender"
+                    autoComplete="gender"
+                    onChange={(e) => {
+                      setGender(e.target.value)
+                    }}
+                    >
+                    <MenuItem value={true}>Male</MenuItem>
+                    <MenuItem value={false}>Female</MenuItem>
+                </Select>
+              </Grid>
+              <Grid item xs={12}>
+                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                    <DesktopDatePicker
+                    required
+                    fullWidth
+                    name="birth"
+                    id="birth"
+                    label="Date of Birth"
+                    inputFormat="MM/dd/yyyy"
+                    value={birth}
+                    onChange={(newValue) => {
+                      setBirth(newValue);
+                    }}
+                    renderInput={(params) => <TextField {...params} />}
+                    />
+                </LocalizationProvider>
               </Grid>
               <Grid item xs={12}>
                 <TextField
