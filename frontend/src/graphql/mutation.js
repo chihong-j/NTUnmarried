@@ -51,20 +51,13 @@ const UPLOADFILE_MUTATION = gql`
 
 const SIGNUP_MUTATION = gql`
 
-  mutation signup($email: String!, $password: String!, $name: String!, $gender: Boolean!, ) {
-    signup(email: $email, password: $passward, name: $name) {
+  mutation signup($email: String!, $password: String!, $name: String!, $gender: Boolean!, $age: Int!, $department: String!) {
+    signup(email: $email, password: $passward, name: $name, gender: $gender, age: $age, department: $department) {
       name
     }
   }
 `
-// id: ID!,
-//     email: String!
-//     name: String!,
-//     gender: Boolean!,
-//     age: Int!
-//     aboutMe: String!,
-//     department: String!,
-//     images: [String!]
+
 const LOGIN_MUTATION = gql`
 
   mutation login($email: String!, $password: String!) {
