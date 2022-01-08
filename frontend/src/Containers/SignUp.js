@@ -12,6 +12,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+// import bcrypt from "bcrypt";
 
 function Copyright(props) {
   return (
@@ -30,6 +31,7 @@ const theme = createTheme();
 
 export default function SignUp({setUserStatus}) {
   const [errorMessage, setErrorMessage] = useState("")
+  const myPassword = 'password1';
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -56,6 +58,9 @@ export default function SignUp({setUserStatus}) {
         setUserStatus("login");
     }
   };
+  // const create = async(password) => {
+
+  // }
 
   return (
     <ThemeProvider theme={theme}>

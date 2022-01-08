@@ -19,7 +19,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import Typography from '@mui/material/Typography';
 import "../style.css"
 
-const Chat = ({ me, displayStatus }) => {
+const Chat = ({ me, displayStatus, user }) => {
     const [messageInput, setMessageInput] = useState("");
     const [activeKey, setActiveKey] = useState("");
     const [modalVisible, setModalVisible] = useState(false);
@@ -66,85 +66,43 @@ const Chat = ({ me, displayStatus }) => {
                 </Message>
                 <Control>
                     <TypeBar me={me} activeKey={activeKey} messageInput = {messageInput} setMessageInput = {setMessageInput}
-                        // displayStatus={displayStatus} sendMessage={sendMessage}
-                        disabled={chatBoxes.length === 0} />
+                        // disabled={chatBoxes.length === 0} 
+                        />
                 </Control>
             </Container>
             ): (
                 <Container maxWidth = "sm" sx = {{display: "flex"}}>
                     <Stack>
-                        {/* {
-                            chatBoxes.map((friend) => 
-                            <Button color="inherit" onClick={() => setUserChatWith(friend)}>
-                                <PersonIcon/>
-                                <h1>Hi</h1>
-                            </Button>
-                            )
-                        } */}
                         <div className="chat-cell" onClick={() => setUserChatWith("1")}>
-                            <div style={{display: "inline-block"}}>
-                                <PersonIcon className="chat_img" sx={{color: "green",fontSize: "70px" }} />    
+                            <div className="chat-img-div" style={{display: "inline-block"}}>
+                                <img className="chat_img" src={user[0].img[0]} ></img>
+                                {/* <PersonIcon className="chat_img" sx={{color: "green",fontSize: "70px" }} />     */}
                             </div>
-                            <div style={{display: "inline-block"}}>  
+                            <div style={{display: "inline-block", marginLeft: "20px"}}>  
                             <Typography variant="h4" color = "primary">
                                             Leehom
                                         </Typography>
                                         <Typography variant="h5">
                                             Hi 1231316541654461111146946944941651... 
-                                            {/* 37 characters */}
                                         </Typography>
                             </div>
                         </div>
                         <div className="chat-cell" onClick={() => setUserChatWith("1")}>
-                            <div style={{display: "inline-block"}}>
+                            {/* <div style={{display: "inline-block"}}>
                                 <PersonIcon className="chat_img" sx={{color: "green",fontSize: "70px" }} />    
+                            </div> */}
+                            <div className="chat-img-div" style={{display: "inline-block"}}>
+                                <img className="chat_img" src={user[1].img[0]} ></img>
                             </div>
-                            <div style={{display: "inline-block"}}>  
+                            <div style={{display: "inline-block", marginLeft: "20px"}}>  
                             <Typography variant="h4" color = "primary">
                                             Leehom
                                         </Typography>
                                         <Typography variant="h5">
                                             Hi 1231316541654461111146946944941651... 
-                                            {/* 37 characters */}
                                         </Typography>
                             </div>
                         </div>
-                        {/* <Button onClick={() => setUserChatWith("1")} sx = {{position: "relative", height: 80, border: "solid"}}>
-                            <div style = {{alignItems: "center", border: "solid"}}>
-                                <div style = {{height: "50%", width: "20%", position: "absolute", display : "inline-block", border: "solid"}}>
-                                    <PersonIcon sx = {{height: 80, fontSize: 80, position: "relative"}}/>
-                                </div>
-                                <div style = {{height: "50%", width: "600px", display: "inline-block", position: "absolute", border: "solid"}}>
-                                    <div>
-                                        <Typography variant="h4" color = "primary">
-                                            Leehom
-                                        </Typography>
-                                        <Typography variant="h5">
-                                            Hi 12313165416544646946944941651... 
-                                            {/* 32 characters */}
-                                        {/* </Typography>
-                                    </div>
-                                </div>
-                            </div>
-                        </Button>
-                        <Button onClick={() => setUserChatWith("1")} sx = {{position: "relative", height: 80}}>
-                            <div style = {{alignItems: "center"}}>
-                                <div style = {{height: "50%", width: "20%", position: "absolute", display : "inline-block"}}>
-                                    <PersonIcon sx = {{height: 80, fontSize: 80, position: "relative"}}/>
-                                </div>
-                                <div style = {{height: "50%", width: "600px", display: "inline-block", position: "absolute"}}>
-                                    <div>
-                                        <Typography variant="h4" color = "primary">
-                                            Leehom
-                                        </Typography>
-                                        <Typography variant="h5">
-                                            Hi 12313165416544646946944941651... 
-                                            {/* 32 characters */}
-                                        {/* </Typography>
-                                    </div>
-                                </div>
-                            </div>
-                        </Button> */}
                     </Stack>
                 </Container>
             )
