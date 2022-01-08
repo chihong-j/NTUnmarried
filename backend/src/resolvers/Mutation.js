@@ -22,10 +22,6 @@ const Mutation = {
         if (!user) {
             throw new Error(`Email: ${email} not found!`)
         } else {
-            if (password === user.password)
-                return {
-                    token: createToken(user, process.env.SECRET)
-                }
             if (await bcrypt.compare(password, user.password)) {
                 return {
                     token: createToken(user, process.env.SECRET)
