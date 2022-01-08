@@ -29,7 +29,7 @@ const Header = ({isNotification, setCurrentPage, setUserStatus, userName}) => {
   return (
     <AppBar position="static">
       <Toolbar>
-        <Typography variant="h6" className= "NTUnmarriedTitle" sx = {{flexGrow: 1}} color = "white">
+        <Typography variant="h6" className= "NTUnmarriedTitle" onClick={() => setCurrentPage("match")} sx = {{flexGrow: 1}} style={{hover: "cursor"}} color = "white">
           NTㄩㄇ
         </Typography>
         <Button color="inherit" onClick={() => setCurrentPage("match")} sx = {{flexGrow: 0}}>

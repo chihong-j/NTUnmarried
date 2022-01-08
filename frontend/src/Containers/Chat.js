@@ -29,7 +29,7 @@ const Chat = ({ me, displayStatus, user }) => {
     const onChange = (idx) => {
         setActiveKey(idx);
     };
-    const firends = [{Email: "b07100000@ntu.edu.tw", Name: "Leehom", LastMessage: "你不知道的事"}, {Email: "b07100001@ntu.edu.tw", Name: "Showlo", LastMessage: "哈囉你好，我是阿扣謝和nnnnnnnnnnnnnnjdsjfodsjlfcdjsalvcjdoaszjxcds"}];
+    const firends = [{Email: "b07100000@ntu.edu.tw", Name: "Leehom", LastMessage: "你不知道的事"}, {Email: "b07100001@ntu.edu.tw", Name: "Showlo", LastMessage: "哈囉你好，我是阿扣謝和我是阿扣謝和我是阿扣謝和"}];
     const onEdit = (targetKey, action) => {
         // if (action === 'add') {
         //     setModalVisible(true);
@@ -82,7 +82,7 @@ const Chat = ({ me, displayStatus, user }) => {
                             <div className="chat-img-div" style={{display: "inline-block"}}>
                                 <img className="chat_img" src={user[0].img[0]} ></img>  
                             </div>
-                            <div style={{display: "inline-block", marginLeft: "20px", overflow: "hidden"}}>
+                            <div style={{display: "inline-block", marginLeft: "20px", overflow: "hidden", width: "500px", height: "70px"}}>
                             <Typography variant="h4" color = "primary">
                                             {friend.Name}
                                         </Typography>
