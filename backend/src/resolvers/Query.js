@@ -2,18 +2,30 @@ import {readStreamToDataUrl, retrieveImage} from "./utility";
 
 
 const Query = {
-    async user(parent, { id }, { db }, info) {
-        const queryUser = await db.UserModel.findOne({_id: id});
+    async user(parent, { email }, { db }, info) {
+        const queryUser = await db.UserModel.findOne({ email });
         let readStream;
-        const { name, gender, age } = queryUser;
-        if (!queryUser.images) return { id, name, gender, age, images: []};
+        const { _id: id, name, gender, age, aboutMe, department } = queryUser;
+        if (!queryUser.images) return { id, email, name, gender, age, aboutMe, department, images: []};
         const images = [];
         for (let i = 0; i < queryUser.images.length; ++i) {
-            console.log(queryUser.images);
             readStream = await retrieveImage(db, queryUser.images[i]);
             images.push(await readStreamToDataUrl(readStream));
         }
-        return { id, name, gender, age, images};
+        return { id, email, name, gender, age, aboutMe, department, images};
+    },
+
+    async stranger(parent, { email }, { db }, info) {
+        const queryUser = await db.UserModel.findOne({ email: "jim12345@gmail.com" });
+        let readStream;
+        const { _id: id, name, gender, age, aboutMe, department } = queryUser;
+        if (!queryUser.images) return { id, email, name, gender, age, aboutMe, department, images: []};
+        const images = [];
+        for (let i = 0; i < queryUser.images.length; ++i) {
+            readStream = await retrieveImage(db, queryUser.images[i]);
+            images.push(await readStreamToDataUrl(readStream));
+        }
+        return { id, email, name, gender, age, aboutMe, department, images};
     }
 }
 

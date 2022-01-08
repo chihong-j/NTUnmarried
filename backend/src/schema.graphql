@@ -3,6 +3,8 @@ scalar Upload
 type Query {
     user(email: String!): User!
     stranger(email: String!): User!
+    chatBox(email1: String!, email2: String!): ChatBox! #Query all the messages in the chatBox given two users
+    usersChatting(email: String!): [ChatBox!] #Query all the ChatBoxes the user have with others
 }
 
 type Mutation {
@@ -12,7 +14,7 @@ type Mutation {
     updateUser(email: String!, gender: Boolean!, age: Int, aboutMe: String, department: String): User!
     uploadFile(file: Upload!, userEmail: String!): String!
 
-    signup(email: String!, password: String!, name: String!): User!
+    signup(email: String!, password: String!, name: String!, gender: Boolean!, age: Int, aboutMe: String, department: String): User!
     login(email: String!, password: String!): Token!
 }
 
