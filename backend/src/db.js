@@ -18,6 +18,8 @@ const UserSchema = new Schema({
     name: { type: String, required: true},
     gender: { type: Boolean, required: true},
     age: { type: Number, required: true},
+    aboutMe: { type: String, required: true},
+    department: { type: String, required: true},
     images: [{ type: mongoose.Types.ObjectId }],
     password: { type: String, required: true }
 })

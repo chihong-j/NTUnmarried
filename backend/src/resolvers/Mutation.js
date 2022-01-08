@@ -4,16 +4,16 @@ import {AuthenticationError} from "apollo-server-core";
 import {UserModel} from "../db";
 
 const Mutation = {
-    async updateUser(parent, {email, name, gender, age}, {db, me}, info) {
+    async updateUser(parent, {email, gender, age, aboutMe, department}, {db, me}, info) {
         if (!me) throw new AuthenticationError('Not logged in');
 
-        await db.UserModel.findOneAndUpdate({ email }, {name, gender, age});
+        await db.UserModel.findOneAndUpdate({ email }, { gender, age, aboutMe, department});
         const user = db.UserModel.findOne({ email })
         return user;
     },
 
-    async signup(parent, { email, name, gender, age, password }, { db }, info) {
-        const user = await newUser(db, email, name, gender, age, password);
+    async signup(parent, { email, name, password, gender, age, aboutMe, department }, { db }, info) {
+        const user = await newUser(db, email, name, password, gender, age, aboutMe, department);
         return user ;
     },
 
@@ -22,13 +22,10 @@ const Mutation = {
         if (!user) {
             throw new Error(`Email: ${email} not found!`)
         } else {
-            // test
             if (password === user.password)
                 return {
                     token: createToken(user, process.env.SECRET)
                 }
-
-
             if (await bcrypt.compare(password, user.password)) {
                 return {
                     token: createToken(user, process.env.SECRET)
@@ -39,11 +36,11 @@ const Mutation = {
         }
     },
 
-    async uploadFile(parent, { file, userId }, { db, me }, info) {
+    async uploadFile(parent, { file, userEmail }, { db, me }, info) {
         if (!me) throw new AuthenticationError('Not logged in');
 
         const { createReadStream, filename, mimetype, encoding } = await file;
-        const user = await db.UserModel.findOne({_id: userId});
+        const user = await db.UserModel.findOne({email: userEmail});
         const readStream1 = createReadStream();
         const readStream2 = createReadStream();
         const writeStream = await saveImage(db, readStream1, filename);

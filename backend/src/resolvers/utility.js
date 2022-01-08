@@ -15,8 +15,8 @@ const checkUser = (db, name, errFunc) => {
 
 
 // make sure calling checkUser beforehand
-const newUser = (db, email, name, gender, age, password) => {
-    return new db.UserModel({ email, name, gender, age, password }).save();
+const newUser = (db, email, name, password, gender, age, aboutMe, department) => {
+    return new db.UserModel({ email, name, password, gender, age, aboutMe, department }).save();
 };
 
 const saveImage = async (db, readStream, filename) => {
