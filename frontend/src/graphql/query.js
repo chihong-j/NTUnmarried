@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
 
-export const CHATBOX_QUERY = gql`
+const CHATBOX_QUERY = gql`
   query chatBox($name1: String, $name2: String) {
       chatBox(name1: $name1, name2: $name2) {
         name
@@ -13,3 +13,31 @@ export const CHATBOX_QUERY = gql`
       }
   }
 `;
+
+const USER_QUERY = gql`
+query user($email: String!){
+  user(email: $email) {
+    email
+    name
+    gender
+    age
+    aboutMe
+    department
+    images
+  }
+}
+`
+
+const STRANGER_QUERY = gql`
+  query stranger($email: String!){
+    stranger(email: $email) {
+      name
+      age
+      aboutMe
+      department
+      images
+    }
+  }
+`
+
+export {CHATBOX_QUERY, USER_QUERY, STRANGER_QUERY}

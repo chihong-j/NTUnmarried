@@ -36,7 +36,7 @@ const CREATE_LIKE_MUTATION = gql`
 
 const UPDATE_USER_MUTATION = gql`
   mutation updateUser($email: String!, $gender: Boolean, $age: Int, $aboutMe: String, $interest: String, $department: String, $birth: Birth!){
-    updateUser(email: $email, gender: $gender, age: $age, aboutMe: $aboutMe, interest: $interest, department: $department, birth: $birth) {
+    updateUser(email: $email, gender: $gender, age: $age, aboutMe: $aboutMe, interest: $interest, department: $department) {
       email
     }
   }
@@ -51,8 +51,8 @@ const UPLOADFILE_MUTATION = gql`
 
 const SIGNUP_MUTATION = gql`
 
-  mutation signup($email: String!, $password: String!, $name: String!, $gender: Boolean!, $age: Int!, $department: String!) {
-    signup(email: $email, password: $passward, name: $name, gender: $gender, age: $age, department: $department) {
+  mutation signup($email: String!, $password: String!, $name: String!, $gender: Boolean!, $age: Int!, $aboutMe: String!, $department: String!) {
+    signup(email: $email, password: $passward, name: $name, gender: $gender, age: $age, aboutMe: $aboutMe, department: $department) {
       name
     }
   }

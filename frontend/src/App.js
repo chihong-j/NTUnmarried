@@ -14,6 +14,7 @@ function App() {
   const [userStatus, setUserStatus] = useState(savedLogin || "login");
   const [userName, setUserName] = useState(savedUser || "Leehom");
   const [userEmail, setUserEmail] = useState("");
+  localStorage.clear()
   useEffect(() => {
     if (userStatus === "logined") {
       localStorage.setItem(LOCALSTORAGE_KEY, userName);
