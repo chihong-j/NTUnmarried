@@ -48,7 +48,7 @@ const Profile = ({me}) => {
     }, [])
 
     const getAge = () => {
-        let now = new Date.getTime()
+        let now = new Date().getTime()
         return Math.ceil((now - birth)/31536000000)
     }
 

@@ -18,6 +18,8 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { SIGNUP_MUTATION  } from "../graphql";
+import { useMutation } from '@apollo/client';
 import bcrypt from "bcryptjs";
 
 function Copyright(props) {
@@ -39,14 +41,18 @@ export default function SignUp({setUserStatus}) {
   const [errorMessage, setErrorMessage] = useState("")
   const [birth, setBirth] = useState(new Date())
   const [gender, setGender] = useState(true);
-  const myPassword = 'password1';
+  const [signUpUser] = useMutation(SIGNUP_MUTATION)
+  const getAge = () => {
+    let now = new Date().getTime()
+    return Math.ceil((now - birth)/31536000000)
+}
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     var name = data.get('name');
     var department = data.get('department');
-    // var gender = data.get('gender');
-    // var birth = data.get('birth');
+    var aboutMe = data.get('aboutMe');
+    var age = getAge();
     var email = data.get('email');
     var password = data.get('password');
     // 加密
@@ -55,11 +61,24 @@ export default function SignUp({setUserStatus}) {
     console.log({
         Name: name,
         Department: department,
+        AboutMe: aboutMe,
         Gender: gender,
         Birth: birth,
+        Age: age,
         Email: email,
         Password: password,
     });
+    signUpUser({
+      variables: {
+          email,
+          password,
+          name,
+          gender,
+          age,
+          aboutMe,
+          department,
+        },
+    })
     setErrorMessage("");
     if (email.slice(9) !== "@ntu.edu.tw") {
         setErrorMessage("You must use NTU mail to sign up.")
@@ -114,6 +133,28 @@ export default function SignUp({setUserStatus}) {
                   autoFocus
                 />
               </Grid>
+              
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  autoComplete="new-password"
+                />
+              </Grid>
               <Grid item xs={12}>
                 <TextField
                   required
@@ -144,6 +185,16 @@ export default function SignUp({setUserStatus}) {
                 </Select>
               </Grid>
               <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  id="aboutMe"
+                  label="About me"
+                  name="aboutMe"
+                  autoComplete="aboutMe"
+                />
+              </Grid>
+              <Grid item xs={12}>
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                     <DesktopDatePicker
                     required
@@ -160,27 +211,7 @@ export default function SignUp({setUserStatus}) {
                     />
                 </LocalizationProvider>
               </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  autoComplete="email"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  id="password"
-                  autoComplete="new-password"
-                />
-              </Grid>
+              
               {/* <Grid item xs={12}>
                 <FormControlLabel
                   control={<Checkbox value="allowExtraEmails" color="primary" />}
