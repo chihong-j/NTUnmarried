@@ -6,24 +6,14 @@ import { useEffect, useState } from "react";
 
 const LOCALSTORAGE_KEY = "save-user";
 const LOCALSTORAGE_KEY_LOGIN = "save-login";
-
-
-// import { useQuery, useMutation } from '@apollo/react-hooks';
-// import {
-//     POSTS_QUERY,
-//     CREATE_POST_MUTATION,
-//     POSTS_SUBSCRIPTION,
-//     S_POSTS_QUERY,
-//     MUTATION,
-// } from '../../graphql';
   
   
-  function App() {
-    const savedUser = localStorage.getItem(LOCALSTORAGE_KEY);
-    const savedLogin = localStorage.getItem(LOCALSTORAGE_KEY_LOGIN);
-    const [userStatus, setUserStatus] = useState(savedLogin || "login");
-    const [userName, setUserName] = useState(savedUser || "Leehom");
-    const [userEmail, setUserEmail] = useState("");
+function App() {
+  const savedUser = localStorage.getItem(LOCALSTORAGE_KEY);
+  const savedLogin = localStorage.getItem(LOCALSTORAGE_KEY_LOGIN);
+  const [userStatus, setUserStatus] = useState(savedLogin || "login");
+  const [userName, setUserName] = useState(savedUser || "Leehom");
+  const [userEmail, setUserEmail] = useState("");
   useEffect(() => {
     if (userStatus === "logined") {
       localStorage.setItem(LOCALSTORAGE_KEY, userName);
