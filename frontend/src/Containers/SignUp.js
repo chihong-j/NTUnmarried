@@ -46,7 +46,7 @@ export default function SignUp({setUserStatus}) {
     let now = new Date().getTime()
     return Math.ceil((now - birth)/31536000000)
 }
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     var name = data.get('name');
@@ -56,7 +56,7 @@ export default function SignUp({setUserStatus}) {
     var email = data.get('email');
     var password = data.get('password');
     // 加密
-    var passwordHash = create(password);
+    var passwordHash = await create(password);
     // 傳給後端
     console.log({
         Name: name,
@@ -99,7 +99,7 @@ export default function SignUp({setUserStatus}) {
         signUpUser({
           variables: {
               email,
-              passwordHash,
+              password: passwordHash,
               name,
               gender,
               age,

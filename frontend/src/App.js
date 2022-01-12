@@ -24,7 +24,7 @@ function App() {
 
   return (
     <>
-      {userStatus === "login" && <SignIn setUserStatus={setUserStatus} setUserName={setUserName} />}
+      {userStatus === "login" && <SignIn setUserStatus={setUserStatus} setUserName={setUserName} setUserEmail={setUserEmail} />}
       {userStatus === "signup" && <SignUp setUserStatus={setUserStatus} />}
       {userStatus === "logined" && <Logined setUserStatus={setUserStatus} userEmail = {userEmail}/>}
     </>

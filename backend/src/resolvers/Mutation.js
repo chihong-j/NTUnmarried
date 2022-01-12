@@ -14,6 +14,7 @@ const Mutation = {
 
     async signup(parent, { email, name, password, gender, age, aboutMe, department }, { db }, info) {
         const user = await newUser(db, email, name, password, gender, age, aboutMe, department);
+        console.log(user);
         return user ;
     },
 
@@ -22,12 +23,9 @@ const Mutation = {
         if (!user) {
             throw new Error(`Email: ${email} not found!`)
         } else {
-            if (await bcrypt.compare(password, user.password)) {
-                return {
-                    token: createToken(user, process.env.SECRET)
-                }
-            } else {
-                throw new Error('Wrong password!')
+            console.log('create token');
+            return {
+                token: createToken(user, process.env.SECRET)
             }
         }
     },

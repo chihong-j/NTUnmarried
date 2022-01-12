@@ -16,6 +16,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import bcrypt from "bcryptjs";
 import { LOGIN_MUTATION } from "../graphql";
 import { useMutation } from '@apollo/client';
+const LOCALSTORAGE_KEY_TOKEN = "token";
 
 function Copyright(props) {
   return (
@@ -32,10 +33,20 @@ function Copyright(props) {
 
 const theme = createTheme();
 
-export default function SignIn({setUserStatus, setUserName}) {
+export default function SignIn({setUserStatus, setUserName, setUserEmail}) {
   const [errorMessage, setErrorMessage] = useState("")
-  const [logInUser] = useMutation(LOGIN_MUTATION)
-  const handleSubmit = (event) => {
+  const [logInUser] = useMutation(LOGIN_MUTATION, {
+    onCompleted: async (data) => {
+      console.log(data.login.token);
+      if (data.login.token) {
+        localStorage.setItem(LOCALSTORAGE_KEY_TOKEN, data.login.token);
+        setUserStatus("logined");
+      } else {
+        console.log('login fail')
+      }
+    }
+  })
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     var email = data.get('email');
@@ -46,7 +57,7 @@ export default function SignIn({setUserStatus, setUserName}) {
     else if (password === "") {
       setErrorMessage("Password field required.")
     }
-    var passwordHash = validate(password); 
+    var passwordHash = await validate(password); 
     console.log({
       Email: email,
       Password: passwordHash,
@@ -54,13 +65,14 @@ export default function SignIn({setUserStatus, setUserName}) {
     logInUser({
       variables: {
           email,
-          passwordHash,
+          password: passwordHash,
         },
       // TODO: token
       // onCompleted: () => {
       // },
     })
-    setUserName(email);
+    // setUserName(email);
+    setUserEmail(email);
     setUserStatus("logined");
   };
   const validate = async(password) => {

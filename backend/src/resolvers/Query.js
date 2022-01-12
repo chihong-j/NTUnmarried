@@ -3,8 +3,10 @@ import {readStreamToDataUrl, retrieveImage} from "./utility";
 
 const Query = {
     async user(parent, { email }, { db }, info) {
+        console.log(email);
         const queryUser = await db.UserModel.findOne({ email });
         let readStream;
+        console.log(queryUser);
         const { _id: id, name, gender, age, aboutMe, department } = queryUser;
         if (!queryUser.images) return { id, email, name, gender, age, aboutMe, department, images: []};
         const images = [];
