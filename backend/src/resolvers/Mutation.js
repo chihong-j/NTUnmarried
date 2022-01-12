@@ -35,6 +35,7 @@ const Mutation = {
         if (!me) throw new AuthenticationError('Not logged in');
         const { createReadStream, filename, mimetype, encoding } = await file;
 
+
         const user = await db.UserModel.findOne({ email:me.email });
         const readStream1 = createReadStream();
         const readStream2 = createReadStream();
