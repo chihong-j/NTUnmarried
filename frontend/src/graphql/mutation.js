@@ -35,8 +35,8 @@ const CREATE_LIKE_MUTATION = gql`
 `;
 
 const UPDATE_USER_MUTATION = gql`
-  mutation updateUser($email: String!, $gender: Boolean, $age: Int, $aboutMe: String, $interest: String, $department: String, $birth: Birth!){
-    updateUser(email: $email, gender: $gender, age: $age, aboutMe: $aboutMe, interest: $interest, department: $department) {
+  mutation updateUser($email: String!, $gender: Boolean, $age: Int, $aboutMe: String, $department: String){
+    updateUser(email: $email, gender: $gender, age: $age, aboutMe: $aboutMe, department: $department) {
       email
     }
   }

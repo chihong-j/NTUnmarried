@@ -38,27 +38,31 @@ const Profile = ({me}) => {
         initialize(me)
     }, [me]);
 
-    const add_image = useCallback(() => {
-        // uploadFile()
-    }, [])
+    // const add_image = useCallback(() => {
+    //     // uploadFile()
+    // }, [])
 
     const getAge = () => {
         let now = new Date().getTime()
         return Math.ceil((now - birth)/31536000000)
     }
 
-    const handleFormSubmit = useCallback(() => {
+    const handleFormSubmit = async() => {
         setAge(getAge())
+        console.log(me.email)
+        console.log(gender)
+        console.log(aboutMe)
+        console.log(department)
         updateUser({
             variables: {
-                email: me.Email,
+                email: me.email,
                 gender,
                 age,
                 aboutMe,
                 department,
               },
         })
-    },[aboutMe, department, gender, birth]);
+    };
 
     return (
             <Container maxWidth = "sm">
@@ -73,7 +77,7 @@ const Profile = ({me}) => {
                             />
                         </ImageListItem>
                         ): (
-                            <ImageListItem sx = {{border: '1px dashed gray'}}>
+                            <ImageListItem key={id} sx = {{border: '1px dashed gray'}}>
                             <input
                                     accept="image/*"
                                     style={{ display: 'none' }}
