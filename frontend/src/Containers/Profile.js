@@ -49,10 +49,6 @@ const Profile = ({me}) => {
 
     const handleFormSubmit = async() => {
         setAge(getAge())
-        console.log(me.email)
-        console.log(gender)
-        console.log(aboutMe)
-        console.log(department)
         updateUser({
             variables: {
                 email: me.email,
