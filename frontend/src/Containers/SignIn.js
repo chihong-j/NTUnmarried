@@ -68,7 +68,6 @@ export default function SignIn({setUserStatus, setUserName, setUserEmail}) {
       await logInUser({
       variables: {
           email,
-          password: password,
         },
       })
     }
