@@ -9,10 +9,12 @@ import { Container } from 'reactstrap';
 import { useQuery } from '@apollo/client';
 import {USER_QUERY} from './../graphql'
 
+const LOCALSTORAGE_KEY = "save-user";
 const Logined = ({setUserStatus, userEmail}) => {
     const [isNotification, setIsNotification] = useState(false);
     const [currentPage, setCurrentPage] = useState("match");
-    const {data, loading, ...props} = useQuery(USER_QUERY, 
+    const savedUser = localStorage.getItem(LOCALSTORAGE_KEY);
+    var {data, loading, ...props} = useQuery(USER_QUERY, 
         {
             variables: {
                 email: userEmail
@@ -20,6 +22,7 @@ const Logined = ({setUserStatus, userEmail}) => {
         }
         );
     //
+    
     const user = [
         {
             id: 1,
@@ -35,6 +38,13 @@ const Logined = ({setUserStatus, userEmail}) => {
         }
     ]
     if(loading) return <p>loading</p>;
+    if(data){
+        localStorage.setItem(LOCALSTORAGE_KEY, JSON.stringify(data));
+        // console.log(localStorage.getItem(LOCALSTORAGE_KEY))
+    }else{
+        data = JSON.parse(localStorage.getItem(LOCALSTORAGE_KEY));
+        // console.log(data);
+    }
     return (
         <Container>
             <Header isNotifications={isNotification} setCurrentPage = {setCurrentPage} setUserStatus = {setUserStatus} userName = {data.user.name}/>
