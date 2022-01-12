@@ -76,8 +76,8 @@ const Chat = ({ me, displayStatus, user}) => {
                 <Container maxWidth = "sm" sx = {{display: "flex"}}>
                     <Stack>
                         {
-                            firends.map((friend) => 
-                            <div className="chat-cell" onClick={() => setUserChatWith(friend)}>
+                            firends.map((friend, id) => 
+                            <div key={id} className="chat-cell" onClick={() => setUserChatWith(friend)}>
                             <div className="chat-img-div" style={{display: "inline-block"}}>
                                 <img className="chat_img" src={user[0].img[0]} ></img>  
                             </div>

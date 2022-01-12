@@ -7,6 +7,7 @@ const useNTU = () => {
     const [gender, setGender] = useState(true); //{true: male, false: female}
     const [age, setAge] = useState(0);
     const [birth, setBirth] = useState(new Date());
+    const [paired, setPaired] = useState([]);
     const initialize = (me) => {
         if(me.images){
             setIamges(me.images.concat(new Array(6 - me.images.length).fill("")))
@@ -18,6 +19,7 @@ const useNTU = () => {
         setDepartment(me.department)
         setGender(me.gender)
         setAge(me.age)
+        setPaired([...me.paired])
         //
     }
 
