@@ -11,7 +11,7 @@ type Mutation {
     createMessage(from: String!, to: String!, message: String!): Message!
     createChatBox(email1: String, email2: String): ChatBox!
     createLike(from: String!, to: String!): User!
-    updateUser(email: String!, gender: Boolean, age: Int, aboutMe: String, department: String): User!
+    updateUser(email: String!, gender: Boolean, age: Int, aboutMe: String, department: String): User
     uploadFile(file: Upload!): String!
 
     signup(email: String!, password: String!, name: String!, gender: Boolean!, age: Int, aboutMe: String, department: String): User!
@@ -33,7 +33,8 @@ type User {
     aboutMe: String!,
     department: String!,
     images: [String!],
-    password: String!
+    password: String!,
+    paired: [User]
 }
 
 type Token {
