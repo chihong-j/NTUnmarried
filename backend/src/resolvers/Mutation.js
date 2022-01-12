@@ -44,20 +44,6 @@ const Mutation = {
         return await readStreamToDataUrl(readStream2);
     },
 
-    async getUser(parent, { email }, { db }, info) {
-        console.log(email);
-        const queryUser = await db.UserModel.findOne({ email });
-        let readStream;
-        console.log(queryUser);
-        const { _id: id, name, gender, age, aboutMe, department, password } = queryUser;
-        if (!queryUser.images) return { id, email, name, gender, age, aboutMe, department, images: [], password};
-        const images = [];
-        for (let i = 0; i < queryUser.images.length; ++i) {
-            readStream = await retrieveImage(db, queryUser.images[i]);
-            images.push(await readStreamToDataUrl(readStream));
-        }
-        return { id, email, name, gender, age, aboutMe, department, images, password};
-    },
 };
 
 export default Mutation;
