@@ -10,7 +10,7 @@ const LOCALSTORAGE_KEY_EMAIL = "save-email";
   
   
 function App() {
-  const savedName = localStorage.getItem(LOCALSTORAGE_KEY);
+  const savedUser = localStorage.getItem(LOCALSTORAGE_KEY);
   const savedLogin = localStorage.getItem(LOCALSTORAGE_KEY_LOGIN);
   const savedEmail = localStorage.getItem(LOCALSTORAGE_KEY_EMAIL);
   const [userStatus, setUserStatus] = useState(savedLogin || "login");
