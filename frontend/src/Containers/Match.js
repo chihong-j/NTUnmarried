@@ -81,7 +81,7 @@ const Match = ({ me, user }) => {
                     <ChevronLeftIcon sx={{fontSize: "50px", marginLeft: "300px", cursor: leftPicDisabled ? "" : "pointer", opacity: leftPicDisabled ? "0.2" : "1"}} onClick={prevPic} />
                     <div className={rightAnimate ? "album alb-animate-like" : (leftAnimate ? "album alb-animate-dislike" : "album")} >  
                         <img className="big-pic" src={user[selectedUserId].img[selectedPicId]} alt="IU"></img>      
-                        <div class="text-on-image">
+                        <div className="text-on-image">
                             <Typography variant="h4" style={{color: "white"}}>IU</Typography>
                             <Typography variant="h6" style={{color: "white"}}>工管系</Typography>
                             <Typography variant="h6" style={{color: "white"}}>25</Typography>
