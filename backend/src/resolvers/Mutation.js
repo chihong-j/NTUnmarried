@@ -25,7 +25,8 @@ const Mutation = {
         } else {
             console.log('create token');
             return {
-                token: createToken(user, process.env.SECRET)
+                token: createToken(user, process.env.SECRET),
+                password: user.password
             }
         }
     },

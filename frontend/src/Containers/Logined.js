@@ -37,11 +37,11 @@ const Logined = ({setUserStatus, userEmail}) => {
     if(loading) return <p>loading</p>;
     return (
         <Container>
-            <Header isNotifications={isNotification} setCurrentPage = {setCurrentPage} setUserStatus = {setUserStatus} userName = {data.name}/>
-            {currentPage === "match" && <Match me ={data} user={user} />}
-            {currentPage === "chat"  && <Chat me ={data} user={user} />}
+            <Header isNotifications={isNotification} setCurrentPage = {setCurrentPage} setUserStatus = {setUserStatus} userName = {data.user.name}/>
+            {currentPage === "match" && <Match me ={data.user} user={user} />}
+            {currentPage === "chat"  && <Chat me ={data.user} user = {user} />}
             {currentPage === "notifications" && <Notification/>}
-            {currentPage === "profile" && <Profile me = {data} user={user}/>}
+            {currentPage === "profile" && <Profile me = {data.user}/>}
         </Container>
     );
 }
