@@ -8,5 +8,5 @@ const Control = styled.div`
   height: 50px;
   // border: solid;
 `;
-
+//
 export default Control;

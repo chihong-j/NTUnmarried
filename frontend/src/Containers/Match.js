@@ -29,6 +29,7 @@ const Match = ({ user }) => {
             setRightPicDisabled(false);
         }
     }
+    //
     const nextPic = () => {
         let currentID = selectedPicId+1
         if (currentID <= user[selectedUserId].img.length - 1) {

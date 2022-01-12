@@ -18,6 +18,7 @@ const useNTU = () => {
         setDepartment(me.department)
         setGender(me.gender)
         setAge(me.age)
+        //
     }
 
     return {images, setIamges, aboutMe, setAboutMe,  department, setDepartment, gender, setGender, age, setAge, birth, setBirth, initialize}

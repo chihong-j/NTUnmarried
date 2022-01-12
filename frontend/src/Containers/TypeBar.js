@@ -16,7 +16,7 @@ const TypeBar = ({ me, displayStatus, sendMessage, disabled, messageInput, setMe
                         msg: 'Please enter some messages.'
                     })
                     return;
-                }
+                }//
                 // console.log(me);
                 await sendMessage(
                 {
