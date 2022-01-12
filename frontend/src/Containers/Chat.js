@@ -18,7 +18,7 @@ import Box from '@mui/material/Box';
 import PersonIcon from '@mui/icons-material/Person';
 import Typography from '@mui/material/Typography';
 import "../style.css"
-
+//
 const Chat = ({ me, displayStatus, user}) => {
     const [messageInput, setMessageInput] = useState("");
     const [modalVisible, setModalVisible] = useState(false);

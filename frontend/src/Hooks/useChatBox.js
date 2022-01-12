@@ -20,6 +20,7 @@ const useChatBox = () => {
             }
         }
     };
+    //
     const createChatBox = (friend) => {
         setChatBoxes([...chatBoxes, friend]);
     };

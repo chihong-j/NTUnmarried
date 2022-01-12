@@ -14,7 +14,7 @@ const RegisterModal = ({ isVisible, onCreate, onCancel} ) => {
                 console.log('Validate Failed:', info);
             });
     }
-
+//
     return (
         <Modal
             visible={isVisible}

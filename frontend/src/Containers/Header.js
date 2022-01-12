@@ -16,6 +16,7 @@ const Header = ({isNotification, setCurrentPage, setUserStatus, userName}) => {
 
   const handleChangeTab = () => {
     setOpen(true);
+    //
   };
 
   const handleClose = () => {

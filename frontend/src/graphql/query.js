@@ -13,7 +13,7 @@ const CHATBOX_QUERY = gql`
       }
   }
 `;
-
+//
 const USER_QUERY = gql`
 query user($email: String!){
   user(email: $email) {
