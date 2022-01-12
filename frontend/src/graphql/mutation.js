@@ -44,8 +44,8 @@ const UPDATE_USER_MUTATION = gql`
 
 const UPLOADFILE_MUTATION = gql`
 
-  mutation uploadFile($file: Upload!, $userEmail: String!) {
-    uploadFile(file: $file, userEmail: $userEmail)
+  mutation uploadFile($file: Upload!) {
+    uploadFile(file: $file)
   }
 `
 
@@ -60,8 +60,9 @@ const SIGNUP_MUTATION = gql`
 //
 const LOGIN_MUTATION = gql`
 
-  mutation login($email: String!, $password: String!) {
-    login(email: $email, password: $password){
+  mutation login($email: String!) {
+    login(email: $email){
+      password,
       token
     }
   }

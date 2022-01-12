@@ -8,7 +8,7 @@ import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import Typography from '@mui/material/Typography';
 
 
-const Match = ({ user }) => {
+const Match = ({ me, user }) => {
     const [selectedUserId, setSelectedUserId] = useState(0);
     const [selectedPicId, setSelectedPicId] = useState(0);
     const [leftPicDisabled, setLeftPicDisabled] = useState(true);
