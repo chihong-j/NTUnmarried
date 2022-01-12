@@ -33,6 +33,7 @@ type User {
     aboutMe: String!,
     department: String!,
     images: [String!]
+    password: String!,
 }
 
 type Token {
