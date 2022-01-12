@@ -15,7 +15,6 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import InputLabel from '@mui/material/InputLabel';
 import Stack from '@mui/material/Stack';
-import useNTU from '../Hooks/useNTU'
 import {
     Form,
   } from 'reactstrap';
@@ -27,8 +26,8 @@ const Image_Button = styled(Button)`
     margin: auto;
 `
 
-const Profile = ({me, isInitialized, setIsInitialized}) => {
-    const {images, setIamges, aboutMe, setAboutMe, department, setDepartment, gender, setGender, age, setAge, birth, setBirth, initialize} = useNTU()
+const Profile = ({images, setIamges, aboutMe, setAboutMe, department, setDepartment, gender, setGender, age, setAge, birth, setBirth, initialize, me, isInitialized, setIsInitialized}) => {
+    // const {images, setIamges, aboutMe, setAboutMe, department, setDepartment, gender, setGender, age, setAge, birth, setBirth, initialize} = useNTU()
 
     const [updateUser] = useMutation(UPDATE_USER_MUTATION)
     const [uploadFile] = useMutation(UPLOADFILE_MUTATION, {
@@ -62,10 +61,6 @@ const Profile = ({me, isInitialized, setIsInitialized}) => {
 
     const handleFormSubmit = async() => {
         setAge(getAge())
-        console.log(me.email)
-        console.log(gender)
-        console.log(aboutMe)
-        console.log(department)
         updateUser({
             variables: {
                 email: me.email,
