@@ -35,12 +35,19 @@ const Mutation = {
         if (!me) throw new AuthenticationError('Not logged in');
 
         const { createReadStream, filename, mimetype, encoding } = await file;
+        console.log(me.email);
         const user = await db.UserModel.findOne({ mail:me.email });
+        console.log(user);
+        console.log("here0");
         const readStream1 = createReadStream();
         const readStream2 = createReadStream();
+        console.log("here1");
         const writeStream = await saveImage(db, readStream1, filename);
+        console.log("here2");
         user.images.push(writeStream.id);
+        console.log("here3");
         await user.save();
+        console.log("here");
         return await readStreamToDataUrl(readStream2);
     },
 
