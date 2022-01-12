@@ -18,7 +18,7 @@ const Mutation = {
         return user ;
     },
 
-    async login(parent, { email, password }, { db }, info) {
+    async login(parent, { email }, { db }, info) {
         const user = await db.UserModel.findOne({ email });
         if (!user) {
             throw new Error(`Email: ${email} not found!`)

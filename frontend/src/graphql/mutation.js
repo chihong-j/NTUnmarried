@@ -60,8 +60,9 @@ const SIGNUP_MUTATION = gql`
 //
 const LOGIN_MUTATION = gql`
 
-  mutation login($email: String!, $password: String!) {
-    login(email: $email, password: $password){
+  mutation login($email: String!) {
+    login(email: $email){
+      password,
       token
     }
   }

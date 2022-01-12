@@ -35,14 +35,16 @@ const theme = createTheme();
 
 export default function SignIn({setUserStatus, setUserName, setUserEmail}) {
   const [errorMessage, setErrorMessage] = useState("")
-  const [logInUser] = useMutation(LOGIN_MUTATION, {
+  var dataPassword
+  const [logInUser, {data}] = useMutation(LOGIN_MUTATION, {
     onCompleted: async (data) => {
-      console.log(data.login.token);
+      // console.log(data.login.password);
+      dataPassword = JSON.parse(JSON.stringify(data.login.password))
       if (data.login.token) {
         localStorage.setItem(LOCALSTORAGE_KEY_TOKEN, data.login.token);
-        setUserStatus("logined");
+        // setUserStatus("logined");
       } else {
-        console.log('login fail')
+        console.log('login fail: No token.')
       }
     }
   })
@@ -57,28 +59,46 @@ export default function SignIn({setUserStatus, setUserName, setUserEmail}) {
     else if (password === "") {
       setErrorMessage("Password field required.")
     }
-    var passwordHash = await validate(password); 
+    // var passwordHash = await create(password); 
     console.log({
       Email: email,
-      Password: passwordHash,
+      Password: password,
     });
-    logInUser({
+    try {
+      await logInUser({
       variables: {
           email,
-          password: passwordHash,
+          password: password,
         },
-      // TODO: token
-      // onCompleted: () => {
-      // },
-    })
-    // setUserName(email);
-    setUserEmail(email);
-    setUserStatus("logined");
+      })
+    }
+    catch (error) {
+      setErrorMessage('Email not found, please register first!')
+    }
+    // await console.log(dataPassword)
+    let res = await validate(password, dataPassword)
+    if (res) {
+      // setUserName(email);
+      setUserEmail(email);
+      setUserStatus("logined");
+    }
+    else {
+      setErrorMessage('incorrect password')
+    }
   };
-  const validate = async(password) => {
-    password = await bcrypt.hash(password, 10);
-    return password;
-  }
+
+  const validate = (async(passwordInput, passwordBackend) => {
+    let res = await bcrypt.compare(passwordInput, passwordBackend)
+    // console.log(res)
+    if (res) {
+      console.log('password correct');
+      return true;
+    }
+    else {
+      console.log('password incorrect');
+      return false;
+    }
+  })
 
   return (
     <ThemeProvider theme={theme}>
