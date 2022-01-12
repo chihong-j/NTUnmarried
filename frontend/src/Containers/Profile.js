@@ -38,10 +38,6 @@ const Profile = ({me}) => {
         initialize(me)
     }, [me]);
 
-    const add_image = useCallback(() => {
-        // uploadFile()
-    }, [])
-
     const getAge = () => {
         let now = new Date().getTime()
         return Math.ceil((now - birth)/31536000000)
