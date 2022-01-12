@@ -1,4 +1,4 @@
-import {useCallback} from 'react'
+import {useCallback, useEffect} from 'react'
 import styled from 'styled-components';
 import Button from '@mui/material/Button';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
@@ -16,7 +16,6 @@ import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import InputLabel from '@mui/material/InputLabel';
 import Stack from '@mui/material/Stack';
 import useNTU from '../Hooks/useNTU'
-//
 import {
     Form,
   } from 'reactstrap';
@@ -32,9 +31,13 @@ const Image_Button = styled(Button)`
 
 const Profile = ({me}) => {
     const {images, setIamges, aboutMe, setAboutMe, department, setDepartment, gender, setGender, age, setAge, birth, setBirth, initialize} = useNTU()
-    const updateUser = useMutation(UPDATE_USER_MUTATION)
-    const uploadFile = useMutation(UPLOADFILE_MUTATION)
-    // initialize(me)
+
+    const [updateUser] = useMutation(UPDATE_USER_MUTATION)
+    const [uploadFile] = useMutation(UPLOADFILE_MUTATION)
+    useEffect(() => {
+        initialize(me)
+    }, [me]);
+
     const add_image = useCallback(() => {
         // uploadFile()
     }, [])
@@ -55,7 +58,7 @@ const Profile = ({me}) => {
                 department,
               },
         })
-    },[images, aboutMe, department, gender, birth]);
+    },[aboutMe, department, gender, birth]);
 
     return (
             <Container maxWidth = "sm">

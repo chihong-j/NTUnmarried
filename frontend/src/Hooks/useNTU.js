@@ -9,7 +9,7 @@ const useNTU = () => {
     const [birth, setBirth] = useState(new Date());
     const initialize = (me) => {
         if(me.images){
-            setIamges(me.images.concat(new Array(6 - me.images.length)))
+            setIamges(me.images.concat(new Array(6 - me.images.length).fill("")))
         }else{
             setIamges(new Array(6).fill(""))
         }
