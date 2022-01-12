@@ -8,16 +8,19 @@ import img from "../img/index";
 import { Container } from 'reactstrap';
 import { useQuery } from '@apollo/client';
 import {USER_QUERY} from './../graphql'
+import useNTU from '../Hooks/useNTU'
 
 const Logined = ({setUserStatus, userEmail}) => {
     const [isNotification, setIsNotification] = useState(false);
     const [currentPage, setCurrentPage] = useState("match");
+    const [isInitialized, setIsInitialized] = useState(false);
+    const {images, setIamges, aboutMe, setAboutMe, department, setDepartment, gender, setGender, age, setAge, birth, setBirth, initialize} = useNTU()
     const {data, loading, ...props} = useQuery(USER_QUERY, 
         {
             variables: {
                 email: userEmail
             }
-        }
+        },
     );
     //
     const user = [
@@ -41,7 +44,7 @@ const Logined = ({setUserStatus, userEmail}) => {
             {currentPage === "match" && <Match me ={data.user} user={user} />}
             {currentPage === "chat"  && <Chat me ={data.user} user = {user} />}
             {currentPage === "notifications" && <Notification/>}
-            {currentPage === "profile" && <Profile me = {data.user}/>}
+            {currentPage === "profile" && <Profile me = {data.user} isInitialized={isInitialized} setIsInitialized={setIsInitialized} images = {images} setIamges = {setIamges} aboutMe = {aboutMe} setAboutMe = {setAboutMe} department = {department} setDepartment = {setDepartment} gender = {gender} setGender = {setGender} age = {age} setAge = {setAge} birth = {birth} setBirth = {setBirth} initialize = {initialize}/>}
         </Container>
     );
 }

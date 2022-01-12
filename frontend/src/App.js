@@ -4,7 +4,7 @@ import SignUp from './Containers/SignUp';
 import Logined from './Containers/Logined';
 import { useEffect, useState } from "react";
 
-const LOCALSTORAGE_KEY = "save-user";
+const LOCALSTORAGE_KEY = "save-name";
 const LOCALSTORAGE_KEY_LOGIN = "save-login";
 const LOCALSTORAGE_KEY_EMAIL = "save-email";
   
@@ -14,8 +14,10 @@ function App() {
   const savedLogin = localStorage.getItem(LOCALSTORAGE_KEY_LOGIN);
   const savedEmail = localStorage.getItem(LOCALSTORAGE_KEY_EMAIL);
   const [userStatus, setUserStatus] = useState(savedLogin || "login");
+
   const [userName, setUserName] = useState(savedUser || "Leehom");
   const [userEmail, setUserEmail] = useState(savedEmail || "");
+
   // localStorage.clear()
   useEffect(() => {
     if (userStatus === "logined") {

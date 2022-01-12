@@ -15,7 +15,6 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import InputLabel from '@mui/material/InputLabel';
 import Stack from '@mui/material/Stack';
-import useNTU from '../Hooks/useNTU'
 import {
     Form,
   } from 'reactstrap';
@@ -27,20 +26,33 @@ const Image_Button = styled(Button)`
     margin: auto;
 `
 
-
-
-const Profile = ({me}) => {
-    const {images, setIamges, aboutMe, setAboutMe, department, setDepartment, gender, setGender, age, setAge, birth, setBirth, initialize} = useNTU()
+const Profile = ({images, setIamges, aboutMe, setAboutMe, department, setDepartment, gender, setGender, age, setAge, birth, setBirth, initialize, me, isInitialized, setIsInitialized}) => {
+    // const {images, setIamges, aboutMe, setAboutMe, department, setDepartment, gender, setGender, age, setAge, birth, setBirth, initialize} = useNTU()
 
     const [updateUser] = useMutation(UPDATE_USER_MUTATION)
-    const [uploadFile] = useMutation(UPLOADFILE_MUTATION)
+    const [uploadFile] = useMutation(UPLOADFILE_MUTATION, {
+        onCompleted: (data) => {
+            let index = 0;
+            while (images[index]) {
+                index++;
+            }
+            const newImages = JSON.parse(JSON.stringify(images));
+            newImages[index] = data.uploadFile;
+            setIamges(newImages);
+        }
+    })
+    const fileUploadHandler = ({target: {validity, files: [file]}}) =>{
+        validity.valid && uploadFile({variables: {file}})
+    }
+
     useEffect(() => {
-        initialize(me)
+        if (!isInitialized) {
+            setIsInitialized(true);
+            initialize(me);
+        }
+
     }, [me]);
 
-    // const add_image = useCallback(() => {
-    //     // uploadFile()
-    // }, [])
 
     const getAge = () => {
         let now = new Date().getTime()
@@ -60,6 +72,8 @@ const Profile = ({me}) => {
         })
     };
 
+
+
     return (
             <Container maxWidth = "sm">
                 <ImageList sx={{ width: 500, height: 450 }} cols={3} rowHeight={200}>
@@ -67,8 +81,7 @@ const Profile = ({me}) => {
                         image?(
                         <ImageListItem key = {id}>
                             <img
-                                src={`${image}?w=164&h=164&fit=crop&auto=format`}
-                                srcSet={`${image}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                                src={image}
                                 loading="lazy"
                             />
                         </ImageListItem>
@@ -80,9 +93,7 @@ const Profile = ({me}) => {
                                     id="raised-button-file"
                                     // multiple
                                     type="file"
-                                    onChange={({target: {validity, files: [file]}}) =>{
-                                        validity.valid && uploadFile({variables: {file}})
-                                    }}
+                                    onChange={fileUploadHandler}
                                 />
                                 <label htmlFor="raised-button-file" style = {{"display": "flex", "margin": "auto"}}>
                                     <Image_Button color="primary" variant="raised" component="span">
