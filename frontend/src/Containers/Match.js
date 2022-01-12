@@ -44,7 +44,7 @@ const Match = ({ me, user }) => {
     //
     const nextPic = () => {
         let currentID = selectedPicId+1
-        if (currentID <= user[selectedUserId].img.length - 1) {
+        if (currentID <= data.stranger[selectedUserId].images.length - 1) {
             setSelectedPicId(currentID);
             setDisabled(currentID);
         }
@@ -64,14 +64,15 @@ const Match = ({ me, user }) => {
     const likePeople = async () => {
         setRightAnimate(true);
         await delay(300);
+        console.log(data.stranger[selectedUserId].email)
         await likeUser({
             variables: {
-                to: data.user.email,
+                to: data.stranger[selectedUserId].email,
                 isLike: true
             },
         });
         let currentUserID = selectedUserId+1
-        if (currentUserID <= user.length - 1) {
+        if (currentUserID <= data.stranger.length - 1) {
             setSelectedUserId(currentUserID);
             setLeftPicDisabled(true);
             setRightPicDisabled(false);
@@ -82,14 +83,15 @@ const Match = ({ me, user }) => {
     const dislikePeople = async () => {
         setLeftAnimate(true);
         await delay(300);
+        console.log(data.stranger[selectedUserId].email)
         await likeUser({
             variables: {
-                to: data.user.email,
+                to: data.stranger[selectedUserId].email,
                 isLike: false
             },
         })
         let currentUserID = selectedUserId+1
-        if (currentUserID <= user.length - 1) {
+        if (currentUserID <= data.stranger.length - 1) {
             setSelectedUserId(currentUserID);
             setLeftPicDisabled(true);
             setRightPicDisabled(false);
@@ -98,6 +100,7 @@ const Match = ({ me, user }) => {
         setLeftAnimate(false);
     }
     if (loading) return <p>loading</p>;
+    console.log(data.stranger[selectedUserId]);
     return (
         <Container>
             <Row>

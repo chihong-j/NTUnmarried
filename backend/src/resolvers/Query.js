@@ -22,12 +22,17 @@ const Query = {
 
         const isMeet = (strangerId, likeList) => {
             for (let i = 0; i < likeList.length; ++i) {
-                if (users[i]._id === likeList[i].stranger) return true;
+                console.log(strangerId);
+                console.log(userMe._id)
+                console.log(likeList[i].stranger)
+                console.log(userMe.email)
+                if (strangerId === likeList[i].stranger) return true;
             }
             return false;
         }
         const strangers = users.filter((stranger) => {
-            return !isMeet(stranger, userMe.likeList);
+            if(stranger.email === userMe.email) return false
+            return !isMeet(stranger._id, userMe.likeList);
         })
         console.log(strangers.length);
         return strangers.map(async (stranger) => {

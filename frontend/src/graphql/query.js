@@ -38,6 +38,7 @@ const STRANGER_QUERY = gql`
       aboutMe
       department
       images
+      email
     }
   }
 `
