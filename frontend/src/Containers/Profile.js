@@ -34,7 +34,7 @@ const Profile = ({me}) => {
     const {images, setIamges, aboutMe, setAboutMe, department, setDepartment, gender, setGender, age, setAge, birth, setBirth, initialize} = useNTU()
     const updateUser = useMutation(UPDATE_USER_MUTATION)
     const uploadFile = useMutation(UPLOADFILE_MUTATION)
-    initialize(me)
+    // initialize(me)
     const add_image = useCallback(() => {
         // uploadFile()
     }, [])
@@ -77,6 +77,9 @@ const Profile = ({me}) => {
                                     id="raised-button-file"
                                     // multiple
                                     type="file"
+                                    onChange={({target: {validity, files: [file]}}) =>{
+                                        validity.valid && uploadFile({variables: {file}})
+                                    }}
                                 />
                                 <label htmlFor="raised-button-file" style = {{"display": "flex", "margin": "auto"}}>
                                     <Image_Button color="primary" variant="raised" component="span">
