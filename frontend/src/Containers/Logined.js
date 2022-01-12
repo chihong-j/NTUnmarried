@@ -12,12 +12,13 @@ import {USER_QUERY} from './../graphql'
 const Logined = ({setUserStatus, userEmail}) => {
     const [isNotification, setIsNotification] = useState(false);
     const [currentPage, setCurrentPage] = useState("match");
+    const [isInitialized, setIsInitialized] = useState(false);
     const {data, loading, ...props} = useQuery(USER_QUERY, 
         {
             variables: {
                 email: userEmail
             }
-        }
+        },
     );
     //
     const user = [
@@ -41,7 +42,7 @@ const Logined = ({setUserStatus, userEmail}) => {
             {currentPage === "match" && <Match me ={data.user} user={user} />}
             {currentPage === "chat"  && <Chat me ={data.user} user = {user} />}
             {currentPage === "notifications" && <Notification/>}
-            {currentPage === "profile" && <Profile me = {data.user}/>}
+            {currentPage === "profile" && <Profile me = {data.user} isInitialized={isInitialized} setIsInitialized={setIsInitialized}/>}
         </Container>
     );
 }

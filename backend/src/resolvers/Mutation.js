@@ -1,4 +1,4 @@
-import {checkUser, newUser, saveImage, readStreamToDataUrl, createToken} from "./utility";
+import {checkUser, newUser, saveImage, readStreamToDataUrl, createToken, retrieveImage} from "./utility";
 import bcrypt from 'bcryptjs';
 import {AuthenticationError} from "apollo-server-core";
 import {UserModel} from "../db";
@@ -42,7 +42,8 @@ const Mutation = {
         user.images.push(writeStream.id);
         await user.save();
         return await readStreamToDataUrl(readStream2);
-    }
+    },
+
 };
 
 export default Mutation;

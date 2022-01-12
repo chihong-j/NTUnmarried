@@ -44,8 +44,8 @@ const UPDATE_USER_MUTATION = gql`
 
 const UPLOADFILE_MUTATION = gql`
 
-  mutation uploadFile($file: Upload!, $userEmail: String!) {
-    uploadFile(file: $file, userEmail: $userEmail)
+  mutation uploadFile($file: Upload!) {
+    uploadFile(file: $file)
   }
 `
 

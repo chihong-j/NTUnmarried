@@ -19,6 +19,7 @@ const autheticate = async (resolve, root, args, context, info) => {
         }
     }
 
+
     context = { ...context, me };
     const result = await resolve(root, args, context, info);
     return result;
