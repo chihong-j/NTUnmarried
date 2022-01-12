@@ -45,7 +45,7 @@ export default function SignUp({setUserStatus}) {
   const getAge = () => {
     let now = new Date().getTime()
     return Math.ceil((now - birth)/31536000000)
-}
+  }
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -56,7 +56,8 @@ export default function SignUp({setUserStatus}) {
     var email = data.get('email');
     var password = data.get('password');
     // 加密
-    var passwordHash = await create(password);
+    var salt = bcrypt.genSaltSync(10);
+    var passwordHash = await create(password, salt);
     // 傳給後端
     console.log({
         Name: name,
@@ -109,8 +110,8 @@ export default function SignUp({setUserStatus}) {
         })
     }
   };
-  const create = async (password) => {
-    password = await bcrypt.hash(password, 10);
+  const create = async (password, salt) => {
+    password = await bcrypt.hash(password, salt);
     return password;
   }
 

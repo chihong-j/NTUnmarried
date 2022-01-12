@@ -15,7 +15,7 @@ type Mutation {
     uploadFile(file: Upload!): String!
 
     signup(email: String!, password: String!, name: String!, gender: Boolean!, age: Int, aboutMe: String, department: String): User!
-    login(email: String!, password: String!): Token!
+    login(email: String!): Token!
 }
 
 #type Subscription {
