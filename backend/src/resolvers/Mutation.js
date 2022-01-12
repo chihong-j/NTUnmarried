@@ -33,7 +33,6 @@ const Mutation = {
 
     async uploadFile(parent, { file }, { db, me }, info) {
         if (!me) throw new AuthenticationError('Not logged in');
-
         const { createReadStream, filename, mimetype, encoding } = await file;
         const user = await db.UserModel.findOne({ mail:me.email });
         const readStream1 = createReadStream();
