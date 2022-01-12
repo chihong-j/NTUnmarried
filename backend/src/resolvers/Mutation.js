@@ -1,4 +1,4 @@
-import {checkUser, newUser, saveImage, readStreamToDataUrl, createToken} from "./utility";
+import {checkUser, newUser, saveImage, readStreamToDataUrl, createToken, retrieveImage} from "./utility";
 import bcrypt from 'bcryptjs';
 import {AuthenticationError} from "apollo-server-core";
 import {UserModel} from "../db";
@@ -42,7 +42,22 @@ const Mutation = {
         user.images.push(writeStream.id);
         await user.save();
         return await readStreamToDataUrl(readStream2);
-    }
+    },
+
+    async getUser(parent, { email }, { db }, info) {
+        console.log(email);
+        const queryUser = await db.UserModel.findOne({ email });
+        let readStream;
+        console.log(queryUser);
+        const { _id: id, name, gender, age, aboutMe, department, password } = queryUser;
+        if (!queryUser.images) return { id, email, name, gender, age, aboutMe, department, images: [], password};
+        const images = [];
+        for (let i = 0; i < queryUser.images.length; ++i) {
+            readStream = await retrieveImage(db, queryUser.images[i]);
+            images.push(await readStreamToDataUrl(readStream));
+        }
+        return { id, email, name, gender, age, aboutMe, department, images, password};
+    },
 };
 
 export default Mutation;
