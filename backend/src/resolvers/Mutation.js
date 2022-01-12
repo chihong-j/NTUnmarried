@@ -30,11 +30,11 @@ const Mutation = {
         }
     },
 
-    async uploadFile(parent, { file, userEmail }, { db, me }, info) {
+    async uploadFile(parent, { file }, { db, me }, info) {
         if (!me) throw new AuthenticationError('Not logged in');
 
         const { createReadStream, filename, mimetype, encoding } = await file;
-        const user = await db.UserModel.findOne({email: userEmail});
+        const user = await db.UserModel.findOne({ mail:me.email });
         const readStream1 = createReadStream();
         const readStream2 = createReadStream();
         const writeStream = await saveImage(db, readStream1, filename);
