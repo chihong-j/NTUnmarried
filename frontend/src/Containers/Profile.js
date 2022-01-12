@@ -33,7 +33,11 @@ const Profile = ({me}) => {
     const {images, setIamges, aboutMe, setAboutMe, department, setDepartment, gender, setGender, age, setAge, birth, setBirth, initialize} = useNTU()
 
     const [updateUser] = useMutation(UPDATE_USER_MUTATION)
-    const [uploadFile] = useMutation(UPLOADFILE_MUTATION)
+    const [uploadFile] = useMutation(UPLOADFILE_MUTATION, {
+        onCompleted: (data) => {
+            setIamges([...images, data.uploadFile]);
+        }
+    })
     useEffect(() => {
         initialize(me)
     }, [me]);
