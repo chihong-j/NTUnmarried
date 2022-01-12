@@ -35,9 +35,9 @@ const theme = createTheme();
 
 export default function SignIn({setUserStatus, setUserName, setUserEmail}) {
   const [errorMessage, setErrorMessage] = useState("")
-  const [logInUser] = useMutation(LOGIN_MUTATION, {
+  const [logInUser, {data}] = useMutation(LOGIN_MUTATION, {
     onCompleted: async (data) => {
-      console.log(data.login.token);
+      // console.log(data.login.password);
       if (data.login.token) {
         localStorage.setItem(LOCALSTORAGE_KEY_TOKEN, data.login.token);
         setUserStatus("logined");
@@ -57,7 +57,7 @@ export default function SignIn({setUserStatus, setUserName, setUserEmail}) {
     else if (password === "") {
       setErrorMessage("Password field required.")
     }
-    var passwordHash = await validate(password); 
+    var passwordHash = await create(password); 
     console.log({
       Email: email,
       Password: passwordHash,
@@ -71,13 +71,29 @@ export default function SignIn({setUserStatus, setUserName, setUserEmail}) {
       // onCompleted: () => {
       // },
     })
-    // setUserName(email);
-    setUserEmail(email);
-    setUserStatus("logined");
+    let res = true;
+    // let res = await validate(passwordHash, data.login.password)
+    if (res) {
+      // setUserName(email);
+      setUserEmail(email);
+      setUserStatus("logined");
+    }
   };
-  const validate = async(password) => {
+  const create = async(password) => {
     password = await bcrypt.hash(password, 10);
     return password;
+  }
+
+  const validate = async(passwordInput, passwordBackend) => {
+    let res = bcrypt.compare(passwordInput, passwordBackend)
+    if (res) {
+      console.log('password correct');
+      return true;
+    }
+    else {
+      console.log('password incorrect');
+      return false;
+    }
   }
 
   return (
