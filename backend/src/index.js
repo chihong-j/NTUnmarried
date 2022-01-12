@@ -11,6 +11,7 @@ const pubsub = new PubSub();
 
 const autheticate = async (resolve, root, args, context, info) => {
     let me;
+
     if (context.request.get("Authorization")) {
         try {
             me = await jwt.verify(context.request.get("Authorization"), process.env.SECRET);
