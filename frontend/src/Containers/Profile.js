@@ -51,7 +51,7 @@ const Profile = ({me}) => {
         setAge(getAge())
         updateUser({
             variables: {
-                email: me.Email,
+                email: me.email,
                 gender,
                 age,
                 aboutMe,
@@ -73,7 +73,7 @@ const Profile = ({me}) => {
                             />
                         </ImageListItem>
                         ): (
-                            <ImageListItem sx = {{border: '1px dashed gray'}}>
+                            <ImageListItem key={id} sx = {{border: '1px dashed gray'}}>
                             <input
                                     accept="image/*"
                                     style={{ display: 'none' }}

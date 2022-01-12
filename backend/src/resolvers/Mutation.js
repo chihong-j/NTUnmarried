@@ -6,7 +6,6 @@ import {UserModel} from "../db";
 const Mutation = {
     async updateUser(parent, {email, gender, age, aboutMe, department}, {db, me}, info) {
         if (!me) throw new AuthenticationError('Not logged in');
-
         await db.UserModel.findOneAndUpdate({ email }, { gender, age, aboutMe, department});
         const user = db.UserModel.findOne({ email })
         return user;
