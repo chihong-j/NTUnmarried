@@ -1,6 +1,7 @@
 import { GraphQLServer, PubSub } from 'graphql-yoga';
 import Query from './resolvers/Query';
 import Mutation from "./resolvers/Mutation";
+import Subscription from "./resolvers/Subscription";
 import * as db from './db';
 import jwt from 'jsonwebtoken';
 import { AuthenticationError } from "apollo-server-core";
@@ -31,6 +32,7 @@ const server = new GraphQLServer({
     resolvers: {
         Query,
         Mutation,
+        Subscription,
     },
     context: (req) => ({ ...req, db, pubsub}),
     middlewares: [autheticate]

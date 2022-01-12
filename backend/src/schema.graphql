@@ -2,7 +2,7 @@ scalar Upload
 
 type Query {
     user(email: String!): User!
-    stranger(email: String!): User!
+    stranger(email: String!): [User!]
     chatBox(email1: String!, email2: String!): ChatBox! #Query all the messages in the chatBox given two users
     usersChatting(email: String!): [ChatBox!] #Query all the ChatBoxes the user have with others
 }
@@ -10,17 +10,17 @@ type Query {
 type Mutation {
     createMessage(from: String!, to: String!, message: String!): Message!
     createChatBox(email1: String, email2: String): ChatBox!
-    createLike(from: String!, to: String!): User!
+    createLike(to: String!, isLike: Boolean!): User
     updateUser(email: String!, gender: Boolean, age: Int, aboutMe: String, department: String): User
     uploadFile(file: Upload!): String!
     signup(email: String!, password: String!, name: String!, gender: Boolean!, age: Int, aboutMe: String, department: String): User!
     login(email: String!): Token!
 }
 
-#type Subscription {
+type Subscription {
 #    message(from: String!, to: String!): MessageSubscriptionPayload!
-#    like(from: String!, to: String!): LikeSubscriptionPayload!
-#}
+    notification: User!
+}
 
 
 type User {

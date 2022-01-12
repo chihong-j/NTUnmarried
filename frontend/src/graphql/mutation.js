@@ -26,10 +26,9 @@ const CREATE_MESSAGE_MUTATION = gql`
 `;
 
 const CREATE_LIKE_MUTATION = gql`
-  mutation createLike($from: String!, $to: String!) {
-    createLike(from: $from, to: $to) {
-      name
-      email
+  mutation createLike($to: String!, $isLike: Boolean!) {
+    createLike(to: $to, isLike: $isLike) {
+        email
     }
   }
 `;
