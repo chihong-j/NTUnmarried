@@ -38,6 +38,7 @@ type User {
 
 type Token {
     token: String!
+    password: String!
 }
 
 type ChatBox {
@@ -51,3 +52,4 @@ type Message {
   sender: User!
   body: String!
 }
+
