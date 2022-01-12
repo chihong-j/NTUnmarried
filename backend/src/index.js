@@ -1,6 +1,7 @@
 import { GraphQLServer, PubSub } from 'graphql-yoga';
 import Query from './resolvers/Query';
 import Mutation from "./resolvers/Mutation";
+import Subscription from "./resolvers/Subscription";
 import * as db from './db';
 import jwt from 'jsonwebtoken';
 import { AuthenticationError } from "apollo-server-core";
@@ -11,7 +12,9 @@ const pubsub = new PubSub();
 
 const autheticate = async (resolve, root, args, context, info) => {
     let me;
-
+    console.log("??")
+    console.log(context.request);
+    console.log("p p")
     if (context.request.get("Authorization")) {
         try {
             me = await jwt.verify(context.request.get("Authorization"), process.env.SECRET);
@@ -31,6 +34,7 @@ const server = new GraphQLServer({
     resolvers: {
         Query,
         Mutation,
+        Subscription,
     },
     context: (req) => ({ ...req, db, pubsub}),
     middlewares: [autheticate]

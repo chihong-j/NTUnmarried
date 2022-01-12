@@ -21,14 +21,21 @@ const UserSchema = new Schema({
     aboutMe: { type: String, required: true},
     department: { type: String, required: true},
     images: [{ type: mongoose.Types.ObjectId }],
-    password: { type: String, required: true }
+    password: { type: String, required: true },
+    likeList: [{ type: mongoose.Types.ObjectId, ref: 'Like' }]
 })
+
+const LikeScheme = new Schema({
+    stranger: { type: mongoose.Types.ObjectId, required: true, ref: 'User'},
+    isLike: { type: Boolean, required: true}
+})
+
 
 const container = []
 CreateFileModel(container);
 
 
 const UserModel = mongoose.model('User', UserSchema);
+const LikeModel = mongoose.model('Like', LikeScheme);
 
-
-export { UserModel,container };
+export { UserModel, container, LikeModel };

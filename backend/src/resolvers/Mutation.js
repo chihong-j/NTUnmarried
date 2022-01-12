@@ -34,22 +34,39 @@ const Mutation = {
     async uploadFile(parent, { file }, { db, me }, info) {
         if (!me) throw new AuthenticationError('Not logged in');
         const { createReadStream, filename, mimetype, encoding } = await file;
-        console.log(me.email);
-        const user = await db.UserModel.findOne({ mail:me.email });
-        console.log(user);
-        console.log("here0");
+
+        const user = await db.UserModel.findOne({ email:me.email });
         const readStream1 = createReadStream();
         const readStream2 = createReadStream();
-        console.log("here1");
         const writeStream = await saveImage(db, readStream1, filename);
-        console.log("here2");
         user.images.push(writeStream.id);
-        console.log("here3");
         await user.save();
-        console.log("here");
         return await readStreamToDataUrl(readStream2);
     },
 
+
+    async createLike(parent, { to, isLike}, { db, me, pubsub}, info) {
+        if (!me) throw new AuthenticationError('Not logged in');
+        const userMe = await db.UserModel.findOne({ email:me.email}).populate('Like');
+        const userStranger = await db.UserModel.findOne({ email: to}).populate('Like');
+        userMe.likeList.push(new db.LikeModel({stranger: userStranger, isLike})).save();
+        // race condition exists
+        if (!isLike) return userMe;
+        for (let i = 0; i < userStranger.likeList.length; ++i) {
+            if (userStranger.likeList[i].stranger.email === userMe.email) {
+                if (userStranger.likeList[i].isLike) {
+                    pubsub.publish(to, {
+                        user: userMe
+                    });
+                    pubsub.publish(userMe.email, {
+                        user: userStranger
+                    });
+                }
+                break;
+            }
+        }
+        return userMe;
+    }
 };
 
 export default Mutation;
