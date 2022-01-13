@@ -14,7 +14,6 @@ const Mutation = {
 
     async signup(parent, { email, name, password, gender, age, aboutMe, department }, { db }, info) {
         const user = await newUser(db, email, name, password, gender, age, aboutMe, department);
-        console.log(user);
         return user ;
     },
 
