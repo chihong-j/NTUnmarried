@@ -4,14 +4,11 @@ import Container from '@mui/material/Container';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import { NOTIFYCATION_SUBSCRIPTION, USER_QUERY } from "../graphql";
+import { NOTIFICATION_SUBSCRIPTION, USER_QUERY } from "../graphql";
 import { useQuery } from "@apollo/client";
 
 
-const Notification = ({ pairedEmail, pairedName, setPairedName, isInitializedNo, setIsInitializedNo, userEmail }) => {
-    //
-    // const userLike = ["Kris", "Showlo"]
-    // setPairedName(["Kris", "Showlo"])
+const Notification = ({ isInitializedNo, setIsInitializedNo, userEmail }) => {
     const {data, loading, subscribeToMore} = useQuery(USER_QUERY,
         {
             variables: {
@@ -19,31 +16,32 @@ const Notification = ({ pairedEmail, pairedName, setPairedName, isInitializedNo,
             }
         },
     );
-    useEffect(() => {
-        if (!isInitializedNo) {
-            setIsInitializedNo(true);
-            if (!(!pairedName && typeof(pairedName) !== 'undefined' && pairedName != 0))
-                setPairedName([...pairedName]);
-        }
-    });
+    // useEffect(() => {
+    //     if (!isInitializedNo) {
+    //         setIsInitializedNo(true);
+    //         if (!(!pairedName && typeof(pairedName) !== 'undefined' && pairedName != 0))
+    //             setPairedName([...pairedName]);
+    //     }
+    // });
     useEffect(() => {
         subscribeToMore({
-          document: NOTIFYCATION_SUBSCRIPTION,
+          document: NOTIFICATION_SUBSCRIPTION,
           variables: {email: userEmail},
           updateQuery: (prev, { subscriptionData }) => {
             if (!subscriptionData.data) return prev;
             const newPairedName = subscriptionData.data.notification.name;
+            const newPairedImage = subscriptionData.data.notification.image;
             return {
               user: {
-                  pairedName: [...prev.user.pairedName, newPairedName]
+                notificationList: [{name: newPairedName, image: newPairedImage}, ...prev.user.notificationList]
               }
             };
           },
         });
     
       }, [subscribeToMore]);
-    console.log(pairedName);
-    if (!pairedName && typeof(pairedName) !== 'undefined' && pairedName != 0) {
+
+    if (!data.user.notificationList && typeof(data.user.notificationList) !== 'undefined' && data.user.notificationList != 0) {
         return (
             <Container maxWidth = "sm" sx={{display: "flex", justifyContent: "center"}}>  
                 <Typography variant="h5" style={{display: "inline-block", color: "black"}}>
@@ -52,31 +50,28 @@ const Notification = ({ pairedEmail, pairedName, setPairedName, isInitializedNo,
             </Container>
         ) 
     }
-    else if (pairedName.length === 0) {
+    else if (data.user.notificationList.length === 0) {
         return (
                 <Container maxWidth = "sm" sx={{display: "flex", justifyContent: "center"}}>  
-                    <Typography variant="h5" style={{display: "inline-block", color: "black"}}>
+                    <Typography variant="h5" style={{display: "inline-block", color: "black", marginTop: "50px"}}>
                         No notification!
                     </Typography>
                 </Container>
             ) 
     }
     // setIsNotification(true);
-    const notifiMsg = pairedName.map((name) => (`${name} 與你配對到了！快去跟他聊天吧！`))
     return (
         <Container maxWidth = "sm" sx={{display: "flex", justifyContent: "center"}}>
             <Stack>
-                {notifiMsg.map((notiMsg, id) => 
+                {data.user.notificationList.map(({name, image}, id) => 
                     <div className="notification-cell" key={id} >
                         <div style={{display: "inline-block"}}>
+                            {/* <img className="like" style={{color: "green",fontSize: "30px" }} src={image}></img> */}
                             <FavoriteIcon className="like" sx={{color: "green",fontSize: "30px" }} />    
                         </div>
                         <Typography variant="h5" style={{display: "inline-block", color: "black"}}>
-                            {notiMsg}
+                            {`${name} 與你配對到了！快去跟他聊天吧！`}
                         </Typography>
-                        {/* <div style={{display: "inline-block"}}>  
-                            {notiMsg}
-                        </div> */}
                     </div>
                 )}
             </Stack>

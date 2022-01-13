@@ -1,14 +1,10 @@
-import { useState } from 'react'
-// import { useMutation } from '@apollo/client';
-import {CREATE_CHATBOX_MUTATION, CREATE_MESSAGE_MUTATION} from '../graphql'
-// import { Button, Input, Tag, Tabs, message } from 'antd'
+import { useState, useEffect } from 'react'
 import Button from '@mui/material/Button';
-import ChatWithModal from '../Components/ChatWithModal'
+import { message } from 'antd'
 import Control from '../Components/Control'
 import Display from '../Components/Display'
 import TypeBar from './TypeBar'
 import ChatBox from './ChatBox';
-import Title from '../Components/Title'
 import useChatBox from './../Hooks/useChatBox';
 import Message from '../Components/Message';
 import styled from 'styled-components'
@@ -18,13 +14,56 @@ import Box from '@mui/material/Box';
 import PersonIcon from '@mui/icons-material/Person';
 import Typography from '@mui/material/Typography';
 import "../style.css"
+import { USER_QUERY, CREATE_MESSAGE_MUTATION } from "../graphql";
+import { useQuery, useMutation } from "@apollo/client";
 //
-const Chat = ({ me, displayStatus, user}) => {
+const Chat = ({ me, user}) => {
     const [messageInput, setMessageInput] = useState("");
-    const [modalVisible, setModalVisible] = useState(false);
+    const [chatBoxName, setChatBoxName] = useState("");
+    const [friendImg, setFriendImg] = useState("");
+    const [friendEma, setFriendEma] = useState("");
+    // const [selectedChatBoxId, setSelectedChatBoxId] = useState(0);
     const {chatBoxes, createChatBox, removeChatBox, userChatWith, setUserChatWith} = useChatBox();
-    // const [startChat] = useMutation(CREATE_CHATBOX_MUTATION);
-    // const [sendMessage] = useMutation(CREATE_MESSAGE_MUTATION);
+    const [sendMessage] = useMutation(CREATE_MESSAGE_MUTATION);
+    const {data, loading, subscribeToMore} = useQuery(USER_QUERY,
+        {
+            variables: {
+                email: me.email
+            }
+        },
+    );
+    useEffect(() => {
+        // subscribeToMore({
+        //   document: NOTIFYCATION_SUBSCRIPTION,
+        //   variables: {email: userEmail},
+        //   updateQuery: (prev, { subscriptionData }) => {
+        //     if (!subscriptionData.data) return prev;
+        //     const newPairedName = subscriptionData.data.notification.name;
+        //     return {
+        //       user: {
+        //           pairedName: [...prev.user.pairedName, newPairedName]
+        //       }
+        //     };
+        //   },
+        // });
+    
+    }, [subscribeToMore]);
+
+    const displayStatus = (payload) => {
+    if (payload.msg) {
+        const { type, msg } = payload;
+        const content = { content: msg, duration: 1.5 }
+        switch (type) {
+        case 'success':
+            message.success(content);
+            break;
+        case 'error':
+        default:
+            message.error(content);
+            break;
+        }
+    }
+    }
     // const onChange = (idx) => {
     //     setActiveKey(idx);
     // };
@@ -53,47 +92,67 @@ const Chat = ({ me, displayStatus, user}) => {
     // const handleClear = () => {
     //     clearChatBox(activeKey);
     // }
+    const startChat = (name, friendName, friendImage, friendEmail) => {
+        setFriendEma(friendEmail);
+        setChatBoxName(name);
+        setFriendImg(friendImage);
+        setUserChatWith(friendName);
+    }
+    if (!data.user.chatBoxPayloadList && typeof(data.user.chatBoxPayloadList) !== 'undefined' && data.user.chatBoxPayloadList != 0) {
+        return (
+            <Container maxWidth = "sm" sx={{display: "flex", justifyContent: "center"}}>  
+                <Typography variant="h5" style={{display: "inline-block", color: "black"}}>
+                    No Message!
+                </Typography>
+            </Container>
+        ) 
+    }
+    else if (data.user.chatBoxPayloadList.length === 0) {
+        return (
+                <Container maxWidth = "sm" sx={{display: "flex", justifyContent: "center"}}>  
+                    <Typography variant="h5" style={{display: "inline-block", color: "black", marginTop: "50px"}}>
+                        No Message!
+                    </Typography>
+                </Container>
+            ) 
+    }
 
     return (
         <>
             { userChatWith ?(
             <Container sx = {{height: 600}}>
                 <Typography variant="h5" sx = {{justifyContent: "center", display: "flex", margin: "10px"}}>
-                    {userChatWith.Name}  
+                    {userChatWith}  
                 </Typography>
                 <Message>
                     <Display>
-                        <ChatBox me = {me.Email} friend = {userChatWith.Email} me_img = {user[0].img[0]} friend_img = {user[1].img[0]}/>
+                        <ChatBox me={me} name={chatBoxName} friendName={userChatWith} friendImage={friendImg} friendEma={friendEma} setFriendEma={setFriendEma} setUserChatWith={setUserChatWith} setChatBoxName={setChatBoxName} setFriendImg={setFriendImg}  />
                     </Display>
                 </Message>
                 <Control>
-                    <TypeBar me={me} friend = {userChatWith} messageInput = {messageInput} setMessageInput = {setMessageInput}
-                        // displayStatus={displayStatus} sendMessage={sendMessage}
-                        disabled={chatBoxes.length === 0} />
+                    <TypeBar me={me.email} friend={friendEma} displayStatus={displayStatus} sendMessage={sendMessage} messageInput = {messageInput} setMessageInput = {setMessageInput} />
                 </Control>
             </Container>
             ): (
-                <Container maxWidth = "sm" sx = {{display: "flex"}}>
-                    <Stack>
+                <Container maxWidth = "sm" sx = {{display: "flex", justifyContent: "center"}}>
                         {
-                            firends.map((friend, id) => 
-                            <div key={id} className="chat-cell" onClick={() => setUserChatWith(friend)}>
-                            <div className="chat-img-div" style={{display: "inline-block"}}>
-                                <img className="chat_img" src={user[0].img[0]} ></img>  
-                            </div>
-                            <div style={{display: "inline-block", marginLeft: "20px", overflow: "hidden", width: "500px", height: "70px"}}>
-                            <Typography variant="h4" color = "primary">
-                                            {friend.Name}
-                                        </Typography>
-                                        <Typography variant="h5">
-                                            {friend.LastMessage} 
-                                            {/* 37 characters */}
-                                        </Typography>
-                            </div>
-                        </div>
+                            data.user.chatBoxPayloadList.map(({name, friendName, friendImage, friendEmail}, id) => 
+                            <Stack>
+                                <div key={id} className="chat-cell" onClick={() => startChat(name, friendName, friendImage, friendEmail)}>
+                                    <div className="chat-img-div" style={{display: "inline-block"}}>
+                                        <img className="chat_img" src={friendImage} ></img>  
+                                    </div>
+                                    <div style={{display: "inline-block", marginLeft: "20px", overflow: "hidden", width: "500px", height: "70px"}}>
+                                    <Typography variant="h4" color = "primary">
+                                        {friendName}
+                                    </Typography>
+                                                {/* <Typography variant="h5">
+                                                </Typography> */}
+                                    </div>
+                                </div>
+                            </Stack>
                             )
                         }
-                    </Stack>
                 </Container>
             )
             }

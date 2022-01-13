@@ -13,6 +13,7 @@ const Query = {
             readStream = await retrieveImage(db, queryUser.images[i]);
             images.push(await readStreamToDataUrl(readStream));
         }
+
         return { id, email, name, gender, age, aboutMe, department, images, password, notificationList, chatBoxPayloadList};
     },
 

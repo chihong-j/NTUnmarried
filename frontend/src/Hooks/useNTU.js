@@ -7,8 +7,8 @@ const useNTU = () => {
     const [gender, setGender] = useState(true); //{true: male, false: female}
     const [age, setAge] = useState(0);
     const [birth, setBirth] = useState(new Date());
-    const [pairedEmail, setPairedEmail] = useState([]);
-    const [pairedName, setPairedName] = useState([]);
+    // const [pairedEmail, setPairedEmail] = useState([]);
+    // const [pairedName, setPairedName] = useState([]);
     const initialize = (me) => {
         if(me.images){
             console.log(me);
@@ -21,13 +21,13 @@ const useNTU = () => {
         setDepartment(me.department)
         setGender(me.gender)
         setAge(me.age)
-        setPairedEmail(me.pairedEmail)
-        setPairedName(me.pairedName)
+        // setPairedEmail(me.pairedEmail)
+        // setPairedName(me.pairedName)
         // setPairedName(['Kris', 'Showlo'])
         //
     }
 
-    return {images, setIamges, aboutMe, setAboutMe,  department, setDepartment, gender, setGender, age, setAge, birth, setBirth, initialize, pairedName, pairedEmail, setPairedName, setPairedEmail}
+    return {images, setIamges, aboutMe, setAboutMe,  department, setDepartment, gender, setGender, age, setAge, birth, setBirth, initialize}
 }
 
 export default useNTU;

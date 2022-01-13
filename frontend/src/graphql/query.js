@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client';
 
 const CHATBOX_QUERY = gql`
-  query chatBox($name1: String, $name2: String) {
-      chatBox(name1: $name1, name2: $name2) {
+  query chatBox($name: String) {
+      chatBox(name: $name) {
         name
         messages {
             sender {
@@ -24,8 +24,16 @@ query user($email: String!){
     aboutMe
     department
     images
-    notificationList
-    chatBoxList
+    notificationList {
+      name
+      image
+    }
+    chatBoxPayloadList {
+      name
+      friendName
+      friendImage
+      friendEmail
+    }
   }
 }
 `

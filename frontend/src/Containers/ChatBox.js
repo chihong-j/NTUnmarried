@@ -13,11 +13,11 @@ const Messages = styled.div`
     overflow: auto;
 `;
 
-const ChatBox = ({me, friend, me_img, friend_img}) => {
+const ChatBox = ({me, name, friendName, friendImage, friendEma, setFriendEma, setUserChatWith, setChatBoxName, setFriendImg}) => {
     const messagesFooter = useRef(null);
     
     const {data, loading, subscribeToMore} = useQuery(CHATBOX_QUERY, {variables: {
-        name1: me, name2: friend
+        name
     }});
 
     const scrollToBottom  = () => {
@@ -33,7 +33,7 @@ const ChatBox = ({me, friend, me_img, friend_img}) => {
             subscribeToMore(
                 {
                     document: MESSAGE_SUBSCRIPTION,
-                    variables: {from: me, to: friend},
+                    variables: {from: me.email, to: friendEma},
                     updateQuery: (prev, {subscriptionData}) => {
                         if (!subscriptionData.data) return prev;
                         const newMessage = subscriptionData.data.message.message;
@@ -52,7 +52,7 @@ const ChatBox = ({me, friend, me_img, friend_img}) => {
 
     return (
         <>
-            <Button color="primary" variant="raised" component="span">
+            <Button color="primary" variant="raised" component="span" onClick={() => setUserChatWith(null)} >
                 <ArrowBackIosIcon sx = {{fontSize : "50px", flexGrow: 1}}/>
             </Button>
             <Messages>

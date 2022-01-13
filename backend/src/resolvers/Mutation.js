@@ -22,6 +22,12 @@ const Mutation = {
     },
 
     async signup(parent, { email, name, password, gender, age, aboutMe, department }, { db }, info) {
+        const users = await db.UserModel.find({});
+        if (users) {
+            for (let i = 0; i < users.length; ++i) {
+                if (users[i].email === email) throw new Error("Sign Error. Email exists!");
+            }
+        }
         const user = await newUser(db, email, name, password, gender, age, aboutMe, department);
         return user ;
     },
@@ -73,7 +79,8 @@ const Mutation = {
         const newLike = new db.LikeModel({stranger: userStranger, isLike});
         newLike.save();
         userMe.likeList.push(newLike);
-        userMe.save()
+        userMe.save();
+
         // race condition exists
         if (!isLike) return userMe;
         for (let i = 0; i < userStranger.likeList.length; ++i) {
@@ -82,7 +89,7 @@ const Mutation = {
                     const populatedUserMe = await populateImg(db, userMe, 1);
                     const populatedUserStranger = await populateImg(db, userStranger, 1);
                     const newNotificationStranger = await new db.NotificationModel({name: populatedUserMe.name, image: populatedUserMe.images[0]}).save()
-                    const newNotificationMe = await  new db.NotificationModel({name: populatedUserStranger.name, image: populatedUserStranger.images[0]}).save()
+                    const newNotificationMe = await new db.NotificationModel({name: populatedUserStranger.name, image: populatedUserStranger.images[0]}).save()
                     userMe.notificationList = [newNotificationMe, ...userMe.notificationList];
                     userStranger.notificationList = [newNotificationStranger, ...userStranger.notificationList];
 
@@ -114,10 +121,10 @@ const Mutation = {
                     pubsub.publish(userMe.email, {
                         notification: newNotificationMe
                     });
-                    pubsub.publish(to, {
+                    pubsub.publish(`chatBoxPayload ${to}`, {
                         chatBox: chatBoxPayloadStranger
                     })
-                    pubsub.publish(userMe.email, {
+                    pubsub.publish(`chatBoxPayload ${userMe.email}`, {
                         chatBox: chatBoxPayloadMe
                     })
                 }
@@ -139,11 +146,48 @@ const Mutation = {
         chatBox.messages.push(newMsg);
         await chatBox.save();
 
+        const userFrom = await db.UserModel.findOne({email: from});
+        const userTo = await db.UserModel.findOne({email: to});
+
+        for (let i = 0; i < userFrom.chatBoxPayloadList.length; ++i) {
+            if (userFrom.chatBoxPayloadList[i].friendEmail === to) {
+                if (i === 0) {
+                    break;
+                } else {
+                    const chatBoxPayloadIdFrom = userFrom.chatBoxPayloadList[i];
+                    userFrom.chatBoxPayloadList.splice(i, 1);
+                    userFrom.chatBoxPayloadList.splice(0, 0, chatBoxPayloadIdFrom);
+                    pubsub.publish(`chatBoxPayload ${userFrom.email}`, {
+                        chatBox: await db.ChatBoxPayloadModel.findById(chatBoxPayloadIdFrom)
+                    })
+                }
+            }
+        }
+
+        for (let i = 0; i < userTo.chatBoxPayloadList.length; ++i) {
+            if (userTo.chatBoxPayloadList[i].friendEmail === from) {
+                if (i === 0) {
+                    break;
+                } else {
+                    let chatBoxPayloadIdTo = userTo.chatBoxPayloadList[i];
+                    userTo.chatBoxPayloadList.splice(i, 1);
+                    userTo.chatBoxPayloadList.splice(0, 0, chatBoxPayloadIdTo);
+                    pubsub.publish(`chatBoxPayload ${userTo.email}`, {
+                        chatBox: await db.ChatBoxPayloadModel.findById(chatBoxPayloadIdTo)
+                    })
+                }
+            }
+        }
+        userTo.save();
+        userFrom.save();
+
+
+
         pubsub.publish(`chatBox ${chatBoxName}`, {
-          message: {message: newMsg},
-        });
+            message: newMsg,
+        })
         return newMsg;
-      },
+    }
 };
 
 export default Mutation;
