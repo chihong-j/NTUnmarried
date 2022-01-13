@@ -101,7 +101,7 @@ const Chat = ({ me, user}) => {
                     </Display>
                 </Message>
                 <Control>
-                    <TypeBar me={me.email} friend={friendEma} displayStatus={displayStatus} sendMessage={sendMessage} messageInput = {messageInput} setMessageInput = {setMessageInput} />
+                    <TypeBar me={me} friend={friendEma} displayStatus={displayStatus} sendMessage={sendMessage} messageInput = {messageInput} setMessageInput = {setMessageInput} />
                 </Control>
             </Container>
             ): (

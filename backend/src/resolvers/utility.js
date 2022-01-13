@@ -81,8 +81,10 @@ const checkMessage = async (db, from, to, message, errFunc) => {
 };
 
 // make sure calling checkMessage beforehand
-const newMessage = (db, sender, body) => {
-    return new db.MessageModel({ sender, body }).save();
+const newMessage = async (db, sender, body) => {
+    const s = await new db.MessageModel({ sender, body }).save();
+    console.log(s);
+    return s;
 };
 
 export {
