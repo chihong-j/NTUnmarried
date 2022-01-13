@@ -23,7 +23,6 @@ const Match = ({ me, user }) => {
     const {data, loading, ...props} = useQuery(STRANGER_QUERY, 
         {
             variables: {
-                email: me.email
             }
         },
     );
@@ -32,7 +31,7 @@ const Match = ({ me, user }) => {
             setLeftPicDisabled(true);
             setRightPicDisabled(false);
         }
-        else if (currentID === user[selectedUserId].img.length - 1) {
+        else if (currentID >= data.stranger[selectedUserId].images.length - 1) {
             setLeftPicDisabled(false);
             setRightPicDisabled(true);
         }

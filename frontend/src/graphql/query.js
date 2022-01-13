@@ -31,8 +31,8 @@ query user($email: String!){
 `
 
 const STRANGER_QUERY = gql`
-  query stranger($email: String!){
-    stranger(email: $email) {
+  query stranger{
+    stranger {
       name
       age
       aboutMe
