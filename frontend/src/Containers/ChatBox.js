@@ -54,7 +54,7 @@ const ChatBox = ({me, name, friendName, friendImage, friendEma, setFriendEma, se
     // }, [subscribeToMore]);
 
     if(loading) return <p>loading</p>;
-
+    console.log(data)
     return (
         <>
             <Button color="primary" variant="raised" component="span" onClick={ReturnChatBox} >

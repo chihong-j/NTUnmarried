@@ -6,7 +6,7 @@ const MESSAGE_SUBSCRIPTION = gql`
         mutation
         message {
             sender {
-                email
+                name
             }
             body
         }

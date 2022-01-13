@@ -112,7 +112,7 @@ const Mutation = {
                     userMe.save();
                     userStranger.save();
 
-                    newChatBox(db, chatBoxName);
+                    await newChatBox(db, chatBoxName);
 
                     pubsub.publish(to, {
                         notification: newNotificationStranger

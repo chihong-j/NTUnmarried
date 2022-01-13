@@ -87,7 +87,7 @@ const Chat = ({ me, user}) => {
             ) 
     }
     if (loading) return <p>loading</p>;
-    console.log(data)
+    // console.log("mydata", data)
     return (
         <>
             { userChatWith ?(
