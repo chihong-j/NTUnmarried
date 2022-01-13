@@ -3,7 +3,7 @@ scalar Upload
 type Query {
     user(email: String!): User!
     stranger: [User!]
-    chatBox(email1: String!, email2: String!): ChatBox! #Query all the messages in the chatBox given two users
+    chatBox(name: String!): ChatBox! #Query all the messages in the chatBox given two users
     usersChatting(email: String!): [ChatBox!] #Query all the ChatBoxes the user have with others
 }
 
@@ -18,8 +18,10 @@ type Mutation {
 }
 
 type Subscription {
-#    message(from: String!, to: String!): MessageSubscriptionPayload!
-    notification: User!
+    message(from: String!, to: String!): MessageSubscriptionPayload!
+    notification(email: String!): NotificationPayload
+    chatBox(email: String!): ChatBoxPayload
+
 }
 
 
@@ -33,8 +35,19 @@ type User {
     department: String!,
     images: [String!],
     password: String!,
-    pairedEmail: [String],
-    pairedName: [String]
+    notificationList: [NotificationPayload],
+    chatBoxList: [ChatBoxPayload],
+}
+
+type NotificationPayload { #createLike要subscribe這個
+    name: String
+    image: String 
+}
+
+type ChatBoxPayload { #當createMessage createLike要subscribe這個
+    name: String # Ex. b07901067@ntu.edu.tw_b07901068@ntu.edu.tw
+    friendName: String #對方的名字
+    friendImage: String #對方大頭貼(照片第一張)
 }
 
 type Token {
