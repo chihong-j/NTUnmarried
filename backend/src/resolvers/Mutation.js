@@ -113,8 +113,6 @@ const Mutation = {
                     userStranger.save();
 
                     newChatBox(db, chatBoxName);
-                    newChatBox.save();
-
 
                     pubsub.publish(to, {
                         notification: newNotificationStranger
