@@ -24,8 +24,8 @@ query user($email: String!){
     aboutMe
     department
     images
-    pairedEmail
-    pairedName
+    notificationList
+    chatBoxList
   }
 }
 `

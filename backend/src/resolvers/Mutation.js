@@ -82,7 +82,25 @@ const Mutation = {
             }
         }
         return userMe;
-    }
+    },
+
+    async createMessage(parent, {from, to, message}, {db, pubsub}, info) {
+        const {chatBox, sender} = await checkMessage(
+          db, from, to, message, "createMessage"
+        );
+        if(!chatBox) throw new Error("ChatBox not found for createMessage");
+        if(!sender) throw new Error("User not found" + from);
+        const chatBoxName = makeName(from, to);
+        const newMsg = await newMessage(db, sender, message);
+        console.log(newMsg.sender);
+        chatBox.messages.push(newMsg);
+        await chatBox.save();
+        
+        pubsub.publish(`chatBox ${chatBoxName}`, {
+          message: {mutation: "CREATED", message: newMsg},
+        });
+        return newMsg;
+      },
 };
 
 export default Mutation;
