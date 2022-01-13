@@ -20,7 +20,7 @@ type Mutation {
 type Subscription {
     message(from: String!, to: String!): Message!
     notification(email: String!): NotificationPayload
-    chatBox(email: String!): ChatBoxPayload
+    chatBoxPayload(email: String!): ChatBoxPayload
 }
 
 
