@@ -14,7 +14,7 @@ import {STRANGER_QUERY} from './../graphql';
 import img from "../img";
 
 
-const Match = ({ me, user }) => {
+const Match = ({ me, user, currentPage }) => {
     const [noUserLeft, setNoUserLeft] = useState(false)
     const [selectedUserId, setSelectedUserId] = useState(0);
     const [selectedPicId, setSelectedPicId] = useState(0);
