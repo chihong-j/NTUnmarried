@@ -14,7 +14,7 @@ import {STRANGER_QUERY} from './../graphql';
 import img from "../img";
 
 
-const Match = ({ me, user }) => {
+const Match = ({ data, loading, me, user, currentPage }) => {
     const [noUserLeft, setNoUserLeft] = useState(false)
     const [selectedUserId, setSelectedUserId] = useState(0);
     const [selectedPicId, setSelectedPicId] = useState(0);
@@ -24,12 +24,12 @@ const Match = ({ me, user }) => {
     const [likeUser] = useMutation(CREATE_LIKE_MUTATION);
     const [rightPicDisabled, setRightPicDisabled] = useState(false);
     
-    const {data, loading, ...props} = useQuery(STRANGER_QUERY, 
-        {
-            variables: {
-            }
-        },
-    );
+    // const {data, loading, ...props} = useQuery(STRANGER_QUERY, 
+    //     {
+    //         variables: {
+    //         }
+    //     },
+    // );
     
     // useEffect(() => {
     //     if (selectedUserId < data.stranger.length)
