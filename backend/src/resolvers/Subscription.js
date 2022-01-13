@@ -15,7 +15,7 @@ const Subscription = {
         },
       },
 
-    chatBox: {
+    chatBoxPayload: {
         subscribe(parent, { email }, { pubsub }, info) {
             return pubsub.asyncIterator(`chatBoxPayload ${email}`);
         }

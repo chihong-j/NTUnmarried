@@ -24,12 +24,12 @@ const NOTIFICATION_SUBSCRIPTION = gql`
 `;
 
 const CHAT_SUBSCRIPTION = gql`
-  subscription chatBox($email: String!) {
+  subscription chatBoxPayload($email: String!) {
     chatBoxPayload(email: $email) {
       name
       friendName
       friendImage
-      freindEmail
+      friendEmail
     }
   }
 `
