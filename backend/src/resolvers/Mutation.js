@@ -60,7 +60,9 @@ const Mutation = {
             }
             }
         );
-        userMe.likeList.push(new db.LikeModel({stranger: userStranger, isLike}));
+        const newLike = new db.LikeModel({stranger: userStranger, isLike});
+        newLike.save();
+        userMe.likeList.push(newLike);
         userMe.save();
         // race condition exists
         if (!isLike) return userMe;
