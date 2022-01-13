@@ -1,4 +1,4 @@
-import {checkUser, newUser, saveImage, readStreamToDataUrl, createToken, retrieveImage} from "./utility";
+import {checkUser, newUser, saveImage, readStreamToDataUrl, createToken, retrieveImage, populateImg} from "./utility";
 import bcrypt from 'bcryptjs';
 import {AuthenticationError} from "apollo-server-core";
 import {UserModel} from "../db";
@@ -69,18 +69,38 @@ const Mutation = {
         for (let i = 0; i < userStranger.likeList.length; ++i) {
             if (userStranger.likeList[i].stranger.email === userMe.email) {
                 if (userStranger.likeList[i].isLike) {
+                    const populatedUserMe = await populateImg(db, userMe, 1);
+                    const populatedUserStrange = await populateImg(db, userStranger, 1);
                     pubsub.publish(to, {
-                        notification: userMe
+                        notification: populatedUserMe
                     });
                     pubsub.publish(userMe.email, {
-                        notification: userStranger
+                        notification: populatedUserStrange
                     });
                 }
                 break;
             }
         }
         return userMe;
-    }
+    },
+
+    async createMessage(parent, {from, to, message}, {db, pubsub}, info) {
+        const {chatBox, sender} = await checkMessage(
+          db, from, to, message, "createMessage"
+        );
+        if(!chatBox) throw new Error("ChatBox not found for createMessage");
+        if(!sender) throw new Error("User not found" + from);
+        const chatBoxName = makeName(from, to);
+        const newMsg = await newMessage(db, sender, message);
+        console.log(newMsg.sender);
+        chatBox.messages.push(newMsg);
+        await chatBox.save();
+        
+        pubsub.publish(`chatBox ${chatBoxName}`, {
+          message: {mutation: "CREATED", message: newMsg},
+        });
+        return newMsg;
+      },
 };
 
 export default Mutation;
