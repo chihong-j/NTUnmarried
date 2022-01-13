@@ -23,7 +23,6 @@ const Match = ({ me, user }) => {
     const {data, loading, ...props} = useQuery(STRANGER_QUERY, 
         {
             variables: {
-                email: me.email
             }
         },
     );
