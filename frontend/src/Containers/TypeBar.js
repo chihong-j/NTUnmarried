@@ -1,7 +1,7 @@
 import { Input } from 'antd';
 const {Search} = Input;
 
-const TypeBar = ({ me, displayStatus, sendMessage, disabled, messageInput, setMessageInput }) => {
+const TypeBar = ({ me, friend, displayStatus, sendMessage, messageInput, setMessageInput }) => {
     
     return (
         <Search
@@ -28,7 +28,6 @@ const TypeBar = ({ me, displayStatus, sendMessage, disabled, messageInput, setMe
                 });
                 setMessageInput('');
             }}
-            disabled={disabled}
             size = "large"
         ></Search>
     );

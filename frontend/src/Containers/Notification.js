@@ -55,7 +55,7 @@ const Notification = ({ pairedEmail, pairedName, setPairedName, isInitializedNo,
     else if (pairedName.length === 0) {
         return (
                 <Container maxWidth = "sm" sx={{display: "flex", justifyContent: "center"}}>  
-                    <Typography variant="h5" style={{display: "inline-block", color: "black"}}>
+                    <Typography variant="h5" style={{display: "inline-block", color: "black", marginTop: "50px"}}>
                         No notification!
                     </Typography>
                 </Container>
