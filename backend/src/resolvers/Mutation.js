@@ -1,4 +1,14 @@
-import {checkUser, newUser, saveImage, readStreamToDataUrl, createToken, retrieveImage, populateImg} from "./utility";
+import {
+    newUser,
+    saveImage,
+    readStreamToDataUrl,
+    createToken,
+    retrieveImage,
+    populateImg,
+    newChatBox,
+    checkMessage,
+    newMessage
+} from "./utility";
 import bcrypt from 'bcryptjs';
 import {AuthenticationError} from "apollo-server-core";
 import {UserModel} from "../db";
@@ -63,6 +73,7 @@ const Mutation = {
         const newLike = new db.LikeModel({stranger: userStranger, isLike});
         newLike.save();
         userMe.likeList.push(newLike);
+        userMe.save()
         // race condition exists
         if (!isLike) return userMe;
         for (let i = 0; i < userStranger.likeList.length; ++i) {
@@ -71,11 +82,31 @@ const Mutation = {
                     const populatedUserMe = await populateImg(db, userMe, 1);
                     const populatedUserStranger = await populateImg(db, userStranger, 1);
                     const newNotificationStranger = await new db.NotificationModel({name: populatedUserMe.name, image: populatedUserMe.images[0]}).save()
-                    const newNotificationMe = await  new db.NotificationModel({name: populatedUserStranger.name, image: populatedUserStranger.image[0]}).save()
+                    const newNotificationMe = await  new db.NotificationModel({name: populatedUserStranger.name, image: populatedUserStranger.images[0]}).save()
                     userMe.notificationList = [newNotificationMe, ...userMe.notificationList];
                     userStranger.notificationList = [newNotificationStranger, ...userStranger.notificationList];
+
+                    const chatBoxPayloadMe = await new db.ChatBoxPayloadModel({
+                        name: userMe.name,
+                        friendName: userStranger.name,
+                        friendImage: populatedUserStranger.images[0],
+                        friendEmail: userStranger.email
+                    }).save();
+                    const chatBoxPayloadStranger = await new db.ChatBoxPayloadModel({
+                        name: userStranger.name,
+                        friendName: userMe.name,
+                        friendImage: populatedUserMe.images[0],
+                        friendEmail: userMe.email
+                    }).save();
+
+                    userMe.chatBoxPayloadList = [chatBoxPayloadMe, ...userMe.chatBoxPayloadList];
+                    userStranger.chatBoxPayloadList = [chatBoxPayloadStranger, ...userStranger.chatBoxPayloadList];
+
                     userMe.save();
                     userStranger.save();
+
+                    newChatBox(db, userMe.email, userStranger.email);
+
 
                     pubsub.publish(to, {
                         notification: newNotificationStranger
@@ -83,6 +114,12 @@ const Mutation = {
                     pubsub.publish(userMe.email, {
                         notification: newNotificationMe
                     });
+                    pubsub.publish(to, {
+                        chatBox: chatBoxPayloadStranger
+                    })
+                    pubsub.publish(userMe.email, {
+                        chatBox: chatBoxPayloadMe
+                    })
                 }
                 break;
             }
@@ -96,14 +133,14 @@ const Mutation = {
         );
         if(!chatBox) throw new Error("ChatBox not found for createMessage");
         if(!sender) throw new Error("User not found" + from);
-        const chatBoxName = makeName(from, to);
+        const chatBoxName = [from, to].sort().join('$');
         const newMsg = await newMessage(db, sender, message);
-        console.log(newMsg.sender);
+
         chatBox.messages.push(newMsg);
         await chatBox.save();
 
         pubsub.publish(`chatBox ${chatBoxName}`, {
-          message: {mutation: "CREATED", message: newMsg},
+          message: {message: newMsg},
         });
         return newMsg;
       },
