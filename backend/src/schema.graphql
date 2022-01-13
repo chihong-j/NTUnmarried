@@ -58,7 +58,7 @@ type Token {
 type ChatBox {
   id: ID!
   name: String!
-  messages: [Message!]
+  messages: [Message]
 }
 
 type Message {

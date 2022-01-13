@@ -95,5 +95,6 @@ export {
     populateImg,
     newChatBox,
     checkMessage,
-    newMessage
+    newMessage,
+    checkChatBox
 };
