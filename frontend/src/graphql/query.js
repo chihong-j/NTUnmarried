@@ -6,7 +6,7 @@ const CHATBOX_QUERY = gql`
         name
         messages {
             sender {
-                name
+                email
             }
             body
         }
