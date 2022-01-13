@@ -79,14 +79,14 @@ const Profile = ({images, setIamges, aboutMe, setAboutMe, department, setDepartm
                 <ImageList sx={{ width: 500, height: 450 }} cols={3} rowHeight={200}>
                     {images.map((image, id) => 
                         image?(
-                        <ImageListItem key = {id}>
+                        <ImageListItem key = {id}  sx={{overflowY: "hidden"}}>
                             <img
                                 src={image}
                                 loading="lazy"
                             />
                         </ImageListItem>
                         ): (
-                            <ImageListItem key={id} sx = {{border: '1px dashed gray'}}>
+                            <ImageListItem key={id} sx = {{border: '1px dashed gray', overflowY: "hidden"}}>
                             <input
                                     accept="image/*"
                                     style={{ display: 'none' }}
