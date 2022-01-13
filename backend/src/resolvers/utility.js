@@ -63,6 +63,10 @@ const populateImg = async (db, user, numImg) => {
     return { id, email, name, gender, age, aboutMe, department, images};
 }
 
+
+
+
+
 export {
     checkUser,
     newUser,

@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose, {mongo} from 'mongoose';
 import { createModel } from "mongoose-gridfs";
 import { connection } from "./mongo";
 const Schema = mongoose.Schema;
@@ -22,20 +22,46 @@ const UserSchema = new Schema({
     department: { type: String, required: true},
     images: [{ type: mongoose.Types.ObjectId }],
     password: { type: String, required: true },
-    likeList: [{ type: mongoose.Types.ObjectId, ref: 'Like' }]
+    likeList: [{ type: mongoose.Types.ObjectId, ref: 'Like' }],
+    notificationList: [{type: mongoose.Types.ObjectId, ref: 'Notification'}],
+    chatBoxPayloadList: [{ type: mongoose.Types.ObjectId, ref: 'ChatBoxPayload'}]
 })
 
-const LikeScheme = new Schema({
+const NotificationListSchema = new Schema({
+    name: { type: String },
+    image: { type: String }
+})
+
+const LikeSchema = new Schema({
     stranger: { type: mongoose.Types.ObjectId, required: true, ref: 'User'},
     isLike: { type: Boolean, required: true}
 })
 
+const MessageSchema = new Schema({
+    sender: { type: mongoose.Types.ObjectId, ref: "User" },
+    body: { type: String, required: true},
+});
+
+const ChatBoxSchema = new Schema({
+    name: { type: String, required: true},
+    messages: [{ type: mongoose.Types.ObjectId, ref: "Message"}],
+});
+
+const ChatBoxPayloadSchema = new Schema({
+    name: { type: String },
+    friendName: { type: String },
+    friendImage: { type: String },
+    friendEmail: { type: String }
+})
 
 const container = []
 CreateFileModel(container);
 
 
 const UserModel = mongoose.model('User', UserSchema);
-const LikeModel = mongoose.model('Like', LikeScheme);
-
-export { UserModel, container, LikeModel };
+const LikeModel = mongoose.model('Like', LikeSchema);
+const NotificationModel = mongoose.model('Notification', NotificationListSchema);
+const MessageModel = mongoose.model('Message', MessageSchema);
+const ChatBoxModel = mongoose.model('ChatBox', ChatBoxSchema);
+const ChatBoxPayloadModel = mongoose.model('ChatBoxPayload', ChatBoxPayloadSchema);
+export { UserModel, container, LikeModel, NotificationModel, MessageModel, ChatBoxModel };

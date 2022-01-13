@@ -18,7 +18,7 @@ type Mutation {
 }
 
 type Subscription {
-    message(from: String!, to: String!): MessageSubscriptionPayload!
+    message(from: String!, to: String!): Message!
     notification(email: String!): NotificationPayload
     chatBox(email: String!): ChatBoxPayload
 }
@@ -47,6 +47,7 @@ type ChatBoxPayload { #當createMessage createLike要subscribe這個
     name: String # Ex. b07901067@ntu.edu.tw_b07901068@ntu.edu.tw
     friendName: String #對方的名字
     friendImage: String #對方大頭貼(照片第一張)
+    friendEmail: String
 }
 
 type Token {
@@ -65,5 +66,7 @@ type Message {
   sender: User!
   body: String!
 }
+
+
 
 
