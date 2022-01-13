@@ -5,7 +5,7 @@ const Subscription = {
         subscribe(parent, args, { db, me, pubsub }, info) {
             if (!me) throw new AuthenticationError('Not logged in');
 
-            return pubsub.asyncIterator(`${me.email}`);
+            return pubsub.asyncIterator(me.email);
         },
     },
 };

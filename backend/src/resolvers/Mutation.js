@@ -70,10 +70,10 @@ const Mutation = {
             if (userStranger.likeList[i].stranger.email === userMe.email) {
                 if (userStranger.likeList[i].isLike) {
                     pubsub.publish(to, {
-                        user: userMe
+                        notification: userMe
                     });
                     pubsub.publish(userMe.email, {
-                        user: userStranger
+                        notification: userStranger
                     });
                 }
                 break;
