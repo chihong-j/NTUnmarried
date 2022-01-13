@@ -92,15 +92,15 @@ const Mutation = {
                     const newNotificationMe = await new db.NotificationModel({name: populatedUserStranger.name, image: populatedUserStranger.images[0]}).save()
                     userMe.notificationList = [newNotificationMe, ...userMe.notificationList];
                     userStranger.notificationList = [newNotificationStranger, ...userStranger.notificationList];
-
+                    const chatBoxName = [userMe.email, userStranger.email].sort().join('$');
                     const chatBoxPayloadMe = await new db.ChatBoxPayloadModel({
-                        name: [userMe.email, userStranger.email].sort().join('$'),
+                        name: chatBoxName,
                         friendName: userStranger.name,
                         friendImage: populatedUserStranger.images[0],
                         friendEmail: userStranger.email
                     }).save();
                     const chatBoxPayloadStranger = await new db.ChatBoxPayloadModel({
-                        name: [userMe.email, userStranger.email].sort().join('$'),
+                        name: chatBoxName,
                         friendName: userMe.name,
                         friendImage: populatedUserMe.images[0],
                         friendEmail: userMe.email
@@ -112,7 +112,8 @@ const Mutation = {
                     userMe.save();
                     userStranger.save();
 
-                    newChatBox(db, [userMe.email, userStranger.email].sort().join('$'));
+                    newChatBox(db, chatBoxName);
+                    newChatBox.save();
 
 
                     pubsub.publish(to, {

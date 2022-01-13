@@ -15,7 +15,7 @@ const Messages = styled.div`
 
 const ChatBox = ({me, name, friendName, friendImage, friendEma, setFriendEma, setUserChatWith, setChatBoxName, setFriendImg}) => {
     const messagesFooter = useRef(null);
-    
+    console.log(name);
     const {data, loading, subscribeToMore} = useQuery(CHATBOX_QUERY, {variables: {
         name
     }});
