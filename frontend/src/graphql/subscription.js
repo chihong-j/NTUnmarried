@@ -14,14 +14,14 @@ const MESSAGE_SUBSCRIPTION = gql`
     }
 `;
 //
-const LIKE_SUBSCRIPTION = gql`
-  subscription like ($from: String!, $to: String!){
-      like (from: $from, to: $to) {
-        mutation
+const NOTIFYCATION_SUBSCRIPTION = gql`
+  subscription like($email: String!) {
+    notification(email: $email) {
         name
         email
+        images
       }
     }
 `;
 
-export {MESSAGE_SUBSCRIPTION, LIKE_SUBSCRIPTION};
+export {MESSAGE_SUBSCRIPTION, NOTIFYCATION_SUBSCRIPTION};

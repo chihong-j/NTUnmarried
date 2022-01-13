@@ -21,7 +21,6 @@ type Subscription {
     message(from: String!, to: String!): MessageSubscriptionPayload!
     notification(email: String!): NotificationPayload
     chatBox(email: String!): ChatBoxPayload
-
 }
 
 

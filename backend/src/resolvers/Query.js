@@ -20,7 +20,6 @@ const Query = {
         if (!me) throw new AuthenticationError('Not logged in');
         const users = await db.UserModel.find({});
         const userMe = await db.UserModel.findOne({email: me.email});
-
         const isMeet = async (stranger, likeList) => {
             let like;
             let likePerson;
@@ -31,7 +30,6 @@ const Query = {
             }
             return false;
         }
-
         const strangers = [];
         for (let i = 0; i < users.length; ++i) {
             if (users[i].email === userMe.email) continue;
@@ -39,7 +37,6 @@ const Query = {
                 strangers.push(users[i]);
             }
         }
-
         return strangers.map(async (stranger) => {
             let readStream;
             const { _id: id, email, name, gender, age, aboutMe, department } = stranger;
@@ -49,11 +46,8 @@ const Query = {
                 readStream = await retrieveImage(db, stranger.images[i]);
                 images.push(await readStreamToDataUrl(readStream));
             }
-
             return { id, email, name, gender, age, aboutMe, department, images};
         })
-
-
     },
 
 }

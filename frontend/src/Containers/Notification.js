@@ -4,19 +4,44 @@ import Container from '@mui/material/Container';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
+import { NOTIFYCATION_SUBSCRIPTION, USER_QUERY } from "../graphql";
+import { useQuery } from "@apollo/client";
 
 
-const Notification = ({ pairedEmail, pairedName, setPairedName, isInitializedNo, setIsInitializedNo }) => {
+const Notification = ({ pairedEmail, pairedName, setPairedName, isInitializedNo, setIsInitializedNo, userEmail }) => {
     //
     // const userLike = ["Kris", "Showlo"]
     // setPairedName(["Kris", "Showlo"])
+    const {data, loading, subscribeToMore} = useQuery(USER_QUERY,
+        {
+            variables: {
+                email: userEmail
+            }
+        },
+    );
     useEffect(() => {
         if (!isInitializedNo) {
             setIsInitializedNo(true);
             if (!(!pairedName && typeof(pairedName) !== 'undefined' && pairedName != 0))
-                setPairedName([...pairedName, 'Kris']);
+                setPairedName([...pairedName]);
         }
     });
+    useEffect(() => {
+        subscribeToMore({
+          document: NOTIFYCATION_SUBSCRIPTION,
+          variables: {email: userEmail},
+          updateQuery: (prev, { subscriptionData }) => {
+            if (!subscriptionData.data) return prev;
+            const newPairedName = subscriptionData.data.notification.name;
+            return {
+              user: {
+                  pairedName: [...prev.user.pairedName, newPairedName]
+              }
+            };
+          },
+        });
+    
+      }, [subscribeToMore]);
     console.log(pairedName);
     if (!pairedName && typeof(pairedName) !== 'undefined' && pairedName != 0) {
         return (
