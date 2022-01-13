@@ -19,6 +19,7 @@ const Query = {
 
     async stranger(parent, args, { db, me }, info) {
         if (!me) throw new AuthenticationError('Not logged in');
+        console.log("ok")
         const users = await db.UserModel.find({});
         const userMe = await db.UserModel.findOne({email: me.email});
         const isMeet = async (stranger, likeList) => {

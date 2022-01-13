@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../style.css"
-import { Container, Row, Col } from 'reactstrap';
+import Container from '@mui/material/Container';
+import { Row } from 'reactstrap';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -9,23 +10,34 @@ import Typography from '@mui/material/Typography';
 import { useMutation } from '@apollo/client';
 import { CREATE_LIKE_MUTATION } from "../graphql";
 import { useQuery } from '@apollo/client';
-import {STRANGER_QUERY} from './../graphql'
+import {STRANGER_QUERY} from './../graphql';
+import img from "../img";
 
 
 const Match = ({ me, user }) => {
+    const [noUserLeft, setNoUserLeft] = useState(false)
     const [selectedUserId, setSelectedUserId] = useState(0);
     const [selectedPicId, setSelectedPicId] = useState(0);
     const [leftPicDisabled, setLeftPicDisabled] = useState(true);
-    const [rightPicDisabled, setRightPicDisabled] = useState(false);
     const [rightAnimate, setRightAnimate] = useState(false);
     const [leftAnimate, setLeftAnimate] = useState(false);
     const [likeUser] = useMutation(CREATE_LIKE_MUTATION);
+    const [rightPicDisabled, setRightPicDisabled] = useState(false);
+    
     const {data, loading, ...props} = useQuery(STRANGER_QUERY, 
         {
             variables: {
             }
         },
     );
+    
+    // useEffect(() => {
+    //     if (selectedUserId < data.stranger.length)
+    //         setNoUserLeft(false);
+    //     else
+    //         setNoUserLeft(true);
+    // }, [selectedUserId, data]);
+
     const setDisabled = (currentID) => {
         if (currentID === 0) {
             setLeftPicDisabled(true);
@@ -74,8 +86,11 @@ const Match = ({ me, user }) => {
         if (currentUserID <= data.stranger.length - 1) {
             setSelectedUserId(currentUserID);
             setLeftPicDisabled(true);
-            setRightPicDisabled(false);
+            setRightPicDisabled(data.stranger[currentUserID].images.length <= 1);
             setSelectedPicId(0);
+        }
+        else {
+            setNoUserLeft(true);
         }
         setRightAnimate(false);
     }
@@ -93,20 +108,50 @@ const Match = ({ me, user }) => {
         if (currentUserID <= data.stranger.length - 1) {
             setSelectedUserId(currentUserID);
             setLeftPicDisabled(true);
-            setRightPicDisabled(false);
+            setRightPicDisabled(data.stranger[currentUserID].images.length <= 1);
             setSelectedPicId(0);
+        }
+        else {
+            setNoUserLeft(true);
         }
         setLeftAnimate(false);
     }
     if (loading) return <p>loading</p>;
-    console.log(data.stranger[selectedUserId]);
+    if (!data.stranger && typeof(data.stranger) !== 'undefined' && data.stranger != 0) {
+        return (
+            <Container maxWidth = "sm" sx={{display: "flex", justifyContent: "center"}}>  
+                <Typography variant="h5" style={{display: "inline-block", color: "black", marginTop: "50px"}}>
+                    No User Left! You can try reloading later.
+                </Typography>
+            </Container>
+        ) 
+    }
+    else if (data.stranger.length === 0) {
+        return (
+            <Container maxWidth = "sm" sx={{display: "flex", justifyContent: "center"}}>  
+                <Typography variant="h5" style={{display: "inline-block", color: "black", marginTop: "50px"}}>
+                    No User Left!
+                </Typography>
+            </Container>
+            ) 
+    }
+    else if (noUserLeft) {
+        return (
+            <Container maxWidth = "sm" sx={{display: "flex", justifyContent: "center"}}>  
+                <Typography variant="h5" style={{display: "inline-block", color: "black", marginTop: "50px"}}>
+                    No User Left!
+                </Typography>
+            </Container>
+        ) 
+    }
+    // console.log(data.stranger[selectedUserId]);
     return (
         <Container>
             <Row>
                 <div className="view-container">
                     <ChevronLeftIcon sx={{fontSize: "50px", marginLeft: "300px", cursor: leftPicDisabled ? "" : "pointer", opacity: leftPicDisabled ? "0.2" : "1"}} onClick={prevPic} />
                     <div className={rightAnimate ? "album alb-animate-like" : (leftAnimate ? "album alb-animate-dislike" : "album")} >  
-                        <img className="big-pic" src={data.stranger[selectedUserId].images[selectedPicId]} alt="IU"></img>      
+                        <img className="big-pic" src={data.stranger[selectedUserId].images.length === 0 ? img.emptyPic : data.stranger[selectedUserId].images[selectedPicId]} alt="IU"></img>      
                         <div className="text-on-image">
                             <Typography variant="h4" style={{color: "white"}}>{data.stranger[selectedUserId].name}</Typography>
                             <Typography variant="h6" style={{color: "white"}}>{data.stranger[selectedUserId].department}</Typography>
