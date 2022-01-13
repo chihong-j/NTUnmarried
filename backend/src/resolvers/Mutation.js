@@ -6,7 +6,6 @@ import {UserModel} from "../db";
 const Mutation = {
     async updateUser(parent, {email, gender, age, aboutMe, department}, {db, me}, info) {
         if (!me) throw new AuthenticationError('Not logged in');
-
         await db.UserModel.findOneAndUpdate({ email }, { gender, age, aboutMe, department});
         const user = db.UserModel.findOne({ email })
         return user;
@@ -47,9 +46,22 @@ const Mutation = {
 
     async createLike(parent, { to, isLike}, { db, me, pubsub}, info) {
         if (!me) throw new AuthenticationError('Not logged in');
-        const userMe = await db.UserModel.findOne({ email:me.email}).populate('Like');
-        const userStranger = await db.UserModel.findOne({ email: to}).populate('Like');
-        userMe.likeList.push(new db.LikeModel({stranger: userStranger, isLike})).save();
+        const userMe = await db.UserModel.findOne({ email:me.email}).populate({
+            path: 'likeList',
+            populate: {
+                path: 'stranger',
+            }
+            }
+        );
+        const userStranger = await db.UserModel.findOne({ email: to}).populate({
+            path: 'likeList',
+            populate: {
+                path: 'stranger',
+            }
+            }
+        );
+        userMe.likeList.push(new db.LikeModel({stranger: userStranger, isLike}));
+        userMe.save();
         // race condition exists
         if (!isLike) return userMe;
         for (let i = 0; i < userStranger.likeList.length; ++i) {

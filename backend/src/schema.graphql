@@ -32,7 +32,9 @@ type User {
     aboutMe: String!,
     department: String!,
     images: [String!],
-    password: String!
+    password: String!,
+    pairedEmail: [String],
+    pairedName: [String]
 }
 
 type Token {
