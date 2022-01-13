@@ -62,9 +62,8 @@ const populateImg = async (db, user, numImg) => {
     return { id, email, name, gender, age, aboutMe, department, images};
 }
 
-const newChatBox = (db, email1, email2) => {
-    const chatBoxName = [email1, email2].sort().join('$');
-    return new db.ChatBoxModel({ name: chatBoxName }).save();
+const newChatBox = (db, name) => {
+    return new db.ChatBoxModel({ name}).save();
 }
 
 const checkChatBox = (db, name, errFunc) => {
