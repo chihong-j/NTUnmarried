@@ -51,11 +51,24 @@ const readStreamToDataUrl = async (readStream) => {
 
 const createToken = ({ email }, secret) => jwt.sign({ email }, secret, { expiresIn: '1d' });
 
+const populateImg = async (db, user, numImg) => {
+    let readStream;
+    const { _id: id, email, name, gender, age, aboutMe, department } = user;
+    if (user.images.length === 0) return { id, email, name, gender, age, aboutMe, department, images: []};
+    const images = [];
+    for (let i = 0; i < numImg; ++i) {
+        readStream = await retrieveImage(db, user.images[i]);
+        images.push(await readStreamToDataUrl(readStream));
+    }
+    return { id, email, name, gender, age, aboutMe, department, images};
+}
+
 export {
     checkUser,
     newUser,
     saveImage,
     readStreamToDataUrl,
     retrieveImage,
-    createToken
+    createToken,
+    populateImg
 };

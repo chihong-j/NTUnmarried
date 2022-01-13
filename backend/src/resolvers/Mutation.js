@@ -1,4 +1,4 @@
-import {checkUser, newUser, saveImage, readStreamToDataUrl, createToken, retrieveImage} from "./utility";
+import {checkUser, newUser, saveImage, readStreamToDataUrl, createToken, retrieveImage, populateImg} from "./utility";
 import bcrypt from 'bcryptjs';
 import {AuthenticationError} from "apollo-server-core";
 import {UserModel} from "../db";
@@ -69,11 +69,13 @@ const Mutation = {
         for (let i = 0; i < userStranger.likeList.length; ++i) {
             if (userStranger.likeList[i].stranger.email === userMe.email) {
                 if (userStranger.likeList[i].isLike) {
+                    const populatedUserMe = await populateImg(db, userMe, 1);
+                    const populatedUserStrange = await populateImg(db, userStranger, 1);
                     pubsub.publish(to, {
-                        notification: userMe
+                        notification: populatedUserMe
                     });
                     pubsub.publish(userMe.email, {
-                        notification: userStranger
+                        notification: populatedUserStrange
                     });
                 }
                 break;
@@ -93,7 +95,7 @@ const Mutation = {
         console.log(newMsg.sender);
         chatBox.messages.push(newMsg);
         await chatBox.save();
-        // console.log("here: ", chatBox.messages[0].body);
+        
         pubsub.publish(`chatBox ${chatBoxName}`, {
           message: {mutation: "CREATED", message: newMsg},
         });
