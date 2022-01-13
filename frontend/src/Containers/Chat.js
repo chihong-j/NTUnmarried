@@ -14,7 +14,7 @@ import Box from '@mui/material/Box';
 import PersonIcon from '@mui/icons-material/Person';
 import Typography from '@mui/material/Typography';
 import "../style.css"
-import { USER_QUERY, CREATE_MESSAGE_MUTATION } from "../graphql";
+import { USER_QUERY, CREATE_MESSAGE_MUTATION, CHAT_SUBSCRIPTION } from "../graphql";
 import { useQuery, useMutation } from "@apollo/client";
 //
 const Chat = ({ me, user}) => {
@@ -33,19 +33,25 @@ const Chat = ({ me, user}) => {
         },
     );
     useEffect(() => {
-        // subscribeToMore({
-        //   document: NOTIFYCATION_SUBSCRIPTION,
-        //   variables: {email: userEmail},
-        //   updateQuery: (prev, { subscriptionData }) => {
-        //     if (!subscriptionData.data) return prev;
-        //     const newPairedName = subscriptionData.data.notification.name;
-        //     return {
-        //       user: {
-        //           pairedName: [...prev.user.pairedName, newPairedName]
-        //       }
-        //     };
-        //   },
-        // });
+        subscribeToMore({
+          document: CHAT_SUBSCRIPTION,
+          variables: {email: me.email},
+          updateQuery: (prev, { subscriptionData }) => {
+            if (!subscriptionData.data) return prev;
+            const newName = subscriptionData.data.chatBoxPayload.name;
+            const newFriendName = subscriptionData.data.chatBoxPayload.friendName;
+            const newFriendImage = subscriptionData.data.chatBoxPayload.friendImage;
+            const newFriendEmail = subscriptionData.data.chatBoxPayload.friendEmail;
+            const newChatBoxPayload = {name: newName, friendName: newFriendName, friendImage: newFriendImage, friendEmail: newFriendEmail};
+            return {
+              user: {
+                  chatBoxPayloadList: [newChatBoxPayload, ...prev.user.chatBoxPayloadList.filter((payload) => {
+                      return payload.friendEmail !== newFriendEmail;
+                  })]
+              }
+            };
+          },
+        });
     
     }, [subscribeToMore]);
 
@@ -64,34 +70,7 @@ const Chat = ({ me, user}) => {
         }
     }
     }
-    // const onChange = (idx) => {
-    //     setActiveKey(idx);
-    // };
-    const firends = [{Email: "b07100000@ntu.edu.tw", Name: "Leehom", LastMessage: "你不知道的事"}, {Email: "b07100001@ntu.edu.tw", Name: "Showlo", LastMessage: "哈囉你好，我是阿扣謝和我是阿扣謝和我是阿扣謝和"}];
-    const onEdit = (targetKey, action) => {
-        // if (action === 'add') {
-        //     setModalVisible(true);
-        // } else if(action === 'remove') {
-        //     setActiveKey(removeChatBox(targetKey, activeKey));
-        // }
-    };
 
-    const onCreate = async (friend) => {
-        // setModalVisible(false);
-        // createChatBox(friend);
-        // await startChat(
-        // {
-        //     variables: {
-        //       name1: me,
-        //       name2: friend,
-        //     },
-        //   });
-        // setActiveKey(friend);
-    };
-
-    // const handleClear = () => {
-    //     clearChatBox(activeKey);
-    // }
     const startChat = (name, friendName, friendImage, friendEmail) => {
         setFriendEma(friendEmail);
         setChatBoxName(name);
@@ -107,7 +86,7 @@ const Chat = ({ me, user}) => {
                 </Container>
             ) 
     }
-
+    if (loading) return <p>loading</p>;
     return (
         <>
             { userChatWith ?(

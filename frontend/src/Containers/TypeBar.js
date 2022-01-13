@@ -20,11 +20,11 @@ const TypeBar = ({ me, friend, displayStatus, sendMessage, messageInput, setMess
                 // console.log(me);
                 await sendMessage(
                 {
-                    // variables: {
-                    //     from: me,
-                    //     to: activeKey,
-                    //     message: msg,
-                    // },
+                    variables: {
+                        from: me.email,
+                        to: friend,
+                        message: msg,
+                    },
                 });
                 setMessageInput('');
             }}

@@ -23,4 +23,15 @@ const NOTIFICATION_SUBSCRIPTION = gql`
     }
 `;
 
-export {MESSAGE_SUBSCRIPTION, NOTIFICATION_SUBSCRIPTION};
+const CHAT_SUBSCRIPTION = gql`
+  subscription chatBox($email: String!) {
+    chatBoxPayload(email: $email) {
+      name
+      friendName
+      friendImage
+      freindEmail
+    }
+  }
+`
+
+export {MESSAGE_SUBSCRIPTION, NOTIFICATION_SUBSCRIPTION, CHAT_SUBSCRIPTION};

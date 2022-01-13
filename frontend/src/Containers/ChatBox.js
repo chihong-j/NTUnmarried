@@ -56,12 +56,12 @@ const ChatBox = ({me, name, friendName, friendImage, friendEma, setFriendEma, se
                 <ArrowBackIosIcon sx = {{fontSize : "50px", flexGrow: 1}}/>
             </Button>
             <Messages>
-                {/* {data.chatBox.messages.map(({sender: {name}, body}, i) => (
-                    <div className="App-message" key={name + body + i} style={{ flexDirection: (name === me) ? 'row-reverse' : ''} } >
+                {data.chatBox.messages.map(({sender: {email}, body}, i) => (
+                    <div className="App-message" key={email + body + i} style={{ flexDirection: (email === me.email) ? 'row-reverse' : ''} } >
                         <Tag style={{height:"25px"}} color="blue">{name}</Tag>
-                        <p className="MessageBody" style={{ margin: (name === me) ? '0px 10px' : '' }}>{body}</p>
+                        <p className="MessageBody" style={{ margin: (email === me.email) ? '0px 10px' : '' }}>{body}</p>
                     </div>
-                    ))} */}
+                    ))}
                 <div ref = {messagesFooter}/>
             </Messages>
         </>

@@ -14,7 +14,7 @@ import {STRANGER_QUERY} from './../graphql';
 import img from "../img";
 
 
-const Match = ({ data, loading, me, user, currentPage }) => {
+const Match = ({ data, loading}) => {
     const [noUserLeft, setNoUserLeft] = useState(false)
     const [selectedUserId, setSelectedUserId] = useState(0);
     const [selectedPicId, setSelectedPicId] = useState(0);
@@ -23,20 +23,6 @@ const Match = ({ data, loading, me, user, currentPage }) => {
     const [leftAnimate, setLeftAnimate] = useState(false);
     const [likeUser] = useMutation(CREATE_LIKE_MUTATION);
     const [rightPicDisabled, setRightPicDisabled] = useState(false);
-    
-    // const {data, loading, ...props} = useQuery(STRANGER_QUERY, 
-    //     {
-    //         variables: {
-    //         }
-    //     },
-    // );
-    
-    // useEffect(() => {
-    //     if (selectedUserId < data.stranger.length)
-    //         setNoUserLeft(false);
-    //     else
-    //         setNoUserLeft(true);
-    // }, [selectedUserId, data]);
 
     const setDisabled = (currentID) => {
         if (currentID === 0) {
@@ -121,7 +107,7 @@ const Match = ({ data, loading, me, user, currentPage }) => {
         return (
             <Container maxWidth = "sm" sx={{display: "flex", justifyContent: "center"}}>  
                 <Typography variant="h5" style={{display: "inline-block", color: "black", marginTop: "50px"}}>
-                    No User Left! You can try reloading later.
+                    No User Left! You can try reloading later1.
                 </Typography>
             </Container>
         ) 
@@ -130,7 +116,7 @@ const Match = ({ data, loading, me, user, currentPage }) => {
         return (
             <Container maxWidth = "sm" sx={{display: "flex", justifyContent: "center"}}>  
                 <Typography variant="h5" style={{display: "inline-block", color: "black", marginTop: "50px"}}>
-                    No User Left!
+                No User Left! You can try reloading later2.
                 </Typography>
             </Container>
             ) 
@@ -139,12 +125,11 @@ const Match = ({ data, loading, me, user, currentPage }) => {
         return (
             <Container maxWidth = "sm" sx={{display: "flex", justifyContent: "center"}}>  
                 <Typography variant="h5" style={{display: "inline-block", color: "black", marginTop: "50px"}}>
-                    No User Left!
+                No User Left! You can try reloading later3.
                 </Typography>
             </Container>
         ) 
     }
-    // console.log(data.stranger[selectedUserId]);
     return (
         <Container>
             <Row>
@@ -177,66 +162,3 @@ const Match = ({ data, loading, me, user, currentPage }) => {
 }
 
 export default Match;
-
-// map
-{/* <Container>
-    {data.stranger.map((user, idx1) => { return (
-        <>
-            <Row>
-                <div className="view-container">
-                    <ChevronLeftIcon sx={{fontSize: "50px", marginLeft: "300px", cursor: leftPicDisabled ? "" : "pointer", opacity: leftPicDisabled ? "0.2" : "1"}} onClick={prevPic} />
-                    <div className={rightAnimate ? "album alb-animate-like" : (leftAnimate ? "album alb-animate-dislike" : "album")} >  
-                        <img className="big-pic" src={data.stranger.images[selectedPicId]} alt="IU"></img>      
-                        <div className="text-on-image">
-                            <Typography variant="h4" style={{color: "white"}}>{data.stranger.name}</Typography>
-                            <Typography variant="h6" style={{color: "white"}}>{data.stranger.department}</Typography>
-                            <Typography variant="h6" style={{color: "white"}}>{data.stranger.age}</Typography>
-                        </div>
-                    </div>
-                    <ChevronRightIcon sx={{fontSize: "50px", marginRight: "300px", cursor: rightPicDisabled ? "" : "pointer", opacity: rightPicDisabled ? "0.2" : "1"}} onClick={nextPic} />
-                </div>
-            </Row>
-            <Row>
-                <div className="view-container">
-                    <Typography variant="body">{data.stranger.aboutMe}</Typography>
-                </div>
-            </Row>
-        </>
-        )}
-    )}
-    <Row>
-        <div className="view-container">
-            <button className="dislike-button"><CloseOutlinedIcon sx={{color: "red", fontSize: "50px"}} onClick={dislikePeople} /></button>
-            <button className="like-button"><FavoriteIcon className="like" sx={{color: "green",fontSize: "50px" }}  onClick={likePeople} /></button>       
-        </div>
-    </Row>
-</Container> */}
-
-// Oldest
-{/* <Container>
-    <Row>
-        <div className="view-container">
-            <ChevronLeftIcon sx={{fontSize: "50px", marginLeft: "300px", cursor: leftPicDisabled ? "" : "pointer", opacity: leftPicDisabled ? "0.2" : "1"}} onClick={prevPic} />
-            <div className={rightAnimate ? "album alb-animate-like" : (leftAnimate ? "album alb-animate-dislike" : "album")} >  
-                <img className="big-pic" src={user[selectedUserId].img[selectedPicId]} alt="IU"></img>      
-                <div className="text-on-image">
-                    <Typography variant="h4" style={{color: "white"}}>IU</Typography>
-                    <Typography variant="h6" style={{color: "white"}}>工管系</Typography>
-                    <Typography variant="h6" style={{color: "white"}}>25</Typography>
-                </div>
-            </div>
-            <ChevronRightIcon sx={{fontSize: "50px", marginRight: "300px", cursor: rightPicDisabled ? "" : "pointer", opacity: rightPicDisabled ? "0.2" : "1"}} onClick={nextPic} />
-        </div>
-    </Row>
-    <Row>
-        <div className="view-container">
-            <Typography variant="body">你好，我是IU，我喜歡睡覺</Typography>
-        </div>
-    </Row>
-    <Row>
-        <div className="view-container">
-            <button className="dislike-button"><CloseOutlinedIcon sx={{color: "red", fontSize: "50px"}} onClick={dislikePeople} /></button>
-            <button className="like-button"><FavoriteIcon className="like" sx={{color: "green",fontSize: "50px" }}  onClick={likePeople} /></button>       
-        </div>
-    </Row>
-</Container> */}

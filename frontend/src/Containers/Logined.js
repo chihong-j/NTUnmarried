@@ -24,37 +24,23 @@ const Logined = ({setUserStatus, userEmail}) => {
         },
     );
     //
+    const {data: data1, loading: loading1, refetch} = useQuery(STRANGER_QUERY, 
+        {
+            variables: {
+                email: userEmail
+            }
+        },
+    );
     const UpdateCurrentPage = async (p) => {
         if(p === "match") await refetch();
         setCurrentPage(p);
     }
-    const {data: data1, loading: loading1, refetch} = useQuery(STRANGER_QUERY, 
-        {
-            variables: {
-            }
-        },
-    );
-
-    const user = [
-        {
-            id: 1,
-            name: "IU",
-            img: [img.girl1, img.girl2, img.girl3],
-            desc: "Hi, I am IU."
-        },
-        {
-            id: 2,
-            name: "Kris",
-            img: [img.man1, img.man2, img.man3],
-            desc: "Hi, I am Kris."
-        }
-    ]
     if(loading) return <p>loading</p>;
     return (
         <Container>
             <Header isNotifications={isNotification} setCurrentPage = {UpdateCurrentPage} setUserStatus = {setUserStatus} userName = {data.user.name}/>
-            {currentPage === "match" && <Match data = {data1} loading = {loading1} me ={data.user} user={user} currentPage = {currentPage}/>}
-            {currentPage === "chat"  && <Chat me ={data.user} user = {user} />}
+            {currentPage === "match" && <Match data = {data1} loading = {loading1} me ={data.user} currentPage = {currentPage}/>}
+            {currentPage === "chat"  && <Chat me ={data.user}/>}
             {currentPage === "notifications" && <Notification isInitializedNo={isInitializedNo} setIsInitializedNo={setIsInitializedNo} userEmail={userEmail} />}
             {currentPage === "profile" && <Profile me = {data.user} isInitialized={isInitialized} setIsInitialized={setIsInitialized} images = {images} setIamges = {setIamges} aboutMe = {aboutMe} setAboutMe = {setAboutMe} department = {department} setDepartment = {setDepartment} gender = {gender} setGender = {setGender} age = {age} setAge = {setAge} birth = {birth} setBirth = {setBirth} initialize = {initialize}/>}
         </Container>

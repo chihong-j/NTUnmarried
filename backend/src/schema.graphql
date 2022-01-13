@@ -2,7 +2,7 @@ scalar Upload
 
 type Query {
     user(email: String!): User!
-    stranger: [User!]
+    stranger(email: String!): [User!]
     chatBox(name: String!): ChatBox! #Query all the messages in the chatBox given two users
     usersChatting(email: String!): [ChatBox!] #Query all the ChatBoxes the user have with others
 }

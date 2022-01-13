@@ -15,10 +15,10 @@ const Query = {
         }
         return { id, email, name, gender, age, aboutMe, department, images, password, notificationList, chatBoxPayloadList};
     },
-    async stranger(parent, args, { db, me }, info) {
+    async stranger(parent, {email: userEmail}, { db, me}, info) {
         if (!me) throw new AuthenticationError('Not logged in');
         const users = await db.UserModel.find({});
-        const userMe = await db.UserModel.findOne({email: me.email}).populate({
+        const userMe = await db.UserModel.findOne({email: userEmail}).populate({
             path: 'likeList',
             populate: {
                 path: 'stranger',
