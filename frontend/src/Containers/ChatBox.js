@@ -15,7 +15,6 @@ const Messages = styled.div`
 
 const ChatBox = ({me, name, friendName, friendImage, friendEma, setFriendEma, setUserChatWith, setChatBoxName, setFriendImg}) => {
     const messagesFooter = useRef(null);
-    console.log(name);
     const {data, loading, subscribeToMore} = useQuery(CHATBOX_QUERY, {variables: {
         name
     }});
@@ -33,28 +32,27 @@ const ChatBox = ({me, name, friendName, friendImage, friendEma, setFriendEma, se
         scrollToBottom();
     }, [data]);
 
-    // useEffect(() => {
-    //     try {
-    //         subscribeToMore(
-    //             {
-    //                 document: MESSAGE_SUBSCRIPTION,
-    //                 variables: {from: me.email, to: friendEma},
-    //                 updateQuery: (prev, {subscriptionData}) => {
-    //                     if (!subscriptionData.data) return prev;
-    //                     const newMessage = subscriptionData.data.message.message;
-    //                     return {
-    //                         chatBox: {
-    //                             messages: [...prev.chatBox.messages, newMessage]
-    //                         }
-    //                     }
-    //                 }
-    //             }
-    //         )
-    //     } catch (e) {}
-    // }, [subscribeToMore]);
+    useEffect(() => {
+        try {
+            subscribeToMore(
+                {
+                    document: MESSAGE_SUBSCRIPTION,
+                    variables: {from: me.email, to: friendEma},
+                    updateQuery: (prev, {subscriptionData}) => {
+                        if (!subscriptionData.data) return prev;
+                        const newMessage = subscriptionData.data.message.message;
+                        return {
+                            chatBox: {
+                                messages: [...prev.chatBox.messages, newMessage]
+                            }
+                        }
+                    }
+                }
+            )
+        } catch (e) {}
+    }, [subscribeToMore]);
 
     if(loading) return <p>loading</p>;
-    console.log(data)
     return (
         <>
             <Button color="primary" variant="raised" component="span" onClick={ReturnChatBox} >
