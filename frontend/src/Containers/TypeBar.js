@@ -18,6 +18,8 @@ const TypeBar = ({ me, friend, displayStatus, sendMessage, messageInput, setMess
                     return;
                 }//
                 // console.log(me);
+                console.log(me.email)
+                console.log(friend)
                 await sendMessage(
                 {
                     variables: {

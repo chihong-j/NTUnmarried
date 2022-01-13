@@ -11,6 +11,7 @@ const Messages = styled.div`
     display: flex;
     flex-direction: column;
     overflow: auto;
+    padding: 20px;
 `;
 
 const ChatBox = ({me, name, friendName, friendImage, friendEma, setFriendEma, setUserChatWith, setChatBoxName, setFriendImg}) => {
@@ -59,9 +60,9 @@ const ChatBox = ({me, name, friendName, friendImage, friendEma, setFriendEma, se
                 <ArrowBackIosIcon sx = {{fontSize : "50px", flexGrow: 1}}/>
             </Button>
             <Messages>
-                {data.chatBox.messages.map(({sender: {email}, body}, i) => (
+                {data.chatBox.messages.map(({sender: {email, name}, body}, i) => (
                     <div className="App-message" key={email + body + i} style={{ flexDirection: (email === me.email) ? 'row-reverse' : ''} } >
-                        <Tag style={{height:"25px"}} color="blue">{name}</Tag>
+                        <Tag style={{height:"25px"}} color="blue">{email === me.email ? name : friendName}</Tag>
                         <p className="MessageBody" style={{ margin: (email === me.email) ? '0px 10px' : '' }}>{body}</p>
                     </div>
                     ))}
