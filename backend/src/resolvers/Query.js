@@ -52,6 +52,13 @@ const Query = {
             return { id, email, name, gender, age, aboutMe, department, images};
         })
     },
+    async chatBox(parent, {name}, {db, pubsub}, info) {
+        let chatBox = await checkChatBox(db, name, "QueryChatBox");
+        if(!chatBox) {
+          console.log("ChatBox does not exist for QueryChatBox: " + name);
+        }
+        return chatBox;
+      }
     // async stranger(parent, args, { db, me }, info) {
     //     if (!me) throw new AuthenticationError('Not logged in');
     //     const users = await db.UserModel.find({});

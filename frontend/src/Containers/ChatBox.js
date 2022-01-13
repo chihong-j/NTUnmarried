@@ -19,7 +19,12 @@ const ChatBox = ({me, name, friendName, friendImage, friendEma, setFriendEma, se
     const {data, loading, subscribeToMore} = useQuery(CHATBOX_QUERY, {variables: {
         name
     }});
-
+    const ReturnChatBox = () => {
+        setUserChatWith(null);
+        setFriendImg(null);
+        setFriendEma(null);
+        setChatBoxName(null);
+    }
     const scrollToBottom  = () => {
         messagesFooter.current?.scrollIntoView({behavior: "smooth"});
     };
@@ -28,31 +33,31 @@ const ChatBox = ({me, name, friendName, friendImage, friendEma, setFriendEma, se
         scrollToBottom();
     }, [data]);
 
-    useEffect(() => {
-        try {
-            subscribeToMore(
-                {
-                    document: MESSAGE_SUBSCRIPTION,
-                    variables: {from: me.email, to: friendEma},
-                    updateQuery: (prev, {subscriptionData}) => {
-                        if (!subscriptionData.data) return prev;
-                        const newMessage = subscriptionData.data.message.message;
-                        return {
-                            chatBox: {
-                                messages: [...prev.chatBox.messages, newMessage]
-                            }
-                        }
-                    }
-                }
-            )
-        } catch (e) {}
-    }, [subscribeToMore]);
+    // useEffect(() => {
+    //     try {
+    //         subscribeToMore(
+    //             {
+    //                 document: MESSAGE_SUBSCRIPTION,
+    //                 variables: {from: me.email, to: friendEma},
+    //                 updateQuery: (prev, {subscriptionData}) => {
+    //                     if (!subscriptionData.data) return prev;
+    //                     const newMessage = subscriptionData.data.message.message;
+    //                     return {
+    //                         chatBox: {
+    //                             messages: [...prev.chatBox.messages, newMessage]
+    //                         }
+    //                     }
+    //                 }
+    //             }
+    //         )
+    //     } catch (e) {}
+    // }, [subscribeToMore]);
 
     if(loading) return <p>loading</p>;
 
     return (
         <>
-            <Button color="primary" variant="raised" component="span" onClick={() => setUserChatWith(null)} >
+            <Button color="primary" variant="raised" component="span" onClick={ReturnChatBox} >
                 <ArrowBackIosIcon sx = {{fontSize : "50px", flexGrow: 1}}/>
             </Button>
             <Messages>
