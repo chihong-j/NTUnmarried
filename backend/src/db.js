@@ -64,4 +64,4 @@ const NotificationModel = mongoose.model('Notification', NotificationListSchema)
 const MessageModel = mongoose.model('Message', MessageSchema);
 const ChatBoxModel = mongoose.model('ChatBox', ChatBoxSchema);
 const ChatBoxPayloadModel = mongoose.model('ChatBoxPayload', ChatBoxPayloadSchema);
-export { UserModel, container, LikeModel, NotificationModel, MessageModel, ChatBoxModel };
+export { UserModel, container, LikeModel, NotificationModel, MessageModel, ChatBoxModel, ChatBoxPayloadModel };

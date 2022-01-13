@@ -40,6 +40,7 @@ const Notification = ({ isInitializedNo, setIsInitializedNo, userEmail }) => {
         });
     
       }, [subscribeToMore]);
+
     if (data.user.notificationList.length === 0) {
         return (
                 <Container maxWidth = "sm" sx={{display: "flex", justifyContent: "center"}}>  

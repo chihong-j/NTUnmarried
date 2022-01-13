@@ -7,10 +7,9 @@ import { AuthenticationError } from "apollo-server-core";
 
 dotenv.config();
 
-const checkUser = (db, name, errFunc) => {
-    console.log(db)
-    if (!name) throw new Error("Missing user name for " + errFunc);
-    return db.UserModel.findOne({ name });
+const checkUser = (db, email, errFunc) => {
+    if (!email) throw new Error("Missing user name for " + errFunc);
+    return db.UserModel.findOne({ email });
 };
 
 
@@ -63,9 +62,29 @@ const populateImg = async (db, user, numImg) => {
     return { id, email, name, gender, age, aboutMe, department, images};
 }
 
+const newChatBox = (db, email1, email2) => {
+    const chatBoxName = [email1, email2].sort().join('$');
+    return new db.ChatBoxModel({ name: chatBoxName }).save();
+}
 
+const checkChatBox = (db, name, errFunc) => {
+    if (!name) throw new Error("Missing chatBox name for " + errFunc);
+    return db.ChatBoxModel.findOne({ name });
+};
 
+const checkMessage = async (db, from, to, message, errFunc) => {
+    const chatBoxName = [from, to].sort().join('$');
+    return {
+        chatBox: await checkChatBox(db, chatBoxName, errFunc),
+        sender: await checkUser(db, from, errFunc),
+        to: await checkUser(db, to, errFunc)
+    }
+};
 
+// make sure calling checkMessage beforehand
+const newMessage = (db, sender, body) => {
+    return new db.MessageModel({ sender, body }).save();
+};
 
 export {
     checkUser,
@@ -74,5 +93,8 @@ export {
     readStreamToDataUrl,
     retrieveImage,
     createToken,
-    populateImg
+    populateImg,
+    newChatBox,
+    checkMessage,
+    newMessage
 };

@@ -13,10 +13,12 @@ const Query = {
             readStream = await retrieveImage(db, queryUser.images[i]);
             images.push(await readStreamToDataUrl(readStream));
         }
+
         return { id, email, name, gender, age, aboutMe, department, images, password, notificationList, chatBoxPayloadList};
     },
     async stranger(parent, {email: userEmail}, { db, me}, info) {
         if (!me) throw new AuthenticationError('Not logged in');
+        console.log("ok")
         const users = await db.UserModel.find({});
         const userMe = await db.UserModel.findOne({email: userEmail}).populate({
             path: 'likeList',

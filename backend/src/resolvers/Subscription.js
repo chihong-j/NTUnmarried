@@ -10,10 +10,16 @@ const Subscription = {
 
     message: {
         subscribe(parent, { from, to }, { pubsub }, info) {
-          let chatBoxName = makeName(from, to);
+          let chatBoxName = [from, to].sort().join('$');
           return pubsub.asyncIterator(`chatBox ${chatBoxName}`);
         },
       },
+
+    chatBox: {
+        subscribe(parent, { email }, { pubsub }, info) {
+            return pubsub.asyncIterator(`chatBoxPayload ${email}`);
+        }
+    }
 };
 
 export default Subscription;

@@ -1,4 +1,14 @@
-import {checkUser, newUser, saveImage, readStreamToDataUrl, createToken, retrieveImage, populateImg} from "./utility";
+import {
+    newUser,
+    saveImage,
+    readStreamToDataUrl,
+    createToken,
+    retrieveImage,
+    populateImg,
+    newChatBox,
+    checkMessage,
+    newMessage
+} from "./utility";
 import bcrypt from 'bcryptjs';
 import {AuthenticationError} from "apollo-server-core";
 import {UserModel} from "../db";
@@ -12,6 +22,12 @@ const Mutation = {
     },
 
     async signup(parent, { email, name, password, gender, age, aboutMe, department }, { db }, info) {
+        const users = await db.UserModel.find({});
+        if (users) {
+            for (let i = 0; i < users.length; ++i) {
+                if (users[i].email === email) throw new Error("Sign Error. Email exists!");
+            }
+        }
         const user = await newUser(db, email, name, password, gender, age, aboutMe, department);
         return user ;
     },
@@ -64,6 +80,7 @@ const Mutation = {
         newLike.save();
         userMe.likeList.push(newLike);
         userMe.save();
+
         // race condition exists
         if (!isLike) return userMe;
         for (let i = 0; i < userStranger.likeList.length; ++i) {
@@ -75,8 +92,28 @@ const Mutation = {
                     const newNotificationMe = await new db.NotificationModel({name: populatedUserStranger.name, image: populatedUserStranger.images[0]}).save()
                     userMe.notificationList = [newNotificationMe, ...userMe.notificationList];
                     userStranger.notificationList = [newNotificationStranger, ...userStranger.notificationList];
+
+                    const chatBoxPayloadMe = await new db.ChatBoxPayloadModel({
+                        name: userMe.name,
+                        friendName: userStranger.name,
+                        friendImage: populatedUserStranger.images[0],
+                        friendEmail: userStranger.email
+                    }).save();
+                    const chatBoxPayloadStranger = await new db.ChatBoxPayloadModel({
+                        name: userStranger.name,
+                        friendName: userMe.name,
+                        friendImage: populatedUserMe.images[0],
+                        friendEmail: userMe.email
+                    }).save();
+
+                    userMe.chatBoxPayloadList = [chatBoxPayloadMe, ...userMe.chatBoxPayloadList];
+                    userStranger.chatBoxPayloadList = [chatBoxPayloadStranger, ...userStranger.chatBoxPayloadList];
+
                     userMe.save();
                     userStranger.save();
+
+                    newChatBox(db, userMe.email, userStranger.email);
+
 
                     pubsub.publish(to, {
                         notification: newNotificationStranger
@@ -84,6 +121,12 @@ const Mutation = {
                     pubsub.publish(userMe.email, {
                         notification: newNotificationMe
                     });
+                    pubsub.publish(`chatBoxPayload ${to}`, {
+                        chatBox: chatBoxPayloadStranger
+                    })
+                    pubsub.publish(`chatBoxPayload ${userMe.email}`, {
+                        chatBox: chatBoxPayloadMe
+                    })
                 }
                 break;
             }
@@ -97,17 +140,54 @@ const Mutation = {
         );
         if(!chatBox) throw new Error("ChatBox not found for createMessage");
         if(!sender) throw new Error("User not found" + from);
-        const chatBoxName = makeName(from, to);
+        const chatBoxName = [from, to].sort().join('$');
         const newMsg = await newMessage(db, sender, message);
-        console.log(newMsg.sender);
+
         chatBox.messages.push(newMsg);
         await chatBox.save();
 
+        const userFrom = await db.UserModel.findOne({email: from});
+        const userTo = await db.UserModel.findOne({email: to});
+
+        for (let i = 0; i < userFrom.chatBoxPayloadList.length; ++i) {
+            if (userFrom.chatBoxPayloadList[i].friendEmail === to) {
+                if (i === 0) {
+                    break;
+                } else {
+                    const chatBoxPayloadIdFrom = userFrom.chatBoxPayloadList[i];
+                    userFrom.chatBoxPayloadList.splice(i, 1);
+                    userFrom.chatBoxPayloadList.splice(0, 0, chatBoxPayloadIdFrom);
+                    pubsub.publish(`chatBoxPayload ${userFrom.email}`, {
+                        chatBox: await db.ChatBoxPayloadModel.findById(chatBoxPayloadIdFrom)
+                    })
+                }
+            }
+        }
+
+        for (let i = 0; i < userTo.chatBoxPayloadList.length; ++i) {
+            if (userTo.chatBoxPayloadList[i].friendEmail === from) {
+                if (i === 0) {
+                    break;
+                } else {
+                    let chatBoxPayloadIdTo = userTo.chatBoxPayloadList[i];
+                    userTo.chatBoxPayloadList.splice(i, 1);
+                    userTo.chatBoxPayloadList.splice(0, 0, chatBoxPayloadIdTo);
+                    pubsub.publish(`chatBoxPayload ${userTo.email}`, {
+                        chatBox: await db.ChatBoxPayloadModel.findById(chatBoxPayloadIdTo)
+                    })
+                }
+            }
+        }
+        userTo.save();
+        userFrom.save();
+
+
+
         pubsub.publish(`chatBox ${chatBoxName}`, {
-          message: newMsg,
-        });
+            message: newMsg,
+        })
         return newMsg;
-      },
+    }
 };
 
 export default Mutation;
