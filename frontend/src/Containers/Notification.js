@@ -40,6 +40,7 @@ const Notification = ({ isInitializedNo, setIsInitializedNo, userEmail }) => {
         });
     
       }, [subscribeToMore]);
+    console.log(data.user.notificationList[0].name)
     if (!data.user.notificationList && typeof(data.user.notificationList) !== 'undefined' && data.user.notificationList != 0) {
         return (
             <Container maxWidth = "sm" sx={{display: "flex", justifyContent: "center"}}>  
@@ -62,7 +63,7 @@ const Notification = ({ isInitializedNo, setIsInitializedNo, userEmail }) => {
     return (
         <Container maxWidth = "sm" sx={{display: "flex", justifyContent: "center"}}>
             <Stack>
-                {data.user.notificationList.map((name, image, id) => 
+                {data.user.notificationList.map(({name, image}, id) => 
                     <div className="notification-cell" key={id} >
                         <div style={{display: "inline-block"}}>
                             {/* <img className="like" style={{color: "green",fontSize: "30px" }} src={image}></img> */}

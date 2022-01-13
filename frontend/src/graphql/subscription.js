@@ -18,8 +18,7 @@ const NOTIFICATION_SUBSCRIPTION = gql`
   subscription like($email: String!) {
     notification(email: $email) {
         name
-        email
-        images
+        image
       }
     }
 `;

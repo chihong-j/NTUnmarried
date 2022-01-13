@@ -7,7 +7,7 @@ const User = {
         );
     },
 
-    chatBoxList(parent, args, { db }, info) {
+    chatBoxPayloadList(parent, args, { db }, info) {
         return Promise.all(
             parent.chatBoxPayloadList.map(
                 (cId) => db.ChatBoxPayloadModel.findById(cId)

@@ -98,6 +98,24 @@ const Chat = ({ me, user}) => {
         setFriendImg(friendImage);
         setUserChatWith(friendName);
     }
+    if (!data.user.chatBoxPayloadList && typeof(data.user.chatBoxPayloadList) !== 'undefined' && data.user.chatBoxPayloadList != 0) {
+        return (
+            <Container maxWidth = "sm" sx={{display: "flex", justifyContent: "center"}}>  
+                <Typography variant="h5" style={{display: "inline-block", color: "black"}}>
+                    No Message!
+                </Typography>
+            </Container>
+        ) 
+    }
+    else if (data.user.chatBoxPayloadList.length === 0) {
+        return (
+                <Container maxWidth = "sm" sx={{display: "flex", justifyContent: "center"}}>  
+                    <Typography variant="h5" style={{display: "inline-block", color: "black", marginTop: "50px"}}>
+                        No Message!
+                    </Typography>
+                </Container>
+            ) 
+    }
 
     return (
         <>
@@ -118,8 +136,7 @@ const Chat = ({ me, user}) => {
             ): (
                 <Container maxWidth = "sm" sx = {{display: "flex", justifyContent: "center"}}>
                         {
-                            (data.user.chatBoxList && data.user.chatBox.length) ?
-                            (data.user.chatBoxList.map((name, friendName, friendImage, friendEmail, id) => 
+                            data.user.chatBoxPayloadList.map(({name, friendName, friendImage, friendEmail}, id) => 
                             <Stack>
                                 <div key={id} className="chat-cell" onClick={() => startChat(name, friendName, friendImage, friendEmail)}>
                                     <div className="chat-img-div" style={{display: "inline-block"}}>
@@ -134,10 +151,7 @@ const Chat = ({ me, user}) => {
                                     </div>
                                 </div>
                             </Stack>
-                            )) :
-                            <Typography variant="h5" style={{display: "inline-block", color: "black", marginTop: "50px"}}>
-                                No message!
-                            </Typography>
+                            )
                         }
                 </Container>
             )
