@@ -98,16 +98,7 @@ const Chat = ({ me, user}) => {
         setFriendImg(friendImage);
         setUserChatWith(friendName);
     }
-    if (!data.user.chatBoxPayloadList && typeof(data.user.chatBoxPayloadList) !== 'undefined' && data.user.chatBoxPayloadList != 0) {
-        return (
-            <Container maxWidth = "sm" sx={{display: "flex", justifyContent: "center"}}>  
-                <Typography variant="h5" style={{display: "inline-block", color: "black"}}>
-                    No Message!
-                </Typography>
-            </Container>
-        ) 
-    }
-    else if (data.user.chatBoxPayloadList.length === 0) {
+    if (data.user.chatBoxPayloadList.length === 0) {
         return (
                 <Container maxWidth = "sm" sx={{display: "flex", justifyContent: "center"}}>  
                     <Typography variant="h5" style={{display: "inline-block", color: "black", marginTop: "50px"}}>

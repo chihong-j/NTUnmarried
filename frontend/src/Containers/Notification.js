@@ -40,17 +40,7 @@ const Notification = ({ isInitializedNo, setIsInitializedNo, userEmail }) => {
         });
     
       }, [subscribeToMore]);
-    console.log(data.user.notificationList[0].name)
-    if (!data.user.notificationList && typeof(data.user.notificationList) !== 'undefined' && data.user.notificationList != 0) {
-        return (
-            <Container maxWidth = "sm" sx={{display: "flex", justifyContent: "center"}}>  
-                <Typography variant="h5" style={{display: "inline-block", color: "black"}}>
-                    No notification!
-                </Typography>
-            </Container>
-        ) 
-    }
-    else if (data.user.notificationList.length === 0) {
+    if (data.user.notificationList.length === 0) {
         return (
                 <Container maxWidth = "sm" sx={{display: "flex", justifyContent: "center"}}>  
                     <Typography variant="h5" style={{display: "inline-block", color: "black", marginTop: "50px"}}>
