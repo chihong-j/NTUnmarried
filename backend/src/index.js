@@ -12,14 +12,24 @@ const pubsub = new PubSub();
 
 const autheticate = async (resolve, root, args, context, info) => {
     let me;
-
-    if (context.request.get("Authorization")) {
-        try {
-            me = await jwt.verify(context.request.get("Authorization"), process.env.SECRET);
-        } catch (e) {
-            return new AuthenticationError("Your session expired. Sign in again.");
+    if (context.request){
+        if (context.request.get("Authorization")) {
+            try {
+                me = await jwt.verify(context.request.get("Authorization"), process.env.SECRET);
+            } catch (e) {
+                return new AuthenticationError("Your session expired. Sign in again.");
+            }
+        }
+    } else {
+        if(context.connection.context.Authorization) {
+            try {
+                me = await jwt.verify(context.connection.context.Authorization, process.env.SECRET);
+            } catch (e) {
+                return new AuthenticationError("Your session expired. Sign in again.");
+            }
         }
     }
+
 
 
     context = { ...context, me };
