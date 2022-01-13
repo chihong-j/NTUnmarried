@@ -6,14 +6,14 @@ const Query = {
     async user(parent, { email }, { db }, info) {
         const queryUser = await db.UserModel.findOne({ email });
         let readStream;
-        const { _id: id, name, gender, age, aboutMe, department, password, pairedEmail, pairedName} = queryUser;
-        if (!queryUser.images) return { id, email, name, gender, age, aboutMe, department, images: [], password, pairedEmail, pairedName};
+        const { _id: id, name, gender, age, aboutMe, department, password, notificationList, chatBoxPayloadList} = queryUser;
+        if (!queryUser.images) return { id, email, name, gender, age, aboutMe, department, images: [], password, notificationList, chatBoxPayloadList};
         const images = [];
         for (let i = 0; i < queryUser.images.length; ++i) {
             readStream = await retrieveImage(db, queryUser.images[i]);
             images.push(await readStreamToDataUrl(readStream));
         }
-        return { id, email, name, gender, age, aboutMe, department, images, password, pairedEmail, pairedName};
+        return { id, email, name, gender, age, aboutMe, department, images, password, notificationList, chatBoxPayloadList};
     },
 
     async stranger(parent, args, { db, me }, info) {

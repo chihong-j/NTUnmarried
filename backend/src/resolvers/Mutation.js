@@ -63,19 +63,25 @@ const Mutation = {
         const newLike = new db.LikeModel({stranger: userStranger, isLike});
         newLike.save();
         userMe.likeList.push(newLike);
-        userMe.save();
         // race condition exists
         if (!isLike) return userMe;
         for (let i = 0; i < userStranger.likeList.length; ++i) {
             if (userStranger.likeList[i].stranger.email === userMe.email) {
                 if (userStranger.likeList[i].isLike) {
                     const populatedUserMe = await populateImg(db, userMe, 1);
-                    const populatedUserStrange = await populateImg(db, userStranger, 1);
+                    const populatedUserStranger = await populateImg(db, userStranger, 1);
+                    const newNotificationStranger = await new db.NotificationModel({name: populatedUserMe.name, image: populatedUserMe.images[0]}).save()
+                    const newNotificationMe = await  new db.NotificationModel({name: populatedUserStranger.name, image: populatedUserStranger.image[0]}).save()
+                    userMe.notificationList = [newNotificationMe, ...userMe.notificationList];
+                    userStranger.notificationList = [newNotificationStranger, ...userStranger.notificationList];
+                    userMe.save();
+                    userStranger.save();
+
                     pubsub.publish(to, {
-                        notification: populatedUserMe
+                        notification: newNotificationStranger
                     });
                     pubsub.publish(userMe.email, {
-                        notification: populatedUserStrange
+                        notification: newNotificationMe
                     });
                 }
                 break;
@@ -95,7 +101,7 @@ const Mutation = {
         console.log(newMsg.sender);
         chatBox.messages.push(newMsg);
         await chatBox.save();
-        
+
         pubsub.publish(`chatBox ${chatBoxName}`, {
           message: newMsg,
         });
