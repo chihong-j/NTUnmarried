@@ -35,7 +35,7 @@ type User {
     images: [String!],
     password: String!,
     notificationList: [NotificationPayload],
-    chatBoxList: [ChatBoxPayload],
+    chatBoxPayloadList: [ChatBoxPayload],
 }
 
 type NotificationPayload { #createLike要subscribe這個
