@@ -15,7 +15,7 @@ const Logined = ({setUserStatus, userEmail}) => {
     const [currentPage, setCurrentPage] = useState("match");
     const [isInitialized, setIsInitialized] = useState(false);
     const [isInitializedNo, setIsInitializedNo] = useState(false);
-    const {images, setIamges, aboutMe, setAboutMe, department, setDepartment, gender, setGender, age, setAge, birth, setBirth, initialize, pairedEmail, pairedName, setPairedName} = useNTU()
+    const {images, setIamges, aboutMe, setAboutMe, department, setDepartment, gender, setGender, age, setAge, birth, setBirth, initialize} = useNTU()
     const {data, loading, ...props} = useQuery(USER_QUERY, 
         {
             variables: {
@@ -44,7 +44,7 @@ const Logined = ({setUserStatus, userEmail}) => {
             <Header isNotifications={isNotification} setCurrentPage = {setCurrentPage} setUserStatus = {setUserStatus} userName = {data.user.name}/>
             {currentPage === "match" && <Match me ={data.user} user={user} />}
             {currentPage === "chat"  && <Chat me ={data.user} user = {user} />}
-            {currentPage === "notifications" && <Notification pairedEmail={pairedEmail} pairedName={pairedName} setPairedName={setPairedName} isInitializedNo={isInitializedNo} setIsInitializedNo={setIsInitializedNo} userEmail={userEmail} />}
+            {currentPage === "notifications" && <Notification isInitializedNo={isInitializedNo} setIsInitializedNo={setIsInitializedNo} userEmail={userEmail} />}
             {currentPage === "profile" && <Profile me = {data.user} isInitialized={isInitialized} setIsInitialized={setIsInitialized} images = {images} setIamges = {setIamges} aboutMe = {aboutMe} setAboutMe = {setAboutMe} department = {department} setDepartment = {setDepartment} gender = {gender} setGender = {setGender} age = {age} setAge = {setAge} birth = {birth} setBirth = {setBirth} initialize = {initialize}/>}
         </Container>
     );

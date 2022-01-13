@@ -97,7 +97,7 @@ const Mutation = {
         await chatBox.save();
         
         pubsub.publish(`chatBox ${chatBoxName}`, {
-          message: {mutation: "CREATED", message: newMsg},
+          message: newMsg,
         });
         return newMsg;
       },

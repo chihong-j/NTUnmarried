@@ -14,7 +14,7 @@ const MESSAGE_SUBSCRIPTION = gql`
     }
 `;
 //
-const NOTIFYCATION_SUBSCRIPTION = gql`
+const NOTIFICATION_SUBSCRIPTION = gql`
   subscription like($email: String!) {
     notification(email: $email) {
         name
@@ -24,4 +24,4 @@ const NOTIFYCATION_SUBSCRIPTION = gql`
     }
 `;
 
-export {MESSAGE_SUBSCRIPTION, NOTIFYCATION_SUBSCRIPTION};
+export {MESSAGE_SUBSCRIPTION, NOTIFICATION_SUBSCRIPTION};
