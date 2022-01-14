@@ -109,6 +109,7 @@ const Mutation = {
                     const newNotificationStranger = await new db.NotificationModel({name: userMe.name, image: userMe.images[0]}).save()
                     const newNotificationMe = await new db.NotificationModel({name: userStranger.name, image: userStranger.images[0]}).save()
                     userMe.notificationList = [newNotificationMe, ...userMe.notificationList];
+                    userStranger.notificationList = [newNotificationStranger, ...userStranger.notificationList];
                     const chatBoxName = [userMe.email, userStranger.email].sort().join('$');
                     const chatBoxPayloadMe = await new db.ChatBoxPayloadModel({
                         name: chatBoxName,
