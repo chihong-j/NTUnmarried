@@ -37,7 +37,7 @@
 yarn install
 ```
 ### 更改 node.js 版本
-由於在此系統中，上傳照片的功能只支援 node v12，而目前大多人使用的版本為 node v14，因此安裝完前、後端的套件之後，需要執行以下指令以更改 node.js 版本為 node v12（提醒：使用完這個系統之後，記得將自己的 node 版本轉為自己原本使用的 node 版本）
+由於在此系統中，上傳照片的功能只支援 node v12，而目前大多人使用的版本為 node v14，因此**安裝完前、後端的套件之後**，需要執行以下指令以更改 node.js 版本為 node v12（提醒：使用完這個系統之後，記得將自己的 node 版本轉為自己原本使用的 node 版本）
 #### 若沒有安裝過 n，則需要先安裝 n，再將版本轉為 node v12 
 ```
 npm install -g n
@@ -63,7 +63,7 @@ yarn start
 
 ### 使用之第三方套件、框架、程式碼
 #### 第三方套件、框架
-- Front end
+- Frontend
     - React
     - apollo
     - antd
@@ -71,7 +71,7 @@ yarn start
     - bcryptjs
     - reactstrap
     - styled-components
-- Back end
+- Backend
     - graphql-yoga
     - bcryptjs
     - jsonwebtoken
@@ -89,9 +89,12 @@ yarn start
 - 吳浩瑜
     - Backend
     - Frontend
+    - Deploy
 - 朱家慶
     - Backend
+    - Deploy
 - 莊啟宏
     - Frontend
+    - demo
 
     
