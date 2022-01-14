@@ -18,7 +18,6 @@ const Query = {
     },
     async stranger(parent, {email: userEmail}, { db, me}, info) {
         if (!me) throw new AuthenticationError('Not logged in');
-        const users = await db.UserModel.find({});
         const userMe = await db.UserModel.findOne({email: userEmail}).populate({
             path: 'likeList',
             populate: {
@@ -26,6 +25,8 @@ const Query = {
             }
             }
         );
+        const queryGender = !userMe.gender;
+        const users = await db.UserModel.find({ gender: queryGender});
         const isMeet = (stranger, likeList) => {
             for (let i = 0; i < likeList.length; ++i) {
                 if (stranger.email === likeList[i].stranger.email) return true;
