@@ -51,18 +51,12 @@ const Mutation = {
 
 
         const user = await db.UserModel.findOne({ email:me.email });
-        const readStream1 = createReadStream();
-        const readStream2 = createReadStream();
-        const writeStream = await saveImage(db, readStream1, filename);
-        user.images.push(writeStream.id);
-        await user.save();
-        return await readStreamToDataUrl(readStream2);
 
-        // const readStream = createReadStream();
-        // const dataUrl = readStreamToDataUrl(readStream);
-        // user.images.push(dataUrl);
-        // await user.save();
-        // return dataUrl;
+        const readStream = createReadStream();
+        const dataUrl = readStreamToDataUrl(readStream);
+        user.images.push(dataUrl);
+        await user.save();
+        return dataUrl;
     },
 
 
@@ -92,23 +86,40 @@ const Mutation = {
         for (let i = 0; i < userStranger.likeList.length; ++i) {
             if (userStranger.likeList[i].stranger.email === userMe.email) {
                 if (userStranger.likeList[i].isLike) {
-                    const populatedUserMe = await populateImg(db, userMe, 1);
-                    const populatedUserStranger = await populateImg(db, userStranger, 1);
-                    const newNotificationStranger = await new db.NotificationModel({name: populatedUserMe.name, image: populatedUserMe.images[0]}).save()
-                    const newNotificationMe = await new db.NotificationModel({name: populatedUserStranger.name, image: populatedUserStranger.images[0]}).save()
+                    // const populatedUserMe = await populateImg(db, userMe, 1);
+                    // const populatedUserStranger = await populateImg(db, userStranger, 1);
+                    // const newNotificationStranger = await new db.NotificationModel({name: userMe.name, image: populatedUserMe.images[0]}).save()
+                    // const newNotificationMe = await new db.NotificationModel({name: userStranger.name, image: populatedUserStranger.images[0]}).save()
+                    // userMe.notificationList = [newNotificationMe, ...userMe.notificationList];
+                    // userStranger.notificationList = [newNotificationStranger, ...userStranger.notificationList];
+                    // const chatBoxName = [userMe.email, userStranger.email].sort().join('$');
+                    // const chatBoxPayloadMe = await new db.ChatBoxPayloadModel({
+                    //     name: chatBoxName,
+                    //     friendName: userStranger.name,
+                    //     friendImage: populatedUserStranger.images[0],
+                    //     friendEmail: userStranger.email
+                    // }).save();
+                    // const chatBoxPayloadStranger = await new db.ChatBoxPayloadModel({
+                    //     name: chatBoxName,
+                    //     friendName: userMe.name,
+                    //     friendImage: populatedUserMe.images[0],
+                    //     friendEmail: userMe.email
+                    // }).save();
+
+                    const newNotificationStranger = await new db.NotificationModel({name: userMe.name, image: userMe.images[0]}).save()
+                    const newNotificationMe = await new db.NotificationModel({name: userStranger.name, image: userStranger.images[0]}).save()
                     userMe.notificationList = [newNotificationMe, ...userMe.notificationList];
-                    userStranger.notificationList = [newNotificationStranger, ...userStranger.notificationList];
                     const chatBoxName = [userMe.email, userStranger.email].sort().join('$');
                     const chatBoxPayloadMe = await new db.ChatBoxPayloadModel({
                         name: chatBoxName,
                         friendName: userStranger.name,
-                        friendImage: populatedUserStranger.images[0],
+                        friendImage: userStranger.images[0],
                         friendEmail: userStranger.email
                     }).save();
                     const chatBoxPayloadStranger = await new db.ChatBoxPayloadModel({
                         name: chatBoxName,
                         friendName: userMe.name,
-                        friendImage: populatedUserMe.images[0],
+                        friendImage: userMe.images[0],
                         friendEmail: userMe.email
                     }).save();
 

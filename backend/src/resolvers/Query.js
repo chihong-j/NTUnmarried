@@ -5,16 +5,17 @@ import {AuthenticationError} from "apollo-server-core";
 const Query = {
     async user(parent, { email }, { db }, info) {
         const queryUser = await db.UserModel.findOne({ email });
-        let readStream;
-        const { _id: id, name, gender, age, aboutMe, department, password, notificationList, chatBoxPayloadList} = queryUser;
-        if (!queryUser.images) return { id, email, name, gender, age, aboutMe, department, images: [], password, notificationList, chatBoxPayloadList};
-        const images = [];
-        for (let i = 0; i < queryUser.images.length; ++i) {
-            readStream = await retrieveImage(db, queryUser.images[i]);
-            images.push(await readStreamToDataUrl(readStream));
-        }
-
-        return { id, email, name, gender, age, aboutMe, department, images, password, notificationList, chatBoxPayloadList};
+        // let readStream;
+        // const { _id: id, name, gender, age, aboutMe, department, password, notificationList, chatBoxPayloadList} = queryUser;
+        // if (!queryUser.images) return { id, email, name, gender, age, aboutMe, department, images: [], password, notificationList, chatBoxPayloadList};
+        // const images = [];
+        // for (let i = 0; i < queryUser.images.length; ++i) {
+        //     readStream = await retrieveImage(db, queryUser.images[i]);
+        //     images.push(await readStreamToDataUrl(readStream));
+        // }
+        //
+        // return { id, email, name, gender, age, aboutMe, department, images, password, notificationList, chatBoxPayloadList};
+        return queryUser;
     },
     async stranger(parent, {email: userEmail}, { db, me}, info) {
         if (!me) throw new AuthenticationError('Not logged in');
@@ -28,7 +29,6 @@ const Query = {
         const emailList = userMe.likeList.map((like) => {
             return like.stranger.email;
         })
-        console.log(emailList)
         const queryGender = !userMe.gender;
         const strangers = await db.UserModel.find({ gender: queryGender, email: {$nin: emailList.concat([userEmail])}}, null, {limit: 10});
         // const isMeet = (stranger, likeList) => {
