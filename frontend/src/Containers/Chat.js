@@ -106,9 +106,9 @@ const Chat = ({ me, user}) => {
             </Container>
             ): (
                 <Container maxWidth = "sm" sx = {{display: "flex", justifyContent: "center"}}>
-                    <Stack>
-                        {
-                            data.user.chatBoxPayloadList.map(({name, friendName, friendImage, friendEmail}, id) => 
+                        <Stack>
+                            {data.user.chatBoxPayloadList.map(({name, friendName, friendImage, friendEmail}, id) => 
+                            
                                 <div key={id} className="chat-cell" onClick={() => startChat(name, friendName, friendImage, friendEmail)}>
                                     <div className="chat-img-div" style={{display: "inline-block"}}>
                                         <img className="chat_img" src={friendImage} ></img>  
@@ -120,10 +120,10 @@ const Chat = ({ me, user}) => {
                                                 {/* <Typography variant="h5">
                                                 </Typography> */}
                                     </div>
-                                </div>
-                            )
-                        }
-                    </Stack>
+                                </div>)
+                            }
+                        </Stack>
+                        
                 </Container>
             )
             }

@@ -57,6 +57,12 @@ const Mutation = {
         user.images.push(writeStream.id);
         await user.save();
         return await readStreamToDataUrl(readStream2);
+
+        // const readStream = createReadStream();
+        // const dataUrl = readStreamToDataUrl(readStream);
+        // user.images.push(dataUrl);
+        // await user.save();
+        // return dataUrl;
     },
 
 
@@ -185,7 +191,6 @@ const Mutation = {
         pubsub.publish(`chatBox ${chatBoxName}`, {
             message: newMsg,
         })
-        console.log(newMsg)
         return newMsg;
     }
 };

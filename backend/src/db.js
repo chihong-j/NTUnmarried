@@ -24,7 +24,8 @@ const UserSchema = new Schema({
     password: { type: String, required: true },
     likeList: [{ type: mongoose.Types.ObjectId, ref: 'Like' }],
     notificationList: [{type: mongoose.Types.ObjectId, ref: 'Notification'}],
-    chatBoxPayloadList: [{ type: mongoose.Types.ObjectId, ref: 'ChatBoxPayload'}]
+    chatBoxPayloadList: [{ type: mongoose.Types.ObjectId, ref: 'ChatBoxPayload'}],
+    // images: [{ type: String }]
 })
 
 const NotificationListSchema = new Schema({

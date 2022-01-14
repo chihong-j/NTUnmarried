@@ -25,21 +25,25 @@ const Query = {
             }
         }
         );
-
-        const users = await db.UserModel.find({});
-        const isMeet = (stranger, likeList) => {
-            for (let i = 0; i < likeList.length; ++i) {
-                if (stranger.email === likeList[i].stranger.email) return true;
-            }
-            return false;
-        }
-        const strangers = [];
-        for (let i = 0; i < users.length; ++i) {//m
-            if (users[i].email === userMe.email) continue;
-            if (!isMeet(users[i], userMe.likeList)) {
-                strangers.push(users[i]);
-            }
-        }
+        const emailList = userMe.likeList.map((like) => {
+            return like.stranger.email;
+        })
+        console.log(emailList)
+        const queryGender = !userMe.gender;
+        const strangers = await db.UserModel.find({ gender: queryGender, email: {$nin: emailList.concat([userEmail])}}, null, {limit: 10});
+        // const isMeet = (stranger, likeList) => {
+        //     for (let i = 0; i < likeList.length; ++i) {
+        //         if (stranger.email === likeList[i].stranger.email) return true;
+        //     }
+        //     return false;
+        // }
+        // const strangers = [];
+        // for (let i = 0; i < users.length; ++i) {//m
+        //     if (users[i].email === userMe.email) continue;
+        //     if (!isMeet(users[i], userMe.likeList)) {
+        //         strangers.push(users[i]);
+        //     }
+        // }
         return strangers.map(async (stranger) => {
             let readStream;
             const { _id: id, email, name, gender, age, aboutMe, department } = stranger;
@@ -53,9 +57,7 @@ const Query = {
         })
     },
     async chatBox(parent, {name}, {db, pubsub, me}, info) {
-        console.log(name)
         let chatBox = await checkChatBox(db, name, "QueryChatBox");
-        console.log(chatBox)
         if(!chatBox) {
           console.log("ChatBox does not exist for QueryChatBox: " + name);
         }
