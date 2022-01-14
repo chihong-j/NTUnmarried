@@ -95,19 +95,24 @@ export default function SignUp({setUserStatus}) {
     else if (!/[a-zA-z]/i.test(password)) {
         setErrorMessage("Password must contains at least one english character.")
     }
-    else {
-        setUserStatus("login");
-        signUpUser({
-          variables: {
-              email,
-              password: passwordHash,
-              name,
-              gender,
-              age,
-              aboutMe,
-              department,
-            },
-        })
+    else {   
+        try {
+          await signUpUser({
+            variables: {
+                email,
+                password: passwordHash,
+                name,
+                gender,
+                age,
+                aboutMe,
+                department,
+              },
+          })
+          setUserStatus("login");
+        }
+        catch(e) {
+          setErrorMessage("Email exists.")
+        }
     }
   };
   const create = async (password, salt) => {
