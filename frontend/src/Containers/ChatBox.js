@@ -42,7 +42,6 @@ const ChatBox = ({me, name, friendName, friendImage, friendEma, setFriendEma, se
                     updateQuery: (prev, {subscriptionData}) => {
                         if (!subscriptionData.data) return prev;
                         const newMessage = subscriptionData.data.message;
-                        console.log("here: ", newMessage)
                         return {
                             chatBox: {
                                 messages: [...prev.chatBox.messages, newMessage]
