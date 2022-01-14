@@ -107,7 +107,7 @@ const Match = ({ data, loading}) => {
         return (
             <Container maxWidth = "sm" sx={{display: "flex", justifyContent: "center"}}>  
                 <Typography variant="h5" style={{display: "inline-block", color: "black", marginTop: "50px"}}>
-                    No User Left! You can try reloading later1.
+                    No User Left! You can try reloading later.
                 </Typography>
             </Container>
         ) 
@@ -116,7 +116,7 @@ const Match = ({ data, loading}) => {
         return (
             <Container maxWidth = "sm" sx={{display: "flex", justifyContent: "center"}}>  
                 <Typography variant="h5" style={{display: "inline-block", color: "black", marginTop: "50px"}}>
-                No User Left! You can try reloading later2.
+                No User Left! You can try reloading later.
                 </Typography>
             </Container>
             ) 
@@ -125,7 +125,7 @@ const Match = ({ data, loading}) => {
         return (
             <Container maxWidth = "sm" sx={{display: "flex", justifyContent: "center"}}>  
                 <Typography variant="h5" style={{display: "inline-block", color: "black", marginTop: "50px"}}>
-                No User Left! You can try reloading later3.
+                No User Left! You can try reloading later.
                 </Typography>
             </Container>
         ) 

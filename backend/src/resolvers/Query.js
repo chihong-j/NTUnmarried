@@ -30,7 +30,7 @@ const Query = {
             return like.stranger.email;
         })
         const queryGender = !userMe.gender;
-        const strangers = await db.UserModel.find({ gender: queryGender, email: {$nin: emailList.concat([userEmail])}}, null, {limit: 10});
+        const strangers = await db.UserModel.find({ gender: queryGender, email: {$nin: emailList.concat([userEmail])}}, null, {limit: 5});
         // const isMeet = (stranger, likeList) => {
         //     for (let i = 0; i < likeList.length; ++i) {
         //         if (stranger.email === likeList[i].stranger.email) return true;
@@ -44,17 +44,7 @@ const Query = {
         //         strangers.push(users[i]);
         //     }
         // }
-        return strangers.map(async (stranger) => {
-            let readStream;
-            const { _id: id, email, name, gender, age, aboutMe, department } = stranger;
-            if (!stranger.images) return { id, email, name, gender, age, aboutMe, department, images: []};
-            const images = [];
-            for (let i = 0; i < stranger.images.length; ++i) {
-                readStream = await retrieveImage(db, stranger.images[i]);
-                images.push(await readStreamToDataUrl(readStream));
-            }
-            return { id, email, name, gender, age, aboutMe, department, images};
-        })
+        return strangers
     },
     async chatBox(parent, {name}, {db, pubsub, me}, info) {
         let chatBox = await checkChatBox(db, name, "QueryChatBox");

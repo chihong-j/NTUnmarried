@@ -53,7 +53,7 @@ const Mutation = {
         const user = await db.UserModel.findOne({ email:me.email });
 
         const readStream = createReadStream();
-        const dataUrl = readStreamToDataUrl(readStream);
+        const dataUrl = await readStreamToDataUrl(readStream);
         user.images.push(dataUrl);
         await user.save();
         return dataUrl;
