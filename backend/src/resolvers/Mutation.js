@@ -191,7 +191,6 @@ const Mutation = {
         pubsub.publish(`chatBox ${chatBoxName}`, {
             message: newMsg,
         })
-        console.log(newMsg)
         return newMsg;
     }
 };

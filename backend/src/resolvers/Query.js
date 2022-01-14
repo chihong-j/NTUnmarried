@@ -53,9 +53,7 @@ const Query = {
         })
     },
     async chatBox(parent, {name}, {db, pubsub, me}, info) {
-        console.log(name)
         let chatBox = await checkChatBox(db, name, "QueryChatBox");
-        console.log(chatBox)
         if(!chatBox) {
           console.log("ChatBox does not exist for QueryChatBox: " + name);
         }

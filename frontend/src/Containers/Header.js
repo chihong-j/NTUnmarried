@@ -28,8 +28,9 @@ const Header = ({isNotification, setCurrentPage, setUserStatus, userName}) => {
   }
 
   const logout = () => {
-    setUserStatus("login");
     localStorage.clear();
+    window.location.reload();
+    setUserStatus("login");
   }
 
   return (

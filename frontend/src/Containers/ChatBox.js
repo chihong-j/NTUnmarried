@@ -7,7 +7,7 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import Button from '@mui/material/Button';
 
 const Messages = styled.div`
-    height: calc(240px - 36px);
+    height: calc(240px - 0px);
     display: flex;
     flex-direction: column;
     overflow: auto;
@@ -58,7 +58,7 @@ const ChatBox = ({me, name, friendName, friendImage, friendEma, setFriendEma, se
     return (
         <>
             <Button color="primary" variant="raised" component="span" onClick={ReturnChatBox} >
-                <ArrowBackIosIcon sx = {{fontSize : "50px", flexGrow: 1}}/>
+                <ArrowBackIosIcon sx = {{fontSize : "50px", flexGrow: 1}}/> back  
             </Button>
             <Messages>
                 {data.chatBox.messages.map(({sender: {email, name}, body}, i) => (
