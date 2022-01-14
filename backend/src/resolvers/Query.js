@@ -5,16 +5,17 @@ import {AuthenticationError} from "apollo-server-core";
 const Query = {
     async user(parent, { email }, { db }, info) {
         const queryUser = await db.UserModel.findOne({ email });
-        let readStream;
-        const { _id: id, name, gender, age, aboutMe, department, password, notificationList, chatBoxPayloadList} = queryUser;
-        if (!queryUser.images) return { id, email, name, gender, age, aboutMe, department, images: [], password, notificationList, chatBoxPayloadList};
-        const images = [];
-        for (let i = 0; i < queryUser.images.length; ++i) {
-            readStream = await retrieveImage(db, queryUser.images[i]);
-            images.push(await readStreamToDataUrl(readStream));
-        }
-
-        return { id, email, name, gender, age, aboutMe, department, images, password, notificationList, chatBoxPayloadList};
+        // let readStream;
+        // const { _id: id, name, gender, age, aboutMe, department, password, notificationList, chatBoxPayloadList} = queryUser;
+        // if (!queryUser.images) return { id, email, name, gender, age, aboutMe, department, images: [], password, notificationList, chatBoxPayloadList};
+        // const images = [];
+        // for (let i = 0; i < queryUser.images.length; ++i) {
+        //     readStream = await retrieveImage(db, queryUser.images[i]);
+        //     images.push(await readStreamToDataUrl(readStream));
+        // }
+        //
+        // return { id, email, name, gender, age, aboutMe, department, images, password, notificationList, chatBoxPayloadList};
+        return queryUser;
     },
     async stranger(parent, {email: userEmail}, { db, me}, info) {
         if (!me) throw new AuthenticationError('Not logged in');
@@ -40,17 +41,18 @@ const Query = {
                 strangers.push(users[i]);
             }
         }
-        return strangers.map(async (stranger) => {
-            let readStream;
-            const { _id: id, email, name, gender, age, aboutMe, department } = stranger;
-            if (!stranger.images) return { id, email, name, gender, age, aboutMe, department, images: []};
-            const images = [];
-            for (let i = 0; i < stranger.images.length; ++i) {
-                readStream = await retrieveImage(db, stranger.images[i]);
-                images.push(await readStreamToDataUrl(readStream));
-            }
-            return { id, email, name, gender, age, aboutMe, department, images};
-        })
+        // return strangers.map(async (stranger) => {
+        //     let readStream;
+        //     const { _id: id, email, name, gender, age, aboutMe, department } = stranger;
+        //     if (!stranger.images) return { id, email, name, gender, age, aboutMe, department, images: []};
+        //     const images = [];
+        //     for (let i = 0; i < stranger.images.length; ++i) {
+        //         readStream = await retrieveImage(db, stranger.images[i]);
+        //         images.push(await readStreamToDataUrl(readStream));
+        //     }
+        //     return { id, email, name, gender, age, aboutMe, department, images};
+        // })
+        return strangers;
     },
     async chatBox(parent, {name}, {db, pubsub, me}, info) {
         let chatBox = await checkChatBox(db, name, "QueryChatBox");
