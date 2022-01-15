@@ -96,14 +96,22 @@ yarn start
 ### 分工
 - 吳浩瑜
     - Backend
+    前、後端串接 debug
     - Frontend
+    負責個人資料修改與照片上傳服務、聊天服務
     - Deploy
+    更改程式碼為可以 deploy 至 Heroku 的版本
 - 朱家慶
     - Backend
+    資料庫的建立，後端服務實作
     - Deploy
+    幫助修改程式碼為可以 deploy 的版本
     - Demo
+    後端技術與架構介紹
 - 莊啟宏
     - Frontend
+    負責登入、註冊頁面，配對服務，通知服務
     - Demo
+    交友軟體服務操作介紹
 
     
