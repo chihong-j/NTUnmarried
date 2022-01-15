@@ -114,4 +114,19 @@ yarn start
     - Demo
     交友軟體服務操作介紹
 
+### 其他想對助教說的話
+**若真的很不幸很不幸在測試的時候有 bug 的解決方式**
+我們有盡量做 error handling，但因為我們有一些資料存在 local storage，如果一台電腦開了多個
+ client 測試的話可能會有 local storage 衝突的問題，如果真的很不幸助教在測試的時候有這樣的 bug 導致頁面空白的話，有一個手動解決的辦法要麻煩助教，方法如下：
+ - 到 /frontend/src/App.js 的第 21 行，把 code 反註解變成以下這行 code 之後，到網頁進行重新整理，清除 local storage
+ ```
+ localStorage.clear()
+ ```
+ 清除之後，再回去原本的這行程式碼進行註解，變回原本的樣子
+ ```
+ // localStorage.clear()
+ ```
+ 接著就可以回去網頁中重新登入，繼續使用此服務
+
+
     
