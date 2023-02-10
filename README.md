@@ -1,4 +1,4 @@
-# NTUnmarried — NTㄩㄇ
+# NTUnmarried
 - 成員：
     - 電機四 B07901067 吳浩瑜
     - 資工五 B06303036 朱家慶
